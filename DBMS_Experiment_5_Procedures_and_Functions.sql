@@ -6,12 +6,20 @@
 -- FILE  : DBMS_Experiment_5_Procedures_and_Functions.sql
 -- =====================================================================
 
-DROP DATABASE IF EXISTS dbms_experiment_5;
-CREATE DATABASE dbms_experiment_5;
-USE dbms_experiment_5;
 
 -- =====================================================================
--- 1. CREATE EMPLOYEE TABLE
+-- 1. CREATE DATABASE
+-- =====================================================================
+
+DROP DATABASE IF EXISTS dbms_experiment_5;
+
+CREATE DATABASE dbms_experiment_5;
+
+USE dbms_experiment_5;
+
+
+-- =====================================================================
+-- 2. CREATE EMPLOYEE TABLE
 -- =====================================================================
 
 CREATE TABLE employee (
@@ -20,8 +28,9 @@ CREATE TABLE employee (
     salary DECIMAL(10,2)
 );
 
+
 -- =====================================================================
--- 2. INSERT SAMPLE DATA
+-- 3. INSERT SAMPLE DATA
 -- =====================================================================
 
 INSERT INTO employee (id, name, salary) VALUES
@@ -29,26 +38,33 @@ INSERT INTO employee (id, name, salary) VALUES
 (2, 'Alice', 6000.00),
 (3, 'Bob', 4500.00);
 
+
 -- =====================================================================
--- 3. DISPLAY EMPLOYEE RECORDS
+-- 4. DISPLAY EMPLOYEE RECORDS
 -- =====================================================================
 
 SELECT * FROM employee;
 
+
 -- Expected Output:
+--
 -- +----+-------+---------+
 -- | id | name  | salary  |
 -- +----+-------+---------+
--- | 1  | John  | 5000.00 |
--- | 2  | Alice | 6000.00 |
--- | 3  | Bob   | 4500.00 |
+-- |  1 | John  | 5000.00 |
+-- |  2 | Alice | 6000.00 |
+-- |  3 | Bob   | 4500.00 |
 -- +----+-------+---------+
 
+
 -- =====================================================================
--- 4. CREATE PROCEDURE
+-- 5. CREATE PROCEDURE
 -- =====================================================================
--- Procedure: SumProcedure
--- Purpose  : Calculate and display the sum of two integers.
+-- Procedure : SumProcedure
+-- Purpose   : Calculate and display the sum of two integers.
+-- =====================================================================
+
+DROP PROCEDURE IF EXISTS SumProcedure;
 
 DELIMITER //
 
@@ -63,24 +79,31 @@ END //
 
 DELIMITER ;
 
+
 -- =====================================================================
--- 5. CALL THE PROCEDURE
+-- 6. CALL THE PROCEDURE
 -- =====================================================================
 
 CALL SumProcedure(10, 20);
 
+
 -- Expected Output:
+--
 -- +--------------------------+
 -- | Result                   |
 -- +--------------------------+
 -- | Sum of two numbers = 30  |
 -- +--------------------------+
 
+
 -- =====================================================================
--- 6. CREATE FUNCTION
+-- 7. CREATE FUNCTION
 -- =====================================================================
--- Function: SumFunction
--- Purpose : Return the sum of two integers.
+-- Function  : SumFunction
+-- Purpose   : Return the sum of two integers.
+-- =====================================================================
+
+DROP FUNCTION IF EXISTS SumFunction;
 
 DELIMITER //
 
@@ -97,34 +120,32 @@ END //
 
 DELIMITER ;
 
+
 -- =====================================================================
--- 7. CALL THE FUNCTION
+-- 8. CALL THE FUNCTION
 -- =====================================================================
 
 SELECT SumFunction(5, 5) AS Result;
 
+
 -- Expected Output:
+--
 -- +--------+
 -- | Result |
 -- +--------+
--- |   10   |
+-- |     10 |
 -- +--------+
 
--- =====================================================================
--- 8. CLEANUP
--- =====================================================================
--- Uncomment the following commands if the procedure/function needs
--- to be removed.
--- DROP PROCEDURE IF EXISTS SumProcedure;
--- DROP FUNCTION IF EXISTS SumFunction;
 
 -- =====================================================================
 -- RESULT
 -- =====================================================================
 -- The stored procedure was successfully created and executed to
--- calculate the sum of two numbers. The stored function was also
--- successfully created and executed to return the sum of two numbers.
-
+-- calculate the sum of two numbers.
+--
+-- The stored function was successfully created and executed to
+-- return the sum of two numbers.
 -- =====================================================================
+
 -- END OF EXPERIMENT 5
 -- =====================================================================

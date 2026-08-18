@@ -939,6 +939,32 @@ END;
 - Create exception handler for all SQL errors
 - Log exceptions to audit table
 
+### Assessment Criteria for Exercises
+
+**Code Quality Evaluation:**
+- Readability: Well-commented, meaningful variable names
+- Correctness: Produces accurate results for all test cases
+- Efficiency: Runs within acceptable time limits
+- Robustness: Handles edge cases and errors gracefully
+- Best Practices: Follows SQL/PL-SQL standards
+
+**Exercise Submission Checklist:**
+- [ ] All required queries/procedures implemented
+- [ ] Code includes comments explaining logic
+- [ ] All error cases handled appropriately
+- [ ] Results verified against expected output
+- [ ] Performance verified for large datasets
+- [ ] No hard-coded values or magic numbers
+- [ ] Database objects properly named and documented
+- [ ] Commit messages explain the work done
+
+**Testing Strategy:**
+- Test with sample data provided
+- Test with boundary values (empty sets, null values)
+- Test with large result sets (1000+ rows)
+- Verify error handling with invalid inputs
+- Document all test cases and results
+
 ---
 
 **Last Updated:** August 2026

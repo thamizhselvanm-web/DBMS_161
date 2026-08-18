@@ -833,6 +833,46 @@ SELECT CURRENT_USER;      -- Verify current user
 - Monitor execution time for large operations
 - Consider parallel execution for heavy workloads
 
+### Trigger Design Patterns (Exercise 6)
+
+**Audit Triggers:**
+Track changes to sensitive columns
+```sql
+BEFORE INSERT OR UPDATE ON employees
+FOR EACH ROW
+BEGIN
+  INSERT INTO audit_log VALUES(:NEW.id, SYSDATE, USER);
+END;
+```
+
+**Validation Triggers:**
+Enforce business rules
+```sql
+BEFORE INSERT ON orders
+FOR EACH ROW
+BEGIN
+  IF :NEW.quantity < 0 THEN
+    RAISE_APPLICATION_ERROR(-20001, 'Quantity cannot be negative');
+  END IF;
+END;
+```
+
+**Cascade Triggers:**
+Maintain referential integrity
+```sql
+BEFORE DELETE ON departments
+FOR EACH ROW
+BEGIN
+  DELETE FROM employees WHERE dept_id = :OLD.dept_id;
+END;
+```
+
+**Performance Tips for Triggers:**
+- Keep trigger logic minimal
+- Avoid recursive triggers
+- Use simple SQL, not complex queries
+- Test trigger performance with realistic data volumes
+
 ---
 
 **Last Updated:** August 2026

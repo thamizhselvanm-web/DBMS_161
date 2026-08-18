@@ -986,6 +986,29 @@ END;
 - Explain Plan Analyzer: Tools for query optimization
 - PL/SQL Interactive Sandbox: Oracle Live SQL environment
 
+### Frequently Asked Questions (FAQ)
+
+**Q: Can I use these exercises with database systems other than Oracle?**
+A: Yes! Exercises 1–3 work with MySQL and PostgreSQL. Exercises 4–8 require minor syntax modifications for non-Oracle databases. Refer to the compatibility matrix in the README.
+
+**Q: What if I make mistakes while running exercises?**
+A: Use ROLLBACK to undo changes before committing. Create backup tables before testing triggers. Use DROP TABLE IF EXISTS to remove test objects safely.
+
+**Q: How long should each exercise take?**
+A: See the Learning Path section. Times are estimates; actual time depends on your experience level and understanding depth.
+
+**Q: Can I modify the SQL files?**
+A: Absolutely! Modify, experiment, and extend the queries. Learning by doing is the best approach.
+
+**Q: Are there solutions provided?**
+A: Check for a solutions branch or contact the instructor. Working through problems yourself provides better learning outcomes.
+
+**Q: What's the difference between implicit and explicit cursors?**
+A: Implicit cursors are automatic for single-row queries; explicit cursors provide fine control for multiple-row processing.
+
+**Q: Why use normalization if it requires more joins?**
+A: Normalization reduces storage, improves data integrity, and simplifies updates. Query optimization and indexing mitigate join performance costs.
+
 ---
 
 **Last Updated:** August 2026

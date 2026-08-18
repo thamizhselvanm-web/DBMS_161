@@ -793,6 +793,20 @@ SELECT CURRENT_USER;      -- Verify current user
 \l                        -- List all databases
 ```
 
+### Common SQL Patterns Used in Exercises
+
+| Pattern | Purpose | Exercise(s) |
+|---------|---------|------------|
+| INNER JOIN | Combine related tables | Ex 2 |
+| LEFT OUTER JOIN | Include unmatched rows | Ex 2 |
+| Subquery in WHERE | Filter based on aggregation | Ex 1 |
+| GROUP BY + HAVING | Aggregate with conditions | Ex 1 |
+| UNION | Combine result sets | Ex 2 |
+| Scalar Subquery | Single-value expression | Ex 1, 5 |
+| CREATE VIEW | Store reusable query | Ex 3 |
+| CREATE INDEX | Improve query performance | Ex 3 |
+| Normalization | Reduce data redundancy | Ex 7 |
+
 ---
 
 **Last Updated:** August 2026

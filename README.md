@@ -965,6 +965,27 @@ END;
 - Verify error handling with invalid inputs
 - Document all test cases and results
 
+### Reference Materials & Resources
+
+**Oracle Documentation:**
+- Oracle SQL Language Reference: [docs.oracle.com/sql-lang](https://docs.oracle.com)
+- PL/SQL Language Reference: [docs.oracle.com/plsql](https://docs.oracle.com)
+- Oracle Database Administration Guide: [docs.oracle.com/dba-guide](https://docs.oracle.com)
+
+**MySQL Documentation:**
+- MySQL SQL Reference: [dev.mysql.com/doc](https://dev.mysql.com/doc)
+- MySQL PL/SQL Equivalent (Stored Procedures): [dev.mysql.com/doc/refman](https://dev.mysql.com)
+
+**PostgreSQL Documentation:**
+- PostgreSQL SQL Reference: [postgresql.org/docs](https://www.postgresql.org/docs)
+- PL/pgSQL Language: [postgresql.org/docs/plpgsql](https://www.postgresql.org/docs)
+
+**Educational Resources:**
+- Database Normalization Tutorial: W3Schools Database Normalization
+- SQL JOIN Visualizer: Visual guide to SQL JOINs
+- Explain Plan Analyzer: Tools for query optimization
+- PL/SQL Interactive Sandbox: Oracle Live SQL environment
+
 ---
 
 **Last Updated:** August 2026

@@ -807,6 +807,32 @@ SELECT CURRENT_USER;      -- Verify current user
 | CREATE INDEX | Improve query performance | Ex 3 |
 | Normalization | Reduce data redundancy | Ex 7 |
 
+### PL/SQL Best Practices
+
+**Cursor Management:**
+- Always close cursors after use to free resources
+- Use `FOR ... IN` loop for automatic cursor management
+- Avoid cursor loops for large result sets
+- Consider using bulk operations with `FORALL`
+
+**Error Handling:**
+- Always include exception handlers in production code
+- Use specific exception types, not generic OTHERS
+- Log error details before raising or re-raising exceptions
+- Provide meaningful error messages to users
+
+**Code Organization:**
+- Use meaningful names for procedures, functions, and variables
+- Include comments explaining complex logic
+- Keep procedures focused on single responsibilities
+- Use packages to organize related procedures and functions
+
+**Performance:**
+- Test queries before embedding in procedures
+- Use bind variables to avoid recompilation
+- Monitor execution time for large operations
+- Consider parallel execution for heavy workloads
+
 ---
 
 **Last Updated:** August 2026

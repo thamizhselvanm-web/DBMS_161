@@ -873,6 +873,35 @@ END;
 - Use simple SQL, not complex queries
 - Test trigger performance with realistic data volumes
 
+### Database Normalization Theory (Exercise 7)
+
+**1st Normal Form (1NF):**
+- Eliminate repeating groups
+- Ensure atomic values in each column
+- Each cell contains single, indivisible value
+
+**2nd Normal Form (2NF):**
+- Must satisfy 1NF
+- Remove partial dependencies
+- Non-key attributes depend on entire primary key
+
+**3rd Normal Form (3NF):**
+- Must satisfy 2NF
+- Remove transitive dependencies
+- Non-key attributes depend only on primary key
+
+**Denormalization Trade-offs:**
+- Improved query performance through reduced joins
+- Risk of data inconsistency
+- Increased storage requirements
+- Use carefully for specific performance bottlenecks
+
+**Exercise 7 Includes:**
+- Converting unnormalized data to 3NF
+- Identifying candidate keys
+- Resolving multivalued dependencies
+- Creating entity-relationship diagrams
+
 ---
 
 **Last Updated:** August 2026

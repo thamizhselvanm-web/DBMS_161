@@ -1009,7 +1009,45 @@ A: Implicit cursors are automatic for single-row queries; explicit cursors provi
 **Q: Why use normalization if it requires more joins?**
 A: Normalization reduces storage, improves data integrity, and simplifies updates. Query optimization and indexing mitigate join performance costs.
 
+### Contributing & Feedback
+
+**How to Contribute:**
+1. Fork the repository or create a feature branch
+2. Make improvements (add exercises, fix bugs, enhance documentation)
+3. Test all changes thoroughly
+4. Write clear, descriptive commit messages
+5. Submit a pull request with detailed explanation
+
+**Types of Contributions Welcome:**
+- Bug fixes and corrections
+- Enhanced documentation and comments
+- Additional practice exercises
+- Performance optimizations
+- Database compatibility improvements
+- Real-world use case examples
+- Translation to other languages
+
+**Reporting Issues:**
+- Use GitHub Issues to report bugs
+- Include database version and error messages
+- Provide minimal reproduction steps
+- Attach relevant SQL excerpts
+
+**Questions & Discussion:**
+- GitHub Discussions for questions
+- Include your environment details
+- Be specific about what's not working
+- Check existing issues before posting
+
 ---
+
+## Final Notes
+
+This repository serves as a comprehensive learning platform for database management fundamentals. Whether you are a student, educator, or professional seeking to refresh your database skills, these exercises provide practical, hands-on experience with industry-standard technologies.
+
+Start with Exercise 1 and progress sequentially. Don't rush. Focus on understanding concepts rather than just completing exercises. Experiment, make mistakes, and learn from them.
+
+Happy learning!
 
 **Last Updated:** August 2026
 **Repository Status:** Active & Maintained

@@ -720,6 +720,14 @@ For questions about:
 - **Week 3:** Exercises 4–5 (PL/SQL basics)
 - **Week 4:** Exercises 6 & 8 (Advanced PL/SQL features)
 
+### Common Pitfalls to Avoid
+
+- Running entire `.sql` files without reading the code
+- Skipping normalization concepts (Exercise 7)
+- Not enabling `SET SERVEROUTPUT ON` for PL/SQL blocks
+- Modifying database structure without backing up data
+- Ignoring database-specific syntax differences
+
 ---
 
 **Last Updated:** August 2026

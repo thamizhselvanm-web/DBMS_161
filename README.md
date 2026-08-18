@@ -768,6 +768,31 @@ After completing all exercises, you should be able to:
 - Handle exceptions gracefully
 - Debug PL/SQL code effectively
 
+### Verifying Your Setup
+
+Before running exercises, verify your environment:
+
+**Oracle Setup:**
+```sql
+SELECT * FROM V$VERSION;  -- Check Oracle version
+SELECT USER FROM DUAL;    -- Verify connected user
+SET SERVEROUTPUT ON;      -- Enable output
+```
+
+**MySQL Setup:**
+```sql
+SELECT VERSION();         -- Check MySQL version
+SELECT USER();            -- Verify current user
+SELECT DATABASE();        -- Confirm database selection
+```
+
+**PostgreSQL Setup:**
+```sql
+SELECT VERSION();         -- Check PostgreSQL version
+SELECT CURRENT_USER;      -- Verify current user
+\l                        -- List all databases
+```
+
 ---
 
 **Last Updated:** August 2026

@@ -902,6 +902,43 @@ END;
 - Resolving multivalued dependencies
 - Creating entity-relationship diagrams
 
+### Practice Assignments & Extensions
+
+**After Exercise 1:**
+- Write a query using ALL comparison operator
+- Create a subquery using correlated subqueries
+- Find students with above-average performance
+
+**After Exercise 2:**
+- Combine four tables using different join types
+- Create a complex query with multiple joins
+- Analyze join performance with EXPLAIN PLAN
+
+**After Exercise 3:**
+- Create indexed views on frequently queried data
+- Test index impact on query performance
+- Implement partial indexes for specific conditions
+
+**After Exercise 4:**
+- Write a cursor fetching 1000+ rows efficiently
+- Implement error handling within cursor loops
+- Use cursor attributes (FOUND, NOTFOUND, ROWCOUNT)
+
+**After Exercise 5:**
+- Create a function returning complex data type
+- Implement function with multiple OUT parameters
+- Handle exceptions within function body
+
+**After Exercise 6:**
+- Design cascade triggers for multi-level updates
+- Implement audit trail with triggers
+- Create disabled triggers for maintenance windows
+
+**After Exercise 8:**
+- Implement custom exception types
+- Create exception handler for all SQL errors
+- Log exceptions to audit table
+
 ---
 
 **Last Updated:** August 2026

@@ -736,6 +736,19 @@ For questions about:
 - **Cursor Usage:** Use explicit cursors only when necessary; prefer set operations
 - **Commit Strategy:** Batch transactions appropriately to avoid locking issues
 
+### Exercise Prerequisites & Dependencies
+
+| Exercise | Prerequisite Knowledge | Required for |
+|----------|----------------------|--------------|
+| Ex 1 | Basic SQL SELECT syntax | Exercises 2–3 |
+| Ex 2 | Exercise 1 completion | Exercises 3–7 |
+| Ex 3 | Exercises 1–2 | Exercise 7 |
+| Ex 4 | Exercise 1, basic PL/SQL | Exercises 5–6, 8 |
+| Ex 5 | Exercise 4 | Exercises 6, 8 |
+| Ex 6 | Exercise 5 | Exercise 8 |
+| Ex 7 | Exercises 1–3 | Advanced DB design |
+| Ex 8 | Exercises 4–5 | Production code review |
+
 ---
 
 **Last Updated:** August 2026

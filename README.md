@@ -55,35 +55,34 @@ dbms-lab-exercises/
 ## Exercise Index
 
 ### Ex 1 — Simple, Nested & Sub Queries
-**File:** [`sql/01_simple_nested_subqueries.sql`]
+
 Builds `Students`, `Courses`, `Enrollments` tables and demonstrates simple filters, nested `IN` subqueries (3 levels deep), scalar aggregate subqueries (`AVG`), and `GROUP BY … HAVING` subqueries.
 
 ### Ex 2 — Join Queries
-**File:** [`sql/02_join_queries.sql`]
+
 Demonstrates all four join types across `Student`, `Courses`, `Enrollments`. Includes a MySQL-compatible `UNION`-based emulation of `FULL OUTER JOIN` since MySQL lacks native support.
 
 ### Ex 3 — Views & Index
-**File:** [`sql/03_views_and_index.sql`]
 Creates a `student_view`, performs `INSERT`/`UPDATE`/`DELETE` on the base table and verifies changes propagate through the view, then creates and inspects an index for performance on large tables.
 
 ### Ex 4 — Implicit & Explicit Cursors
-**File:** [`sql/04_implicit_explicit_cursors.sql`]
+
 Shows the implicit `SQL%` cursor attributes after a bulk `UPDATE`, and a fully-declared explicit cursor with `OPEN` → `LOOP`/`FETCH` → `EXIT WHEN %NOTFOUND` → `CLOSE`.
 
 ### Ex 5 — Procedures & Functions
-**File:** [`sql/05_procedures_and_functions.sql`]
+
 `Sum_Numbers` procedure (IN params, no return) and `Sum_Function` function (IN params, `RETURN NUMBER`), each with a calling PL/SQL block.
 
 ### Ex 6 — Triggers
-**File:** [`sql/06_triggers.sql`]
+
 Three `BEFORE` row-level triggers: on `UPDATE` (prints `:OLD`/`:NEW`), on `DELETE` (logs deletion), and on `INSERT` (raises a user-defined exception via `RAISE_APPLICATION_ERROR` if `stotal > 1000`).
 
 ### Ex 7 — Normalized Schema (Library System)
-**File:** [`sql/07_normalized_schema_library.sql`]
+
 Full ER-driven, normalized schema: `Authors`, `Books`, `Borrowers`, plus `BookAuthors` and `BorrowedBooks` as associative (junction) tables modeling the two many-to-many relationships.
 
 ### Ex 8 — Exception Handling
-**File:** [`sql/08_exception_handling.sql`].
+
 Pre-defined exception handling (`NO_DATA_FOUND`, `OTHERS`) and a user-defined exception (`ex_invalid_id`) raised on a business-rule violation, both with proper propagation and display.
 
 ## Prerequisites

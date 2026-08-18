@@ -749,6 +749,25 @@ For questions about:
 | Ex 7 | Exercises 1–3 | Advanced DB design |
 | Ex 8 | Exercises 4–5 | Production code review |
 
+### Learning Outcomes by Exercise
+
+After completing all exercises, you should be able to:
+
+**SQL Skills (Exercises 1–3, 7):**
+- Write complex SELECT queries with multiple conditions
+- Design normalized database schemas
+- Create and maintain database views
+- Implement indexing strategies
+- Perform different types of joins
+
+**PL/SQL Skills (Exercises 4–6, 8):**
+- Write PL/SQL blocks with declarations and executable sections
+- Implement explicit and implicit cursors
+- Create reusable procedures and functions
+- Design and implement database triggers
+- Handle exceptions gracefully
+- Debug PL/SQL code effectively
+
 ---
 
 **Last Updated:** August 2026

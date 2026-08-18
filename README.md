@@ -728,6 +728,14 @@ For questions about:
 - Modifying database structure without backing up data
 - Ignoring database-specific syntax differences
 
+### Performance Considerations
+
+- **Indexes:** Use indexes on frequently searched columns to improve query speed
+- **Query Optimization:** Analyze execution plans for complex queries
+- **Join Strategy:** Consider join order and type for optimal performance
+- **Cursor Usage:** Use explicit cursors only when necessary; prefer set operations
+- **Commit Strategy:** Batch transactions appropriately to avoid locking issues
+
 ---
 
 **Last Updated:** August 2026

@@ -1,989 +1,156 @@
-# DBMS — MySQL Experiments 
+# DBMS Lab Exercises 🗄️
 
-A structured and professional collection of **Database Management Systems (DBMS) laboratory experiments** implemented using **MySQL 8.0+**.
+Complete set of DBMS / PL-SQL lab exercises — SQL commands, PL/SQL blocks, expected outputs, and explanations, each in its own `.sql` file. Built from lab manual Ex. No. 1–8 (Simple/Nested/Sub Queries → Exception Handling).
 
-This repository contains SQL programs covering fundamental database operations, queries, joins, views, indexes, cursors, stored procedures, and stored functions.
+## 📋 Table of Contents
 
-The scripts are designed to be:
-
-- Easy to execute
-- Easy to understand
-- Suitable for DBMS laboratory records
-- Compatible with MySQL 8.0+
-- Reusable in MySQL Workbench and Ubuntu MySQL CLI
-- Organized for academic submission and GitHub portfolio use
-
----
-
-## Table of Contents
-
-- [Repository Overview](#repository-overview)
-- [Experiments](#experiments)
+- [Overview](#overview)
 - [Repository Structure](#repository-structure)
-- [Technology Stack](#technology-stack)
-- [Database Concepts Covered](#database-concepts-covered)
-- [Experiment 1](#experiment-1--simple-nested-queries-and-subqueries)
-- [Experiment 2](#experiment-2--join-queries)
-- [Experiment 3](#experiment-3--views-and-indexes)
-- [Experiment 4](#experiment-4--implicit-and-explicit-cursors)
-- [Experiment 5](#experiment-5--procedures-and-functions)
+- [Exercise Index](#exercise-index)
+- [Prerequisites](#prerequisites)
 - [How to Run](#how-to-run)
-- [Running on Ubuntu MySQL](#running-on-ubuntu-mysql)
-- [Running with MySQL Workbench](#running-with-mysql-workbench)
-- [Verifying the Results](#verifying-the-results)
-- [Git Workflow](#git-workflow)
-- [Expected Repository Workflow](#expected-repository-workflow)
-- [Learning Outcomes](#learning-outcomes)
-- [Notes](#notes)
+- [Database Compatibility Notes](#database-compatibility-notes)
+- [Schema Summary](#schema-summary)
 - [Author](#author)
+- [License](#license)
 
----
+## Overview
 
-# Repository Overview
+This repository contains 8 DBMS lab exercises covering core relational database and PL/SQL concepts:
 
-This repository contains implementations of DBMS laboratory experiments using SQL and MySQL.
+| # | Topic | Key Concepts |
+|---|-------|---------------|
+| 1 | Simple, Nested & Sub Queries | `SELECT`, `WHERE`, nested `IN`, scalar subqueries, `GROUP BY`/`HAVING` |
+| 2 | Join Queries | `INNER JOIN`, `LEFT JOIN`, `RIGHT JOIN`, `FULL OUTER JOIN` |
+| 3 | Views & Index | `CREATE VIEW`, DML through views, `CREATE INDEX` |
+| 4 | Implicit & Explicit Cursors | `%FOUND`, `%NOTFOUND`, `%ROWCOUNT`, `%ISOPEN`, cursor loops |
+| 5 | Procedures & Functions | `CREATE OR REPLACE PROCEDURE`, `CREATE OR REPLACE FUNCTION` |
+| 6 | Triggers | `BEFORE INSERT/UPDATE/DELETE` triggers, `:NEW`/`:OLD` |
+| 7 | Normalized Schema (Library System) | ER modeling, normalization, M:N associative entities |
+| 8 | Exception Handling | Pre-defined (`NO_DATA_FOUND`, `OTHERS`) & user-defined exceptions |
 
-Each experiment is maintained as an independent `.sql` file. The scripts contain database creation, table creation, sample data, SQL operations, stored-program constructs, and verification queries.
+Each `.sql` file is self-contained and includes:
+- **Header comment block** with Ex No., Title, Aim, and Algorithm (taken from the lab manual)
+- **Table creation & sample data** (`CREATE TABLE`, `INSERT`)
+- **Fully commented SQL/PL-SQL statements**
+- **Expected output** shown as inline comments directly below each query
+- **Result statement** summarizing the outcome
 
-The repository follows a simple structure:
+## Repository Structure
 
-```text
-DBMS_161/
-│
+```
+dbms-lab-exercises/
 ├── README.md
-│
-├── DBMS_Experiment_1_Simple_Nested_Subqueries.sql
-│
-├── DBMS_Experiment_2_JOIN_Queries.sql
-│
-├── DBMS_Experiment_3_View_and_Index.sql
-│
-├── DBMS_Experiment_4_Cursors.sql
-│
-└── DBMS_Experiment_5_Procedures_and_Functions.sql
+└── sql/
+    ├── 01_simple_nested_subqueries.sql
+    ├── 02_join_queries.sql
+    ├── 03_views_and_index.sql
+    ├── 04_implicit_explicit_cursors.sql
+    ├── 05_procedures_and_functions.sql
+    ├── 06_triggers.sql
+    ├── 07_normalized_schema_library.sql
+    └── 08_exception_handling.sql
 ```
 
----
+## Exercise Index
 
-# Experiments
+### Ex 1 — Simple, Nested & Sub Queries
+**File:** [`sql/01_simple_nested_subqueries.sql`](sql/01_simple_nested_subqueries.sql)
+Builds `Students`, `Courses`, `Enrollments` tables and demonstrates simple filters, nested `IN` subqueries (3 levels deep), scalar aggregate subqueries (`AVG`), and `GROUP BY … HAVING` subqueries.
 
-| No. | Experiment | Main Concepts |
-|---:|---|---|
-| 1 | Simple, Nested Queries & Subqueries | SELECT, WHERE, IN, AVG, COUNT, GROUP BY, HAVING, Subqueries |
-| 2 | JOIN Queries | INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL OUTER JOIN equivalent |
-| 3 | Views & Indexes | CREATE VIEW, INSERT, UPDATE, DELETE, CREATE INDEX |
-| 4 | Cursors | Implicit Cursor, Explicit Cursor, DECLARE CURSOR, FETCH, LOOP |
-| 5 | Procedures & Functions | Stored Procedure, Stored Function, Parameters, RETURN, DELIMITER |
+### Ex 2 — Join Queries
+**File:** [`sql/02_join_queries.sql`](sql/02_join_queries.sql)
+Demonstrates all four join types across `Student`, `Courses`, `Enrollments`. Includes a MySQL-compatible `UNION`-based emulation of `FULL OUTER JOIN` since MySQL lacks native support.
 
----
+### Ex 3 — Views & Index
+**File:** [`sql/03_views_and_index.sql`](sql/03_views_and_index.sql)
+Creates a `student_view`, performs `INSERT`/`UPDATE`/`DELETE` on the base table and verifies changes propagate through the view, then creates and inspects an index for performance on large tables.
 
-# Technology Stack
+### Ex 4 — Implicit & Explicit Cursors
+**File:** [`sql/04_implicit_explicit_cursors.sql`](sql/04_implicit_explicit_cursors.sql)
+Shows the implicit `SQL%` cursor attributes after a bulk `UPDATE`, and a fully-declared explicit cursor with `OPEN` → `LOOP`/`FETCH` → `EXIT WHEN %NOTFOUND` → `CLOSE`.
 
-## Database
+### Ex 5 — Procedures & Functions
+**File:** [`sql/05_procedures_and_functions.sql`](sql/05_procedures_and_functions.sql)
+`Sum_Numbers` procedure (IN params, no return) and `Sum_Function` function (IN params, `RETURN NUMBER`), each with a calling PL/SQL block.
 
-**MySQL 8.0+**
+### Ex 6 — Triggers
+**File:** [`sql/06_triggers.sql`](sql/06_triggers.sql)
+Three `BEFORE` row-level triggers: on `UPDATE` (prints `:OLD`/`:NEW`), on `DELETE` (logs deletion), and on `INSERT` (raises a user-defined exception via `RAISE_APPLICATION_ERROR` if `stotal > 1000`).
 
-## Language
+### Ex 7 — Normalized Schema (Library System)
+**File:** [`sql/07_normalized_schema_library.sql`](sql/07_normalized_schema_library.sql)
+Full ER-driven, normalized schema: `Authors`, `Books`, `Borrowers`, plus `BookAuthors` and `BorrowedBooks` as associative (junction) tables modeling the two many-to-many relationships.
 
-**SQL**
+### Ex 8 — Exception Handling
+**File:** [`sql/08_exception_handling.sql`](sql/08_exception_handling.sql)
+Pre-defined exception handling (`NO_DATA_FOUND`, `OTHERS`) and a user-defined exception (`ex_invalid_id`) raised on a business-rule violation, both with proper propagation and display.
 
-## Recommended Tools
+## Prerequisites
 
-- MySQL Server 8.0+
-- MySQL Workbench
-- Ubuntu Terminal / MySQL CLI
-- Git
-- GitHub
+- An RDBMS client / server. Exercises 4–6 and 8 use **Oracle PL/SQL** syntax (`DECLARE`/`BEGIN`/`END`, `DBMS_OUTPUT`, `%TYPE`, triggers with `:NEW`/`:OLD`).
+- Exercises 1–3 and 7 use **ANSI-standard SQL** that runs on MySQL, PostgreSQL, and Oracle with minor tweaks (see notes below).
+- Recommended tools: **Oracle SQL Developer**, **SQL*Plus**, or **PostgreSQL/pgAdmin** for the PL/SQL exercises; **MySQL Workbench** or **DBeaver** for the pure-SQL exercises.
 
----
+## How to Run
 
-# Database Concepts Covered
-
-This repository demonstrates the following DBMS concepts:
-
-### Database Fundamentals
-
-- Database creation
-- Table creation
-- Primary keys
-- Foreign keys
-- Composite primary keys
-- Referential integrity
-- Data insertion
-- Data retrieval
-- Data modification
-- Data deletion
-
-### SQL Queries
-
-- `SELECT`
-- `WHERE`
-- `IN`
-- Aggregate functions
-- `AVG()`
-- `COUNT()`
-- `GROUP BY`
-- `HAVING`
-- Nested queries
-- Subqueries
-
-### Joins
-
-- `INNER JOIN`
-- `LEFT JOIN`
-- `RIGHT JOIN`
-- Full outer join equivalent using `UNION`
-
-### Database Objects
-
-- Views
-- Indexes
-- Stored procedures
-- Stored functions
-
-### Cursor Operations
-
-- Cursor declaration
-- Cursor opening
-- Fetching records
-- Loop processing
-- Cursor termination
-- Cursor closing
-- `NOT FOUND` handler
-
----
-
-# Experiment 1 — Simple, Nested Queries and Subqueries
-
-### File
-
-```text
-DBMS_Experiment_1_Simple_Nested_Subqueries.sql
-```
-
-### Objective
-
-To implement and execute simple queries, nested queries, and subqueries using relational database tables.
-
-### Tables
-
-The experiment uses:
-
-```text
-Students
-Courses
-Enrollments
-```
-
-### Concepts Demonstrated
-
-- `CREATE DATABASE`
-- `CREATE TABLE`
-- Primary Key
-- Foreign Key
-- Composite Primary Key
-- `INSERT`
-- `SELECT`
-- `WHERE`
-- `IN`
-- Nested queries
-- Subqueries
-- `AVG()`
-- `COUNT()`
-- `GROUP BY`
-- `HAVING`
-
-### Example Operations
-
-Retrieve all students:
-
-```sql
-SELECT * FROM Students;
-```
-
-Retrieve students older than 20:
-
-```sql
-SELECT Name, Age
-FROM Students
-WHERE Age > 20;
-```
-
-Find students enrolled in a particular course using nested queries:
-
-```sql
-SELECT Name
-FROM Students
-WHERE StudentID IN (
-    SELECT StudentID
-    FROM Enrollments
-    WHERE CourseID = (
-        SELECT CourseID
-        FROM Courses
-        WHERE CourseName = 'Database Management'
-    )
-);
-```
-
-Find students whose age is greater than the average age:
-
-```sql
-SELECT Name, Age
-FROM Students
-WHERE Age > (
-    SELECT AVG(Age)
-    FROM Students
-);
-```
-
----
-
-# Experiment 2 — JOIN Queries
-
-### File
-
-```text
-DBMS_Experiment_2_JOIN_Queries.sql
-```
-
-### Objective
-
-To implement SQL queries using different types of joins.
-
-### Tables
-
-```text
-Students
-Courses
-Enrollments
-```
-
-### Joins Implemented
-
-#### INNER JOIN
-
-Retrieves matching records from the related tables.
-
-```sql
-SELECT
-    s.StudentID,
-    s.Name,
-    s.Age,
-    c.CourseID,
-    c.CourseName,
-    e.Grade
-FROM Students AS s
-INNER JOIN Enrollments AS e
-    ON s.StudentID = e.StudentID
-INNER JOIN Courses AS c
-    ON e.CourseID = c.CourseID;
-```
-
-#### LEFT JOIN
-
-Retrieves all students and their corresponding enrollment information.
-
-```sql
-SELECT
-    s.StudentID,
-    s.Name,
-    s.Age,
-    c.CourseID,
-    c.CourseName,
-    e.Grade
-FROM Students AS s
-LEFT JOIN Enrollments AS e
-    ON s.StudentID = e.StudentID
-LEFT JOIN Courses AS c
-    ON e.CourseID = c.CourseID;
-```
-
-#### RIGHT JOIN
-
-Retrieves all courses together with their enrollment information.
-
-```sql
-SELECT
-    s.StudentID,
-    s.Name,
-    s.Age,
-    c.CourseID,
-    c.CourseName,
-    e.Grade
-FROM Students AS s
-RIGHT JOIN Enrollments AS e
-    ON s.StudentID = e.StudentID
-RIGHT JOIN Courses AS c
-    ON e.CourseID = c.CourseID;
-```
-
-#### FULL OUTER JOIN Equivalent
-
-MySQL does not provide `FULL OUTER JOIN` directly. The experiment demonstrates the equivalent approach using `LEFT JOIN`, `RIGHT JOIN`, and `UNION`.
-
----
-
-# Experiment 3 — Views and Indexes
-
-### File
-
-```text
-DBMS_Experiment_3_View_and_Index.sql
-```
-
-### Objective
-
-To create and verify database views and indexes.
-
-### Main Concepts
-
-- Table creation
-- View creation
-- View verification
-- Insert operation
-- Update operation
-- Delete operation
-- Index creation
-- Index verification
-
-### Create View
-
-```sql
-CREATE OR REPLACE VIEW student_view AS
-SELECT
-    student_id,
-    student_name,
-    student_email
-FROM students;
-```
-
-The view provides a reusable query-based representation of the underlying student table.
-
-### Insert Data
-
-```sql
-INSERT INTO students
-    (student_name, student_email)
-VALUES
-    ('Diana Prince', 'diana@example.com');
-```
-
-### Update Data
-
-```sql
-UPDATE students
-SET student_email = 'new_bob@example.com'
-WHERE student_name = 'Bob Smith';
-```
-
-### Delete Data
-
-```sql
-DELETE FROM students
-WHERE student_name = 'Charlie Brown';
-```
-
-### Create Index
-
-```sql
-CREATE INDEX idx_student_email
-ON students (student_email);
-```
-
-### Verify Index
-
-```sql
-SHOW INDEX FROM students;
-```
-
----
-
-# Experiment 4 — Implicit and Explicit Cursors
-
-### File
-
-```text
-DBMS_Experiment_4_Cursors.sql
-```
-
-### Objective
-
-To implement and demonstrate implicit and explicit cursors.
-
-The experiment uses a `customers` table containing:
-
-```text
-id
-name
-address
-salary
-```
-
-### Sample Data
-
-```text
-1   John    New York      5000.00
-2   Alice   Los Angeles   6000.00
-3   Bob     Chicago       4500.00
-4   David   Houston       7000.00
-5   Emma    Boston        5500.00
-```
-
-### Implicit Cursor
-
-The experiment demonstrates an implicit cursor through an `UPDATE` statement.
-
-```sql
-UPDATE customers
-SET salary = salary + 500;
-```
-
-The number of affected rows can be obtained using:
-
-```sql
-SELECT ROW_COUNT() AS Rows_Updated;
-```
-
-Expected result:
-
-```text
-Rows_Updated
-5
-```
-
-### Explicit Cursor
-
-The experiment creates a stored procedure containing an explicitly declared cursor.
-
-The cursor performs the following operations:
-
-```text
-DECLARE CURSOR
-       ↓
-OPEN CURSOR
-       ↓
-FETCH RECORD
-       ↓
-CHECK HANDLER
-       ↓
-PROCESS RECORD
-       ↓
-LOOP
-       ↓
-CLOSE CURSOR
-```
-
-Important constructs include:
-
-```sql
-DECLARE cur CURSOR FOR
-    SELECT id, name, salary
-    FROM customers;
-```
-
-A `NOT FOUND` handler is used to detect the end of the cursor:
-
-```sql
-DECLARE CONTINUE HANDLER FOR NOT FOUND
-    SET done = TRUE;
-```
-
-Records are retrieved using:
-
-```sql
-FETCH cur INTO c_id, c_name, c_salary;
-```
-
-The cursor is closed after processing:
-
-```sql
-CLOSE cur;
-```
-
-The experiment therefore demonstrates both implicit and explicit cursor processing.
-
----
-
-# Experiment 5 — Procedures and Functions
-
-### File
-
-```text
-DBMS_Experiment_5_Procedures_and_Functions.sql
-```
-
-### Objective
-
-To implement and execute stored procedures and stored functions in MySQL.
-
-The experiment uses an `employee` table with:
-
-```text
-id
-name
-salary
-```
-
-### Sample Data
-
-```text
-1   John    5000.00
-2   Alice   6000.00
-3   Bob     4500.00
-```
-
-### Stored Procedure
-
-The procedure is named:
-
-```text
-SumProcedure
-```
-
-It accepts two integer input parameters:
-
-```sql
-IN a INT
-IN b INT
-```
-
-The procedure calculates their sum and displays the result.
-
-```sql
-CREATE PROCEDURE SumProcedure(IN a INT, IN b INT)
-BEGIN
-    DECLARE c INT;
-
-    SET c = a + b;
-
-    SELECT CONCAT('Sum of two numbers = ', c) AS Result;
-END;
-```
-
-### Execute Procedure
-
-```sql
-CALL SumProcedure(10, 20);
-```
-
-Expected result:
-
-```text
-Sum of two numbers = 30
-```
-
-### Stored Function
-
-The function is named:
-
-```text
-SumFunction
-```
-
-It returns an integer value.
-
-```sql
-CREATE FUNCTION SumFunction(a INT, b INT)
-RETURNS INT
-DETERMINISTIC
-BEGIN
-    DECLARE c INT;
-
-    SET c = a + b;
-
-    RETURN c;
-END;
-```
-
-### Execute Function
-
-```sql
-SELECT SumFunction(5, 5) AS Result;
-```
-
-Expected result:
-
-```text
-10
-```
-
-The experiment demonstrates creation and execution of both a stored procedure and a stored function.
-
----
-
-# How to Run
-
-There are two recommended ways to execute the SQL programs.
-
-## Method 1 — MySQL CLI
-
-Open a terminal and verify that MySQL is installed:
-
+### Oracle (SQL*Plus / SQL Developer)
 ```bash
-mysql --version
+sqlplus username/password@database
+SQL> @sql/04_implicit_explicit_cursors.sql
 ```
+Make sure `SET SERVEROUTPUT ON` is enabled (already included at the top of each PL/SQL file) so `DBMS_OUTPUT.PUT_LINE` output is visible.
 
-If your Ubuntu setup uses root authentication through `sudo`, enter MySQL using:
-
+### PostgreSQL
 ```bash
-sudo mysql
+psql -U username -d your_database -f sql/01_simple_nested_subqueries.sql
 ```
+> Note: PostgreSQL doesn't support PL/SQL (`DBMS_OUTPUT`, `%TYPE` triggers as written) — Exercises 4, 5, 6, 8 would need translation to PL/pgSQL (`RAISE NOTICE`, `%TYPE` is supported, but trigger syntax differs). Exercises 1, 2, 3, 7 run natively.
 
-You should see:
-
-```text
-mysql>
-```
-
----
-
-## Execute a SQL File
-
-Inside MySQL:
-
-```sql
-SOURCE /full/path/to/DBMS_Experiment_1_Simple_Nested_Subqueries.sql;
-```
-
-For example:
-
-```sql
-SOURCE /home/username/DBMS_Experiment_5_Procedures_and_Functions.sql;
-```
-
-After execution, the SQL statements containing `SELECT` will display their results in the terminal.
-
----
-
-# Running Directly from Ubuntu Terminal
-
-You can also execute a file directly:
-
+### MySQL
 ```bash
-sudo mysql < DBMS_Experiment_5_Procedures_and_Functions.sql
+mysql -u username -p your_database < sql/02_join_queries.sql
+```
+> Note: MySQL has no native `FULL OUTER JOIN` — see the `UNION`-based workaround included as a comment in Exercise 2. MySQL also lacks PL/SQL blocks; use MySQL stored procedure syntax for 4–6, 8 if needed.
+
+## Database Compatibility Notes
+
+| Exercise | Best run on | Notes |
+|----------|-------------|-------|
+| 1 | Any (MySQL/PostgreSQL/Oracle) | Standard SQL |
+| 2 | Any | `FULL OUTER JOIN` needs emulation on MySQL |
+| 3 | Any | `SHOW INDEX` is MySQL-specific; alternatives noted in comments |
+| 4 | Oracle | PL/SQL cursors |
+| 5 | Oracle | PL/SQL procedures/functions |
+| 6 | Oracle | Trigger syntax (`:NEW`/`:OLD`) is Oracle-style |
+| 7 | Any | Standard SQL, `AUTO_INCREMENT` is MySQL syntax (`SERIAL`/`IDENTITY` elsewhere) |
+| 8 | Oracle | PL/SQL exception handling |
+
+## Schema Summary
+
+```
+Students / Student (StudentID PK, Name, Age)
+Courses            (CourseID PK, CourseName)
+Enrollments        (StudentID/EnrollmentID, StudentID FK, CourseID FK, [Grade])
+
+students (view/index demo) (student_id PK, student_name, student_email)
+
+customers  (id PK, name, address, salary)
+customer   (sid PK, sname, stotal)
+classb     (sid PK, sname, sdept, stotal, grade)
+
+Authors       (AuthorID PK, FirstName, LastName)
+Books         (BookID PK, Title, Genre, PublicationYear)
+Borrowers     (BorrowerID PK, FirstName, LastName, MembershipDate)
+BookAuthors   (BookID FK, AuthorID FK)              -- M:N junction
+BorrowedBooks (BorrowerID FK, BookID FK, BorrowedDate, ReturnDate)  -- M:N junction
 ```
 
-For interactive output and easier laboratory verification, the `SOURCE` approach from inside MySQL is recommended.
+## Author
 
-Example:
-
-```bash
-sudo mysql
-```
-
-Then:
-
-```sql
-SOURCE /home/username/DBMS_Experiment_5_Procedures_and_Functions.sql;
-```
-
----
-
-# Running with MySQL Workbench
-
-1. Open MySQL Workbench.
-2. Connect to your MySQL server.
-3. Open the required `.sql` file.
-4. Review the script.
-5. Execute the script using the **Run** button.
-6. Check the output panel.
-7. Verify the created database and tables.
-
-Each experiment creates its own database, so the experiments remain logically separated.
-
----
-
-# Verifying the Results
-
-After executing an experiment, verify the database:
-
-```sql
-SHOW DATABASES;
-```
-
-For Experiment 5:
-
-```sql
-USE dbms_experiment_5;
-```
-
-Check the tables:
-
-```sql
-SHOW TABLES;
-```
-
-Expected:
-
-```text
-employee
-```
-
-Check employee records:
-
-```sql
-SELECT * FROM employee;
-```
-
-Test the procedure:
-
-```sql
-CALL SumProcedure(10, 20);
-```
-
-Test the function:
-
-```sql
-SELECT SumFunction(5, 5) AS Result;
-```
-
----
-
-# Important MySQL Notes
-
-## DELIMITER
-
-Stored procedures and functions contain multiple SQL statements. Therefore, the scripts use:
-
-```sql
-DELIMITER //
-```
-
-before creating the stored program and restore the normal delimiter afterward:
-
-```sql
-DELIMITER ;
-```
-
-This is required so MySQL can correctly identify the end of the procedure or function definition.
-
----
-
-## Re-running the Scripts
-
-The experiment scripts use:
-
-```sql
-DROP DATABASE IF EXISTS ...
-```
-
-before creating their databases.
-
-This allows the complete experiment to be executed again from a clean database state.
-
-For stored programs, the scripts also use:
-
-```sql
-DROP PROCEDURE IF EXISTS ...
-```
-
-and:
-
-```sql
-DROP FUNCTION IF EXISTS ...
-```
-
-where required.
-
-**Important:** Dropping the database removes the existing data in that experiment database. These scripts are intended for laboratory/demo environments.
-
----
-
-# Git Workflow
-
-After adding or modifying an experiment:
-
-```bash
-git status
-```
-
-Review the changes.
-
-Then:
-
-```bash
-git add .
-```
-
-Create a meaningful commit:
-
-```bash
-git commit -m "Add DBMS cursor, procedure and function experiments"
-```
-
-Push the changes:
-
-```bash
-git push
-```
-
-For future updates, the basic workflow is:
-
-```bash
-git add .
-git commit -m "Describe the change"
-git push
-```
-
----
-
-# Suggested Commit Messages
-
-### Experiment 1
-
-```bash
-git commit -m "Add simple nested queries and subqueries"
-```
-
-### Experiment 2
-
-```bash
-git commit -m "Add SQL join queries experiment"
-```
-
-### Experiment 3
-
-```bash
-git commit -m "Add view and index implementation"
-```
-
-### Experiment 4
-
-```bash
-git commit -m "Add implicit and explicit cursor implementation"
-```
-
-### Experiment 5
-
-```bash
-git commit -m "Add procedures and functions implementation"
-```
-
-### Multiple Experiments
-
-```bash
-git commit -m "Add DBMS cursor, procedure and function experiments"
-```
-
----
-
-# Expected Repository Structure
-
-```text
-DBMS_161/
-│
-├── README.md
-│
-├── DBMS_Experiment_1_Simple_Nested_Subqueries.sql
-│
-├── DBMS_Experiment_2_JOIN_Queries.sql
-│
-├── DBMS_Experiment_3_View_and_Index.sql
-│
-├── DBMS_Experiment_4_Cursors.sql
-│
-└── DBMS_Experiment_5_Procedures_and_Functions.sql
-```
-
----
-
-# Learning Outcomes
-
-After completing these experiments, the following DBMS concepts are demonstrated:
-
-- Creating and managing databases
-- Creating relational tables
-- Defining primary keys
-- Defining foreign keys
-- Maintaining relationships between tables
-- Writing simple SQL queries
-- Writing nested queries
-- Writing subqueries
-- Using aggregate functions
-- Grouping and filtering grouped data
-- Combining data using joins
-- Creating database views
-- Understanding indexed columns
-- Executing insert, update and delete operations
-- Understanding implicit cursor behavior
-- Declaring and processing explicit cursors
-- Using cursor loops
-- Handling cursor termination
-- Creating stored procedures
-- Passing input parameters to procedures
-- Creating stored functions
-- Returning values from functions
-- Using MySQL delimiters
-
----
-
-# Academic Scope
-
-This repository is intended for:
-
-- DBMS laboratory practice
-- SQL practice
-- MySQL experimentation
-- Academic laboratory submissions
-- Practical examination preparation
-- Database programming demonstrations
-- GitHub-based academic portfolios
-
-The SQL files prioritize clear execution and readable implementation so that each experiment can be independently studied and executed.
-
----
-
-# Notes
-
-1. The scripts target **MySQL 8.0+**.
-2. Execute each experiment independently.
-3. Review the SQL before running it against any database containing important data.
-4. The scripts intentionally create dedicated experiment databases.
-5. The sample data is included so that the queries can be executed immediately.
-6. Expected outputs are included as comments inside the SQL files.
-7. MySQL does not provide a direct `FULL OUTER JOIN`; the JOIN experiment uses a `UNION`-based equivalent.
-8. Stored procedures and functions require appropriate MySQL privileges.
-9. When running from Ubuntu, `SOURCE` inside the MySQL client is useful when you want to see the query output interactively.
-10. The repository is primarily an academic DBMS laboratory implementation rather than a production database system.
-
----
-
-# Result
-
-The repository provides a complete set of MySQL DBMS laboratory implementations covering:
-
-```text
-SQL Queries
-     │
-     ├── Simple Queries
-     ├── Nested Queries
-     └── Subqueries
-             │
-             ▼
-          JOINs
-             │
-             ▼
-       Views & Indexes
-             │
-             ▼
-          Cursors
-             │
-             ▼
-   Procedures & Functions
-```
-
-These experiments provide practical exposure to fundamental SQL querying, relational data manipulation, database objects, cursor processing, and stored-program development.
-
----
-
-# Author
-
-**Thamizh Selvan**
-
-DBMS Laboratory — MySQL
-
----
+**Thamizhselvan_M** — B.E. Computer Science and Engineering, IFET College of Engineering
+GitHub: [github.com/thamizhselvanm-web](https://github.com/thamizhselvanm-web)
 
 ## License
 
-This repository is intended primarily for educational and academic purposes.
+This project is for academic/educational purposes. Feel free to fork and adapt for your own DBMS lab coursework.

@@ -1,151 +1,92 @@
--- =====================================================================
--- DBMS LAB - EXPERIMENT 5
--- =====================================================================
--- TITLE : IMPLEMENTATION OF PROCEDURES AND FUNCTIONS
--- DBMS  : MySQL 8.0+
--- FILE  : DBMS_Experiment_5_Procedures_and_Functions.sql
--- =====================================================================
+/* ============================================================================
+   EX NO: 5
+   TITLE : IMPLEMENT PL/SQL PROGRAM FOR PROCEDURES AND FUNCTION
+   AIM   : To implement PL/SQL programs for procedures and functions.
+   ============================================================================
+   SYNTAX FOR PROCEDURE:
+     CREATE OR REPLACE PROCEDURE <procedure_name>
+         (<parameter1> IN/OUT <datatype>, ...) [IS | AS]
+         <declaration part>
+     BEGIN
+         <execution part>
+     EXCEPTION
+         <exception handling part>
+     END;
+
+   SYNTAX FOR FUNCTION:
+     CREATE OR REPLACE FUNCTION <function_name>
+         (<variable_name> IN <datatype>, ...) RETURN <datatype> IS/AS
+         <variable/constant declaration>
+     BEGIN
+         -- PL/SQL subprogram body
+     EXCEPTION
+         -- Exception handling block
+     END <function_name>;
+   ============================================================================ */
 
 
--- =====================================================================
--- 1. CREATE DATABASE
--- =====================================================================
+/* ----------------------------------------------------------------------------
+   PROCEDURE: Sum_Numbers
+   Takes two numbers IN and prints their sum.
+   ---------------------------------------------------------------------------- */
 
-DROP DATABASE IF EXISTS dbms_experiment_5;
+SET SERVEROUTPUT ON;
 
-CREATE DATABASE dbms_experiment_5;
-
-USE dbms_experiment_5;
-
-
--- =====================================================================
--- 2. CREATE EMPLOYEE TABLE
--- =====================================================================
-
-CREATE TABLE employee (
-    id INT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    salary DECIMAL(10,2)
-);
-
-
--- =====================================================================
--- 3. INSERT SAMPLE DATA
--- =====================================================================
-
-INSERT INTO employee (id, name, salary) VALUES
-(1, 'John', 5000.00),
-(2, 'Alice', 6000.00),
-(3, 'Bob', 4500.00);
-
-
--- =====================================================================
--- 4. DISPLAY EMPLOYEE RECORDS
--- =====================================================================
-
-SELECT * FROM employee;
-
-
--- Expected Output:
---
--- +----+-------+---------+
--- | id | name  | salary  |
--- +----+-------+---------+
--- |  1 | John  | 5000.00 |
--- |  2 | Alice | 6000.00 |
--- |  3 | Bob   | 4500.00 |
--- +----+-------+---------+
-
-
--- =====================================================================
--- 5. CREATE PROCEDURE
--- =====================================================================
--- Procedure : SumProcedure
--- Purpose   : Calculate and display the sum of two integers.
--- =====================================================================
-
-DROP PROCEDURE IF EXISTS SumProcedure;
-
-DELIMITER //
-
-CREATE PROCEDURE SumProcedure(IN a INT, IN b INT)
+CREATE OR REPLACE PROCEDURE Sum_Numbers (
+    a IN NUMBER,
+    b IN NUMBER
+) IS
+    c NUMBER;
 BEGIN
-    DECLARE c INT;
+    c := a + b;
+    DBMS_OUTPUT.PUT_LINE('Sum of two nos = ' || c);
+END Sum_Numbers;
+/
 
-    SET c = a + b;
-
-    SELECT CONCAT('Sum of two numbers = ', c) AS Result;
-END //
-
-DELIMITER ;
-
-
--- =====================================================================
--- 6. CALL THE PROCEDURE
--- =====================================================================
-
-CALL SumProcedure(10, 20);
-
-
--- Expected Output:
---
--- +--------------------------+
--- | Result                   |
--- +--------------------------+
--- | Sum of two numbers = 30  |
--- +--------------------------+
-
-
--- =====================================================================
--- 7. CREATE FUNCTION
--- =====================================================================
--- Function  : SumFunction
--- Purpose   : Return the sum of two integers.
--- =====================================================================
-
-DROP FUNCTION IF EXISTS SumFunction;
-
-DELIMITER //
-
-CREATE FUNCTION SumFunction(a INT, b INT)
-RETURNS INT
-DETERMINISTIC
+-- Calling the procedure
 BEGIN
-    DECLARE c INT;
+    Sum_Numbers(10, 20);
+END;
+/
+/* OUTPUT:
+Sum of two nos = 30
+*/
 
-    SET c = a + b;
 
+/* ----------------------------------------------------------------------------
+   FUNCTION: Sum_Function
+   Takes two numbers IN and RETURNS their sum.
+   ---------------------------------------------------------------------------- */
+
+SET SERVEROUTPUT ON;
+
+CREATE OR REPLACE FUNCTION Sum_Function (
+    a IN NUMBER,
+    b IN NUMBER
+) RETURN NUMBER
+IS
+    c NUMBER;
+BEGIN
+    c := a + b;
     RETURN c;
-END //
+END Sum_Function;
+/
 
-DELIMITER ;
-
-
--- =====================================================================
--- 8. CALL THE FUNCTION
--- =====================================================================
-
-SELECT SumFunction(5, 5) AS Result;
-
-
--- Expected Output:
---
--- +--------+
--- | Result |
--- +--------+
--- |     10 |
--- +--------+
+-- Calling the function
+SET SERVEROUTPUT ON;
+DECLARE
+    result NUMBER;
+BEGIN
+    result := Sum_Function(5, 5);
+    DBMS_OUTPUT.PUT_LINE('Sum of two nos = ' || result);
+END;
+/
+/* OUTPUT:
+Sum of two nos = 10
+*/
 
 
--- =====================================================================
--- RESULT
--- =====================================================================
--- The stored procedure was successfully created and executed to
--- calculate the sum of two numbers.
---
--- The stored function was successfully created and executed to
--- return the sum of two numbers.
--- =====================================================================
-
--- END OF EXPERIMENT 5
--- =====================================================================
+/* ============================================================================
+   RESULT: Thus the PL/SQL programs for procedure and function have been
+   executed successfully and the output was verified.
+   ============================================================================ */

@@ -1,142 +1,120 @@
--- =====================================================================
--- DBMS LAB - EXPERIMENT 4
--- =====================================================================
--- TITLE : IMPLEMENTATION OF IMPLICIT AND EXPLICIT CURSORS
--- DBMS  : MySQL 8.0+
--- FILE  : DBMS_Experiment_4_Cursors.sql
--- =====================================================================
+/* ============================================================================
+   EX NO: 4
+   TITLE : CREATE PL/SQL PROGRAM FOR IMPLICIT AND EXPLICIT CURSORS
+   AIM   : To implement implicit and explicit cursor programs in SQL.
+   ============================================================================
+   INTRODUCTION
+   ------------
+   A cursor is a pointer to a private SQL work area (context area).
+   PL/SQL controls this context area through a cursor. A cursor holds
+   the row(s) returned by a SQL statement; the set of rows the cursor
+   holds is called the "active set".
 
-DROP DATABASE IF EXISTS dbms_experiment_4;
-CREATE DATABASE dbms_experiment_4;
-USE dbms_experiment_4;
+   TYPES OF CURSORS
+   ----------------
+   1. Implicit cursors - automatically created by Oracle for every DML
+      statement (INSERT/UPDATE/DELETE/SELECT INTO) when no explicit
+      cursor is declared. Cannot be controlled by the programmer.
 
--- =====================================================================
--- 1. CREATE TABLE
--- =====================================================================
+        Attribute    | Description
+        -------------+----------------------------------------------------
+        %FOUND       | TRUE if INSERT/UPDATE/DELETE affected >=1 row, or
+                      | SELECT INTO returned >=1 row. Else FALSE.
+        %NOTFOUND    | Logical opposite of %FOUND.
+        %ISOPEN      | Always FALSE for implicit cursors (Oracle closes
+                      | the SQL cursor automatically after execution).
+        %ROWCOUNT    | Number of rows affected/returned.
+
+   2. Explicit cursors - programmer-defined, declared for SELECT
+      statements that may return more than one row.
+        Steps: (1) Declare (2) Open (3) Fetch (4) Close
+   ============================================================================ */
+
+
+/* ----------------------------------------------------------------------------
+   TABLE CREATION AND SAMPLE DATA
+   ---------------------------------------------------------------------------- */
 
 CREATE TABLE customers (
-    id INT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
+    id      INT PRIMARY KEY,
+    name    VARCHAR(50),
     address VARCHAR(100),
-    salary DECIMAL(10,2)
+    salary  DECIMAL(10,2)
 );
 
--- =====================================================================
--- 2. INSERT SAMPLE DATA
--- =====================================================================
-
 INSERT INTO customers (id, name, address, salary) VALUES
-(1, 'John', 'New York', 5000.00),
+(1, 'John',  'New York',    5000.00),
 (2, 'Alice', 'Los Angeles', 6000.00),
-(3, 'Bob', 'Chicago', 4500.00),
-(4, 'David', 'Houston', 7000.00),
-(5, 'Emma', 'Boston', 5500.00);
+(3, 'Bob',   'Chicago',     4500.00),
+(4, 'David', 'Houston',     7000.00),
+(5, 'Emma',  'Boston',      5500.00);
 
--- =====================================================================
--- 3. DISPLAY CUSTOMER RECORDS
--- =====================================================================
 
-SELECT * FROM customers;
+/* ----------------------------------------------------------------------------
+   IMPLICIT CURSOR EXAMPLE
+   Uses the implicit SQL cursor's %FOUND / %NOTFOUND / %ROWCOUNT
+   attributes after a bulk UPDATE.
+   ---------------------------------------------------------------------------- */
 
--- Expected Output:
--- +----+-------+-------------+---------+
--- | id | name  | address     | salary  |
--- +----+-------+-------------+---------+
--- | 1  | John  | New York    | 5000.00 |
--- | 2  | Alice | Los Angeles | 6000.00 |
--- | 3  | Bob   | Chicago     | 4500.00 |
--- | 4  | David | Houston     | 7000.00 |
--- | 5  | Emma  | Boston      | 5500.00 |
--- +----+-------+-------------+---------+
+SET SERVEROUTPUT ON;
 
--- =====================================================================
--- 4. IMPLICIT CURSOR
--- =====================================================================
--- Update the salary of every customer by 500.
-
-UPDATE customers
-SET salary = salary + 500;
-
--- ROW_COUNT() returns the number of rows affected by the UPDATE.
-
-SELECT ROW_COUNT() AS Rows_Updated;
-
--- Expected Output:
--- +--------------+
--- | Rows_Updated |
--- +--------------+
--- |      5       |
--- +--------------+
-
--- =====================================================================
--- 5. EXPLICIT CURSOR
--- =====================================================================
--- A stored procedure is used to explicitly declare, open, fetch from,
--- and close a cursor.
-
-DELIMITER //
-
-CREATE PROCEDURE p()
+DECLARE
+    total_rows NUMBER(2);
 BEGIN
-    DECLARE done INT DEFAULT FALSE;
-    DECLARE c_id INT;
-    DECLARE c_name VARCHAR(50);
-    DECLARE c_salary DECIMAL(10,2);
+    UPDATE customers
+    SET salary = salary + 500;
 
-    DECLARE cur CURSOR FOR
-        SELECT id, name, salary
-        FROM customers;
+    IF SQL%NOTFOUND THEN
+        DBMS_OUTPUT.PUT_LINE('no customers selected');
+    ELSIF SQL%FOUND THEN
+        total_rows := SQL%ROWCOUNT;
+        DBMS_OUTPUT.PUT_LINE(total_rows || ' customers selected ');
+    END IF;
+END;
+/
+/* OUTPUT:
+5 customers selected
 
-    DECLARE CONTINUE HANDLER FOR NOT FOUND
-        SET done = TRUE;
+PL/SQL procedure successfully completed.
+*/
 
-    OPEN cur;
 
-    read_loop: LOOP
-        FETCH cur INTO c_id, c_name, c_salary;
+/* ----------------------------------------------------------------------------
+   EXPLICIT CURSOR EXAMPLE
+   Declares a cursor over a multi-row SELECT, then opens, fetches in a
+   loop, and closes it.
+   ---------------------------------------------------------------------------- */
 
-        IF done THEN
-            LEAVE read_loop;
-        END IF;
+SET SERVEROUTPUT ON;
 
-        SELECT
-            c_id AS ID,
-            c_name AS Name,
-            c_salary AS Salary;
+DECLARE
+    c_id      customers.id%TYPE;
+    c_name    customers.name%TYPE;
+    c_addr    customers.address%TYPE;
+    CURSOR c_customers IS
+        SELECT id, name, address FROM customers;
+BEGIN
+    OPEN c_customers;
+    LOOP
+        FETCH c_customers INTO c_id, c_name, c_addr;
+        EXIT WHEN c_customers%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE(c_id || ' ' || c_name || ' ' || c_addr);
     END LOOP;
+    CLOSE c_customers;
+END;
+/
+/* OUTPUT:
+ID | NAME  | ADDRESS
+---+-------+------------
+1  | John  | New York
+2  | Alice | Los Angeles
+3  | Bob   | Chicago
+4  | David | Houston
+5  | Emma  | Boston
+*/
 
-    CLOSE cur;
-END //
 
-DELIMITER ;
-
--- =====================================================================
--- 6. CALL THE EXPLICIT CURSOR PROCEDURE
--- =====================================================================
-
-CALL p();
-
--- Expected Output:
--- ID | Name  | Salary
--- 1  | John  | 5500.00
--- 2  | Alice | 6500.00
--- 3  | Bob   | 5000.00
--- 4  | David | 7500.00
--- 5  | Emma  | 6000.00
-
--- =====================================================================
--- 7. CLEANUP
--- =====================================================================
--- Uncomment the following command if the procedure needs to be removed.
--- DROP PROCEDURE IF EXISTS p;
-
--- =====================================================================
--- RESULT
--- =====================================================================
--- The implicit cursor was successfully demonstrated using UPDATE and
--- ROW_COUNT(). The explicit cursor was successfully implemented using
--- DECLARE CURSOR, OPEN, FETCH, LOOP, HANDLER and CLOSE.
-
--- =====================================================================
--- END OF EXPERIMENT 4
--- =====================================================================
+/* ============================================================================
+   RESULT: Thus the program for implicit and explicit cursors in SQL has
+   been executed successfully and the output was verified.
+   ============================================================================ */

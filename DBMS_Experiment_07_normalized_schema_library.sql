@@ -1,0 +1,153 @@
+/* ============================================================================
+   EX NO: 7
+   TITLE : IMPLEMENT THE NORMALIZED SCHEMA IN THE RDBMS AND POPULATE IT
+           WITH SAMPLE DATA
+   AIM   : Implement the normalized schema for a library system and
+           populate it with sample data.
+   ============================================================================
+   ALGORITHM
+   ---------
+   STEP 1 : Start
+   STEP 2 : Design the schema for the library system and normalize it
+   STEP 3 : Create the tables in the RDBMS
+   STEP 4 : Populate the tables with sample data
+   STEP 5 : Stop
+
+   ENTITY-RELATIONSHIP DESIGN
+   ---------------------------
+   Authors        : AuthorID (PK), FirstName, LastName
+   Books          : BookID (PK), Title, Genre, PublicationYear
+   Borrowers      : BorrowerID (PK), FirstName, LastName, MembershipDate
+   BookAuthors    : BookID (FK), AuthorID (FK)               -- M:N Books<->Authors
+   BorrowedBooks  : BorrowerID (FK), BookID (FK),
+                    BorrowedDate, ReturnDate                 -- M:N Borrowers<->Books
+
+   RELATIONSHIPS
+   -------------
+   - An author can write multiple books (via BookAuthors)
+   - A book can have multiple authors (via BookAuthors)
+   - A borrower can borrow multiple books (via BorrowedBooks)
+   - A book can be borrowed by multiple borrowers over time (via BorrowedBooks)
+   ============================================================================ */
+
+
+/* ----------------------------------------------------------------------------
+   STEP 3 : TABLE CREATION (in dependency order)
+   ---------------------------------------------------------------------------- */
+
+CREATE TABLE Authors (
+    AuthorID  INT PRIMARY KEY AUTO_INCREMENT,
+    FirstName VARCHAR(50),
+    LastName  VARCHAR(50)
+);
+
+CREATE TABLE Books (
+    BookID          INT PRIMARY KEY AUTO_INCREMENT,
+    Title           VARCHAR(100),
+    Genre           VARCHAR(50),
+    PublicationYear INT
+);
+
+CREATE TABLE BookAuthors (
+    BookID   INT,
+    AuthorID INT,
+    PRIMARY KEY (BookID, AuthorID),
+    FOREIGN KEY (BookID)   REFERENCES Books(BookID),
+    FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID)
+);
+
+CREATE TABLE Borrowers (
+    BorrowerID     INT PRIMARY KEY AUTO_INCREMENT,
+    FirstName      VARCHAR(50),
+    LastName       VARCHAR(50),
+    MembershipDate DATE
+);
+
+CREATE TABLE BorrowedBooks (
+    BorrowerID   INT,
+    BookID       INT,
+    BorrowedDate DATE,
+    ReturnDate   DATE,
+    PRIMARY KEY (BorrowerID, BookID),
+    FOREIGN KEY (BorrowerID) REFERENCES Borrowers(BorrowerID),
+    FOREIGN KEY (BookID)     REFERENCES Books(BookID)
+);
+
+
+/* ----------------------------------------------------------------------------
+   STEP 4 : POPULATE WITH SAMPLE DATA
+   ---------------------------------------------------------------------------- */
+
+INSERT INTO Authors (FirstName, LastName) VALUES ('George', 'Orwell');
+INSERT INTO Authors (FirstName, LastName) VALUES ('Aldous', 'Huxley');
+INSERT INTO Authors (FirstName, LastName) VALUES ('J.K.', 'Rowling');
+
+INSERT INTO Books (Title, Genre, PublicationYear) VALUES ('1984', 'Dystopian', 1949);
+INSERT INTO Books (Title, Genre, PublicationYear) VALUES ('Brave New World', 'Dystopian', 1932);
+INSERT INTO Books (Title, Genre, PublicationYear) VALUES ('Harry Potter and the Sorcerer''s Stone', 'Fantasy', 1997);
+
+INSERT INTO BookAuthors (BookID, AuthorID) VALUES (1, 1);
+INSERT INTO BookAuthors (BookID, AuthorID) VALUES (2, 2);
+INSERT INTO BookAuthors (BookID, AuthorID) VALUES (3, 3);
+
+INSERT INTO Borrowers (FirstName, LastName, MembershipDate) VALUES ('John', 'Doe', '2023-01-01');
+INSERT INTO Borrowers (FirstName, LastName, MembershipDate) VALUES ('Jane', 'Smith', '2023-02-15');
+
+INSERT INTO BorrowedBooks (BorrowerID, BookID, BorrowedDate, ReturnDate)
+VALUES (1, 1, '2023-03-01', '2023-03-15');
+INSERT INTO BorrowedBooks (BorrowerID, BookID, BorrowedDate, ReturnDate)
+VALUES (2, 3, '2023-03-05', '2023-03-20');
+
+
+/* ----------------------------------------------------------------------------
+   VERIFICATION QUERIES
+   ---------------------------------------------------------------------------- */
+
+SELECT * FROM Authors;
+/* OUTPUT:
+AuthorID | FirstName | LastName
+---------+-----------+----------
+1        | George    | Orwell
+2        | Aldous    | Huxley
+3        | J.K.      | Rowling
+*/
+
+SELECT * FROM Books;
+/* OUTPUT:
+BookID | Title                                | Genre     | PublicationYear
+-------+--------------------------------------+-----------+----------------
+1      | 1984                                 | Dystopian | 1949
+2      | Brave New World                      | Dystopian | 1932
+3      | Harry Potter and the Sorcerer's Stone | Fantasy   | 1997
+*/
+
+SELECT * FROM BookAuthors;
+/* OUTPUT:
+BookID | AuthorID
+-------+---------
+1      | 1
+2      | 2
+3      | 3
+*/
+
+SELECT * FROM Borrowers;
+/* OUTPUT:
+BorrowerID | FirstName | LastName | MembershipDate
+-----------+-----------+----------+---------------
+1          | John      | Doe      | 2023-01-01
+2          | Jane      | Smith    | 2023-02-15
+*/
+
+SELECT * FROM BorrowedBooks;
+/* OUTPUT:
+BorrowerID | BookID | BorrowedDate | ReturnDate
+-----------+--------+--------------+-----------
+1          | 1      | 2023-03-01   | 2023-03-15
+2          | 3      | 2023-03-05   | 2023-03-20
+*/
+
+
+/* ============================================================================
+   RESULT: Thus the normalized schema for the library system was created
+   and populated with sample data successfully.
+   ============================================================================ */

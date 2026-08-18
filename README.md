@@ -701,5 +701,26 @@ For questions about:
 
 ---
 
+---
+
+## Getting Started Tips
+
+### For First-Time Learners
+
+1. **Start with Exercise 1** — Establish foundational SQL knowledge before moving to PL/SQL
+2. **Read comments carefully** — Each SQL file contains detailed explanations
+3. **Run queries individually** — Execute one query at a time to understand output
+4. **Experiment with data** — Modify queries and observe how results change
+5. **Review Oracle documentation** — Reference official docs when encountering unfamiliar concepts
+
+### Recommended Learning Sequence
+
+- **Week 1:** Exercises 1–3 (Core SQL fundamentals)
+- **Week 2:** Exercise 7 (Database design & normalization)
+- **Week 3:** Exercises 4–5 (PL/SQL basics)
+- **Week 4:** Exercises 6 & 8 (Advanced PL/SQL features)
+
+---
+
 **Last Updated:** August 2026
 **Repository Status:** Active & Maintained

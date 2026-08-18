@@ -1,4 +1,4 @@
-# DBMS Lab Exercises 🗄️
+# DBMS Lab Exercises
 
 > A comprehensive collection of **8 hands-on DBMS lab exercises** covering SQL fundamentals through advanced PL/SQL concepts. Perfect for students learning relational databases and procedural SQL.
 
@@ -6,13 +6,13 @@ Complete set of DBMS / PL-SQL lab exercises — SQL commands, PL/SQL blocks, exp
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
-- [✨ Features & Highlights](#-features--highlights)
-- [🎯 Overview](#-overview)
-- [📁 Repository Structure](#-repository-structure)
-- [🚀 Quick Start](#-quick-start)
-- [📚 Exercise Index](#-exercise-index)
+- [Features & Highlights](#features--highlights)
+- [Overview](#overview)
+- [Repository Structure](#repository-structure)
+- [Quick Start](#quick-start)
+- [Exercise Index](#exercise-index)
   - [Ex 1: Simple, Nested & Sub Queries](#ex-1--simple-nested--sub-queries)
   - [Ex 2: Join Queries](#ex-2--join-queries)
   - [Ex 3: Views & Index](#ex-3--views--index)
@@ -21,29 +21,29 @@ Complete set of DBMS / PL-SQL lab exercises — SQL commands, PL/SQL blocks, exp
   - [Ex 6: Triggers](#ex-6--triggers)
   - [Ex 7: Normalized Schema (Library System)](#ex-7--normalized-schema-library-system)
   - [Ex 8: Exception Handling](#ex-8--exception-handling)
-- [⚙️ Prerequisites & Setup](#️-prerequisites--setup)
-- [🔧 How to Run](#-how-to-run)
-- [🗄️ Database Compatibility](#️-database-compatibility)
-- [📊 Schema Summary](#-schema-summary)
-- [🆘 Troubleshooting](#-troubleshooting)
-- [✍️ Author & License](#️-author--license)
+- [Prerequisites & Setup](#prerequisites--setup)
+- [How to Run](#how-to-run)
+- [Database Compatibility](#database-compatibility)
+- [Schema Summary](#schema-summary)
+- [Troubleshooting](#troubleshooting)
+- [Author & License](#author--license)
 
 ---
 
-## ✨ Features & Highlights
+## Features & Highlights
 
-✅ **8 Progressive Exercises** — From basic queries to advanced PL/SQL  
-✅ **Self-Contained Files** — Each exercise is independent with complete setup  
-✅ **Detailed Comments** — Fully documented SQL/PL-SQL code  
-✅ **Expected Outputs** — Results shown inline for easy verification  
-✅ **Multi-Database Support** — Oracle, MySQL, and PostgreSQL compatibility  
-✅ **Real-World Schemas** — Student enrollment, library system, and customer data  
-✅ **Learning Outcomes** — Each exercise builds foundational database skills  
-✅ **Production-Ready** — Best practices and proper syntax throughout  
+* 8 Progressive Exercises — From basic queries to advanced PL/SQL
+* Self-Contained Files — Each exercise is independent with complete setup
+* Detailed Comments — Fully documented SQL/PL-SQL code
+* Expected Outputs — Results shown inline for easy verification
+* Multi-Database Support — Oracle, MySQL, and PostgreSQL compatibility
+* Real-World Schemas — Student enrollment, library system, and customer data
+* Learning Outcomes — Each exercise builds foundational database skills
+* Production-Ready — Best practices and proper syntax throughout
 
 ---
 
-## 🎯 Overview
+## Overview
 
 This repository contains **8 DBMS lab exercises** covering core relational database and PL/SQL concepts, progressing from basic queries to advanced procedural SQL:
 
@@ -51,27 +51,27 @@ This repository contains **8 DBMS lab exercises** covering core relational datab
 
 | # | Topic | Difficulty | Time | Key Skills |
 |---|-------|------------|------|-----------|
-| 1 | Simple, Nested & Sub Queries | ⭐ | 30 min | `SELECT`, `WHERE`, nested `IN`, scalar subqueries, `GROUP BY`/`HAVING` |
-| 2 | Join Queries | ⭐⭐ | 40 min | `INNER JOIN`, `LEFT JOIN`, `RIGHT JOIN`, `FULL OUTER JOIN` |
-| 3 | Views & Index | ⭐⭐ | 35 min | `CREATE VIEW`, DML through views, `CREATE INDEX`, performance tuning |
-| 4 | Implicit & Explicit Cursors | ⭐⭐⭐ | 45 min | `%FOUND`, `%NOTFOUND`, `%ROWCOUNT`, `%ISOPEN`, cursor loops |
-| 5 | Procedures & Functions | ⭐⭐⭐ | 50 min | `CREATE OR REPLACE PROCEDURE`, `CREATE OR REPLACE FUNCTION`, parameters |
-| 6 | Triggers | ⭐⭐⭐ | 45 min | `BEFORE INSERT/UPDATE/DELETE` triggers, `:NEW`/`:OLD`, event handling |
-| 7 | Normalized Schema (Library System) | ⭐⭐ | 40 min | ER modeling, normalization, M:N associative entities |
-| 8 | Exception Handling | ⭐⭐⭐ | 40 min | Pre-defined & user-defined exceptions, error propagation |
+| 1 | Simple, Nested & Sub Queries | Beginner | 30 min | `SELECT`, `WHERE`, nested `IN`, scalar subqueries, `GROUP BY`/`HAVING` |
+| 2 | Join Queries | Beginner+ | 40 min | `INNER JOIN`, `LEFT JOIN`, `RIGHT JOIN`, `FULL OUTER JOIN` |
+| 3 | Views & Index | Beginner+ | 35 min | `CREATE VIEW`, DML through views, `CREATE INDEX`, performance tuning |
+| 4 | Implicit & Explicit Cursors | Intermediate | 45 min | `%FOUND`, `%NOTFOUND`, `%ROWCOUNT`, `%ISOPEN`, cursor loops |
+| 5 | Procedures & Functions | Intermediate | 50 min | `CREATE OR REPLACE PROCEDURE`, `CREATE OR REPLACE FUNCTION`, parameters |
+| 6 | Triggers | Intermediate | 45 min | `BEFORE INSERT/UPDATE/DELETE` triggers, `:NEW`/`:OLD`, event handling |
+| 7 | Normalized Schema (Library System) | Beginner+ | 40 min | ER modeling, normalization, M:N associative entities |
+| 8 | Exception Handling | Intermediate | 40 min | Pre-defined & user-defined exceptions, error propagation |
 
 ### What's in Each File
 
 Each `.sql` file is **self-contained** and includes:
-- 📌 **Header comment block** — Exercise No., Title, Aim, and Algorithm (from lab manual)  
-- 📊 **Table creation & sample data** — `CREATE TABLE`, `INSERT` statements  
-- 💬 **Fully commented SQL/PL-SQL** — Every query explained step-by-step  
-- 📋 **Expected output** — Results shown as inline comments directly below each query  
-- ✔️ **Result statement** — Summary of the outcome and learning points
+- Header comment block — Exercise No., Title, Aim, and Algorithm (from lab manual)
+- Table creation & sample data — `CREATE TABLE`, `INSERT` statements
+- Fully commented SQL/PL-SQL — Every query explained step-by-step
+- Expected output — Results shown as inline comments directly below each query
+- Result statement — Summary of the outcome and learning points
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```
 DBMS_EXERCISE/
@@ -86,27 +86,27 @@ DBMS_EXERCISE/
 └── DBMS_Experiment_08_exception_handling.sql
 ```
 
-> **Note:** Each `.sql` file is standalone — you can run any exercise independently without running the others.
+> Note: Each `.sql` file is standalone — you can run any exercise independently without running the others.
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### For Oracle SQL Developer / SQL*Plus
 
-1. **Open your RDBMS client** (Oracle SQL Developer or SQL*Plus)
-2. **Navigate** to the `DBMS_EXERCISE` directory
-3. **Run an exercise file:**
+1. Open your RDBMS client (Oracle SQL Developer or SQL*Plus)
+2. Navigate to the `DBMS_EXERCISE` directory
+3. Run an exercise file:
    ```sql
    @DBMS_Experiment_1_Simple_Nested_Subqueries.sql
    ```
-4. **View output** — Results appear in the console
+4. View output — Results appear in the console
 
 ### For MySQL Workbench
 
-1. **Open MySQL Workbench** → **File** → **Open SQL Script**
-2. **Select** an exercise file (e.g., `DBMS_Experiment_1_Simple_Nested_Subqueries.sql`)
-3. **Execute** — Click the lightning bolt ⚡ icon or press `Ctrl+Enter`
+1. Open MySQL Workbench → File → Open SQL Script
+2. Select an exercise file (e.g., `DBMS_Experiment_1_Simple_Nested_Subqueries.sql`)
+3. Execute — Click the Execute icon or press `Ctrl+Enter`
 
 ### For PostgreSQL (psql)
 
@@ -116,13 +116,13 @@ psql -U username -d database_name -f DBMS_Experiment_1_Simple_Nested_Subqueries.
 
 ---
 
-## 📚 Exercise Index
+## Exercise Index
 
-### Ex 1 • Simple, Nested & Sub Queries
+### Ex 1 — Simple, Nested & Sub Queries
 
-**File:** `DBMS_Experiment_1_Simple_Nested_Subqueries.sql`  
-**Difficulty:** ⭐  
-**Time:** 30 minutes  
+**File:** `DBMS_Experiment_1_Simple_Nested_Subqueries.sql`
+**Difficulty:** Beginner
+**Time:** 30 minutes
 
 **What you'll learn:**
 - Writing basic `SELECT` statements with `WHERE` clauses
@@ -137,11 +137,11 @@ psql -U username -d database_name -f DBMS_Experiment_1_Simple_Nested_Subqueries.
 
 ---
 
-### Ex 2 • Join Queries
+### Ex 2 — Join Queries
 
-**File:** `DBMS_Experiment_2_JOIN_Queries.sql`  
-**Difficulty:** ⭐⭐  
-**Time:** 40 minutes  
+**File:** `DBMS_Experiment_2_JOIN_Queries.sql`
+**Difficulty:** Beginner+
+**Time:** 40 minutes
 
 **What you'll learn:**
 - All four join types: `INNER`, `LEFT`, `RIGHT`, `FULL OUTER`
@@ -157,11 +157,11 @@ psql -U username -d database_name -f DBMS_Experiment_1_Simple_Nested_Subqueries.
 
 ---
 
-### Ex 3 • Views & Index
+### Ex 3 — Views & Index
 
-**File:** `DBMS_Experiment_3_View_and_Index.sql`  
-**Difficulty:** ⭐⭐  
-**Time:** 35 minutes  
+**File:** `DBMS_Experiment_3_View_and_Index.sql`
+**Difficulty:** Beginner+
+**Time:** 35 minutes
 
 **What you'll learn:**
 - Creating views with `CREATE VIEW`
@@ -177,11 +177,11 @@ psql -U username -d database_name -f DBMS_Experiment_1_Simple_Nested_Subqueries.
 
 ---
 
-### Ex 4 • Implicit & Explicit Cursors
+### Ex 4 — Implicit & Explicit Cursors
 
-**File:** `DBMS_Experiment_4_Cursors.sql`  
-**Difficulty:** ⭐⭐⭐  
-**Time:** 45 minutes  
+**File:** `DBMS_Experiment_4_Cursors.sql`
+**Difficulty:** Intermediate
+**Time:** 45 minutes
 
 **What you'll learn:**
 - Implicit cursor attributes: `SQL%FOUND`, `SQL%NOTFOUND`, `SQL%ROWCOUNT`, `SQL%ISOPEN`
@@ -197,11 +197,11 @@ psql -U username -d database_name -f DBMS_Experiment_1_Simple_Nested_Subqueries.
 
 ---
 
-### Ex 5 • Procedures & Functions
+### Ex 5 — Procedures & Functions
 
-**File:** `DBMS_Experiment_5_Procedures_and_Functions.sql`  
-**Difficulty:** ⭐⭐⭐  
-**Time:** 50 minutes  
+**File:** `DBMS_Experiment_5_Procedures_and_Functions.sql`
+**Difficulty:** Intermediate
+**Time:** 50 minutes
 
 **What you'll learn:**
 - Creating procedures with `CREATE OR REPLACE PROCEDURE`
@@ -218,11 +218,11 @@ psql -U username -d database_name -f DBMS_Experiment_1_Simple_Nested_Subqueries.
 
 ---
 
-### Ex 6 • Triggers
+### Ex 6 — Triggers
 
-**File:** `DBMS_Experiment_6_triggers.sql`  
-**Difficulty:** ⭐⭐⭐  
-**Time:** 45 minutes  
+**File:** `DBMS_Experiment_6_triggers.sql`
+**Difficulty:** Intermediate
+**Time:** 45 minutes
 
 **What you'll learn:**
 - Creating row-level triggers with `BEFORE INSERT/UPDATE/DELETE`
@@ -240,11 +240,11 @@ psql -U username -d database_name -f DBMS_Experiment_1_Simple_Nested_Subqueries.
 
 ---
 
-### Ex 7 • Normalized Schema (Library System)
+### Ex 7 — Normalized Schema (Library System)
 
-**File:** `DBMS_Experiment_07_normalized_schema_library.sql`  
-**Difficulty:** ⭐⭐  
-**Time:** 40 minutes  
+**File:** `DBMS_Experiment_07_normalized_schema_library.sql`
+**Difficulty:** Beginner+
+**Time:** 40 minutes
 
 **What you'll learn:**
 - Entity-Relationship (ER) modeling
@@ -255,18 +255,18 @@ psql -U username -d database_name -f DBMS_Experiment_1_Simple_Nested_Subqueries.
 
 **Concepts covered:**
 - **Entities:** Authors, Books, Borrowers (independent entities)
-- **Relationships:** 
+- **Relationships:**
   - Books ↔ Authors (M:N via `BookAuthors`)
   - Borrowers ↔ Books (M:N via `BorrowedBooks`)
 - **Real-world example:** A complete library system with proper normalization
 
 ---
 
-### Ex 8 • Exception Handling
+### Ex 8 — Exception Handling
 
-**File:** `DBMS_Experiment_08_exception_handling.sql`  
-**Difficulty:** ⭐⭐⭐  
-**Time:** 40 minutes  
+**File:** `DBMS_Experiment_08_exception_handling.sql`
+**Difficulty:** Intermediate
+**Time:** 40 minutes
 
 **What you'll learn:**
 - Pre-defined exceptions: `NO_DATA_FOUND`, `TOO_MANY_ROWS`, `OTHERS`
@@ -283,17 +283,17 @@ psql -U username -d database_name -f DBMS_Experiment_1_Simple_Nested_Subqueries.
 
 ---
 
-## ⚙️ Prerequisites & Setup
+## Prerequisites & Setup
 
 ### System Requirements
 
 | Component | Requirement | Notes |
 |-----------|-------------|-------|
-| **RDBMS** | Oracle 11g+ / MySQL 5.7+ / PostgreSQL 10+ | Choose one to get started |
-| **Client** | SQL Developer, SQL*Plus, MySQL Workbench, pgAdmin, or DBeaver | Free tools available |
-| **OS** | Windows, macOS, or Linux | DBMS software is cross-platform |
-| **Disk Space** | 100 MB (minimum) | For DBMS installation + sample data |
-| **RAM** | 2 GB (minimum) | Most modern systems have this |
+| RDBMS | Oracle 11g+ / MySQL 5.7+ / PostgreSQL 10+ | Choose one to get started |
+| Client | SQL Developer, SQL*Plus, MySQL Workbench, pgAdmin, or DBeaver | Free tools available |
+| OS | Windows, macOS, or Linux | DBMS software is cross-platform |
+| Disk Space | 100 MB (minimum) | For DBMS installation + sample data |
+| RAM | 2 GB (minimum) | Most modern systems have this |
 
 ### Which Database Should I Choose?
 
@@ -306,35 +306,35 @@ psql -U username -d database_name -f DBMS_Experiment_1_Simple_Nested_Subqueries.
 
 ### Installation Links
 
-- 🐘 **PostgreSQL** (Free): https://www.postgresql.org/download/
-- 🐬 **MySQL** (Free): https://dev.mysql.com/downloads/mysql/
-- 🍊 **Oracle XE** (Free): https://www.oracle.com/database/technologies/xe-downloads.html
-- 🔧 **Oracle SQL Developer** (Free): https://www.oracle.com/tools/downloads/sqldev-downloads.html
+- PostgreSQL (Free): https://www.postgresql.org/download/
+- MySQL (Free): https://dev.mysql.com/downloads/mysql/
+- Oracle XE (Free): https://www.oracle.com/database/technologies/xe-downloads.html
+- Oracle SQL Developer (Free): https://www.oracle.com/tools/downloads/sqldev-downloads.html
 
 ### Client Tools (IDE / GUI)
 
 | Tool | Best For | Cost | Platform |
 |------|----------|------|----------|
-| **Oracle SQL Developer** | Oracle DB | Free | Win/Mac/Linux |
-| **SQL*Plus** | Oracle DB (CLI) | Free | Win/Mac/Linux |
-| **MySQL Workbench** | MySQL | Free | Win/Mac/Linux |
-| **pgAdmin** | PostgreSQL | Free | Win/Mac/Linux |
-| **DBeaver** | Any RDBMS | Free/Pro | Win/Mac/Linux |
-| **VS Code + Extensions** | Any (with extensions) | Free | Win/Mac/Linux |
+| Oracle SQL Developer | Oracle DB | Free | Win/Mac/Linux |
+| SQL*Plus | Oracle DB (CLI) | Free | Win/Mac/Linux |
+| MySQL Workbench | MySQL | Free | Win/Mac/Linux |
+| pgAdmin | PostgreSQL | Free | Win/Mac/Linux |
+| DBeaver | Any RDBMS | Free/Pro | Win/Mac/Linux |
+| VS Code + Extensions | Any (with extensions) | Free | Win/Mac/Linux |
 
 ---
 
-## 🔧 How to Run
+## How to Run
 
 ### Oracle SQL Developer or SQL*Plus
 
 **Using SQL Developer (GUI):**
 
-1. Open **Oracle SQL Developer**
+1. Open Oracle SQL Developer
 2. Create or connect to a database
-3. File → **Open** → Select a `.sql` file (e.g., `DBMS_Experiment_1_Simple_Nested_Subqueries.sql`)
-4. Click the **Execute** button (▶️) or press `Ctrl+Enter`
-5. View results in the **Script Output** panel
+3. File → Open → Select a `.sql` file (e.g., `DBMS_Experiment_1_Simple_Nested_Subqueries.sql`)
+4. Click the Execute button or press `Ctrl+Enter`
+5. View results in the Script Output panel
 
 **Using SQL*Plus (Command Line):**
 
@@ -360,11 +360,11 @@ SQL> EXIT;
 
 **Step-by-step:**
 
-1. Open **MySQL Workbench**
-2. Click **File** → **Open SQL Script**
+1. Open MySQL Workbench
+2. Click File → Open SQL Script
 3. Select an exercise file (e.g., `DBMS_Experiment_1_Simple_Nested_Subqueries.sql`)
-4. Click the **Execute** button (⚡ lightning icon) or press `Ctrl+Shift+Enter`
-5. Check the **Output** tab for results
+4. Click the Execute button or press `Ctrl+Shift+Enter`
+5. Check the Output tab for results
 
 **Alternative — Command line:**
 
@@ -380,10 +380,10 @@ mysql -u username -p database_name < DBMS_Experiment_1_Simple_Nested_Subqueries.
 
 **Using pgAdmin (GUI):**
 
-1. Open **pgAdmin** → Expand your server
-2. Right-click your database → **Query Tool**
-3. Click **Open** → Select a `.sql` file
-4. Click **Execute** (▶️) or press `F5`
+1. Open pgAdmin → Expand your server
+2. Right-click your database → Query Tool
+3. Click Open → Select a `.sql` file
+4. Click Execute or press `F5`
 5. View results in the panel below
 
 **Using psql (Command Line):**
@@ -403,25 +403,25 @@ psql -U username -d database_name -f DBMS_Experiment_1_Simple_Nested_Subqueries.
 
 ---
 
-## 🗄️ Database Compatibility
+## Database Compatibility
 
 ### Exercise Support by Database
 
 | Exercise | Oracle | MySQL | PostgreSQL | Notes |
 |----------|:------:|:-----:|:----------:|-------|
-| **Ex 1** — Simple, Nested & Sub Queries | ✅ | ✅ | ✅ | Standard SQL — all databases supported |
-| **Ex 2** — Join Queries | ✅ | ⚠️ | ✅ | MySQL needs `UNION` workaround for `FULL OUTER JOIN` |
-| **Ex 3** — Views & Index | ✅ | ✅ | ✅ | Standard SQL — all databases supported |
-| **Ex 4** — Implicit & Explicit Cursors | ✅ | ❌ | ❌ | Oracle PL/SQL only; MySQL/PostgreSQL use different cursor syntax |
-| **Ex 5** — Procedures & Functions | ✅ | ⚠️ | ⚠️ | Oracle syntax; MySQL/PostgreSQL require stored procedure syntax changes |
-| **Ex 6** — Triggers | ✅ | ⚠️ | ⚠️ | Oracle `:NEW`/`:OLD`; MySQL/PostgreSQL use `NEW`/`OLD` |
-| **Ex 7** — Normalized Schema | ✅ | ✅ | ✅ | Standard SQL — all databases supported |
-| **Ex 8** — Exception Handling | ✅ | ❌ | ❌ | Oracle PL/SQL exception syntax; others use different approaches |
+| Ex 1 — Simple, Nested & Sub Queries | Yes | Yes | Yes | Standard SQL — all databases supported |
+| Ex 2 — Join Queries | Yes | Partial | Yes | MySQL needs `UNION` workaround for `FULL OUTER JOIN` |
+| Ex 3 — Views & Index | Yes | Yes | Yes | Standard SQL — all databases supported |
+| Ex 4 — Implicit & Explicit Cursors | Yes | No | No | Oracle PL/SQL only; MySQL/PostgreSQL use different cursor syntax |
+| Ex 5 — Procedures & Functions | Yes | Partial | Partial | Oracle syntax; MySQL/PostgreSQL require stored procedure syntax changes |
+| Ex 6 — Triggers | Yes | Partial | Partial | Oracle `:NEW`/`:OLD`; MySQL/PostgreSQL use `NEW`/`OLD` |
+| Ex 7 — Normalized Schema | Yes | Yes | Yes | Standard SQL — all databases supported |
+| Ex 8 — Exception Handling | Yes | No | No | Oracle PL/SQL exception syntax; others use different approaches |
 
 ### Legend
-- ✅ **Supported** — Works out-of-the-box
-- ⚠️ **Minor Changes** — Requires syntax adjustments
-- ❌ **Not Supported** — Requires significant translation or alternative approach
+- Yes — Supported: Works out-of-the-box
+- Partial — Minor Changes: Requires syntax adjustments
+- No — Not Supported: Requires significant translation or alternative approach
 
 ### Database-Specific Notes
 
@@ -457,7 +457,7 @@ psql -U username -d database_name -f DBMS_Experiment_1_Simple_Nested_Subqueries.
 
 ---
 
-## 📊 Schema Summary
+## Schema Summary
 
 ### Schema Overview
 
@@ -551,12 +551,12 @@ BorrowedBooks (M:N Junction Table)
 
 ---
 
-## 🆘 Troubleshooting
+## Troubleshooting
 
 ### Common Issues & Solutions
 
-#### ❌ "ORA-06550: Line 1, Column 7: PLS-00103: Encountered the symbol 'CREATE'"
-**Problem:** PL/SQL block execution issue  
+#### "ORA-06550: Line 1, Column 7: PLS-00103: Encountered the symbol 'CREATE'"
+**Problem:** PL/SQL block execution issue
 **Solution:** Ensure `SET SERVEROUTPUT ON` is set before running PL/SQL blocks
 
 ```sql
@@ -565,14 +565,14 @@ SET SERVEROUTPUT ON;
 @DBMS_Experiment_4_Cursors.sql
 ```
 
-#### ❌ "Table 'tablename' doesn't exist"
-**Problem:** Running exercise in wrong database or database not initialized  
-**Solution:** 
+#### "Table 'tablename' doesn't exist"
+**Problem:** Running exercise in wrong database or database not initialized
+**Solution:**
 - Verify you're connected to the correct database
 - Ensure you're running the `.sql` file from the beginning (includes `CREATE TABLE` statements)
 
-#### ❌ "MySQL: FULL OUTER JOIN not supported"
-**Problem:** MySQL doesn't have native `FULL OUTER JOIN`  
+#### "MySQL: FULL OUTER JOIN not supported"
+**Problem:** MySQL doesn't have native `FULL OUTER JOIN`
 **Solution:** Use the `UNION`-based workaround included in Exercise 2:
 
 ```sql
@@ -582,8 +582,8 @@ UNION
 SELECT * FROM table1 RIGHT JOIN table2 ON ...;
 ```
 
-#### ❌ "PostgreSQL: function dbms_output.put_line(...) does not exist"
-**Problem:** Trying to run Oracle PL/SQL on PostgreSQL  
+#### "PostgreSQL: function dbms_output.put_line(...) does not exist"
+**Problem:** Trying to run Oracle PL/SQL on PostgreSQL
 **Solution:** Translate `DBMS_OUTPUT.PUT_LINE` to `RAISE NOTICE`:
 
 ```plpgsql
@@ -594,20 +594,20 @@ DBMS_OUTPUT.PUT_LINE('Hello World');
 RAISE NOTICE 'Hello World';
 ```
 
-#### ❌ "Syntax error near ':='"
-**Problem:** Running Oracle PL/SQL on MySQL/PostgreSQL  
+#### "Syntax error near ':='"
+**Problem:** Running Oracle PL/SQL on MySQL/PostgreSQL
 **Solution:** Differences in syntax for variable assignment and procedures. Consult database-specific stored procedure documentation.
 
-#### ❌ "No rows returned" (when expecting results)
-**Problem:** Data not inserted properly or query has wrong logic  
+#### "No rows returned" (when expecting results)
+**Problem:** Data not inserted properly or query has wrong logic
 **Solution:**
 1. Check `INSERT` statements completed successfully
 2. Verify `WHERE` clause conditions
 3. Run intermediate `SELECT` queries to debug
 4. Check table contents: `SELECT * FROM table_name;`
 
-#### ❌ "Permission denied" when running scripts
-**Problem:** User doesn't have required privileges  
+#### "Permission denied" when running scripts
+**Problem:** User doesn't have required privileges
 **Solution:**
 - Ensure user account has `CREATE TABLE`, `INSERT`, `SELECT` privileges
 - For PL/SQL: User needs `CREATE PROCEDURE` and `CREATE TRIGGER` privileges
@@ -628,10 +628,10 @@ RAISE NOTICE 'Hello World';
    ```sql
    -- Oracle
    DESC table_name;
-   
+
    -- MySQL
    SHOW COLUMNS FROM table_name;
-   
+
    -- PostgreSQL
    \d table_name
    ```
@@ -647,26 +647,26 @@ RAISE NOTICE 'Hello World';
 
 ---
 
-## ✍️ Author & License
+## Author & License
 
 ### Author
 
-**Thamizhselvan_M**  
-📚 B.E. Computer Science and Engineering  
-🏫 IFET College of Engineering  
-🔗 GitHub: [thamizhselvanm-web](https://github.com/thamizhselvanm-web)  
+**Thamizhselvan_M**
+B.E. Computer Science and Engineering
+IFET College of Engineering
+GitHub: [thamizhselvanm-web](https://github.com/thamizhselvanm-web)
 
 ---
 
 ### License
 
-📝 **Academic & Educational Use**
+**Academic & Educational Use**
 
 This project is created for **academic and educational purposes**. It's designed to support DBMS lab coursework and is freely available for:
-- ✅ Educational use in classroom settings
-- ✅ Personal learning and skill development
-- ✅ Forking and adapting for your own coursework
-- ✅ Sharing with other students (with attribution)
+- Educational use in classroom settings
+- Personal learning and skill development
+- Forking and adapting for your own coursework
+- Sharing with other students (with attribution)
 
 **Please cite:** If you use this repository in your coursework or publications, please provide attribution to Thamizhselvan_M.
 
@@ -675,9 +675,9 @@ This project is created for **academic and educational purposes**. It's designed
 ### Contributing
 
 Have improvements or corrections? Feel free to:
-- 🐛 Report issues in GitHub
-- 🔧 Submit pull requests for bug fixes
-- 💡 Suggest enhancements
+- Report issues in GitHub
+- Submit pull requests for bug fixes
+- Suggest enhancements
 
 ---
 
@@ -689,9 +689,9 @@ For questions about:
 - **This repository** — Create an issue on GitHub
 
 **Additional Resources:**
-- 📖 [Oracle Documentation](https://docs.oracle.com/en/database/)
-- 📖 [MySQL Documentation](https://dev.mysql.com/doc/)
-- 📖 [PostgreSQL Documentation](https://www.postgresql.org/docs/)
+- [Oracle Documentation](https://docs.oracle.com/en/database/)
+- [MySQL Documentation](https://dev.mysql.com/doc/)
+- [PostgreSQL Documentation](https://www.postgresql.org/docs/)
 
 ---
 
@@ -701,5 +701,5 @@ For questions about:
 
 ---
 
-**Last Updated:** August 2026  
+**Last Updated:** August 2026
 **Repository Status:** Active & Maintained

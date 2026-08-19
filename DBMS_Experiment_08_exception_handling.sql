@@ -14,23 +14,36 @@
    ============================================================================ */
 
 
+SET SERVEROUTPUT ON;
+
 /* ----------------------------------------------------------------------------
-   SUPPORTING TABLE AND DATA
-   ---------------------------------------------------------------------------- */
+    RESET OBJECTS SO THE EXERCISE CAN BE RUN MORE THAN ONCE
+    ---------------------------------------------------------------------------- */
+
+BEGIN
+     EXECUTE IMMEDIATE 'DROP TABLE customers CASCADE CONSTRAINTS';
+EXCEPTION
+     WHEN OTHERS THEN
+          IF SQLCODE != -942 THEN RAISE; END IF;
+END;
+/
+
+/* ----------------------------------------------------------------------------
+    SUPPORTING TABLE AND DATA
+    ---------------------------------------------------------------------------- */
 
 CREATE TABLE customers (
-    id      INT PRIMARY KEY,
-    name    VARCHAR(50),
-    address VARCHAR(100),
-    salary  DECIMAL(10,2)
+    id      NUMBER PRIMARY KEY,
+    name    VARCHAR2(50),
+    address VARCHAR2(100),
+    salary  NUMBER(10,2)
 );
 
-INSERT INTO customers (id, name, address, salary) VALUES
-(1, 'John',  'New York',    5500.00),
-(2, 'Alice', 'Los Angeles', 6500.00),
-(3, 'Bob',   'Chicago',     5000.00),
-(4, 'David', 'Houston',     7500.00),
-(5, 'Emma',  'Boston',      6000.00);
+INSERT INTO customers (id, name, address, salary) VALUES (1, 'John', 'New York', 5500.00);
+INSERT INTO customers (id, name, address, salary) VALUES (2, 'Alice', 'Los Angeles', 6500.00);
+INSERT INTO customers (id, name, address, salary) VALUES (3, 'Bob', 'Chicago', 5000.00);
+INSERT INTO customers (id, name, address, salary) VALUES (4, 'David', 'Houston', 7500.00);
+INSERT INTO customers (id, name, address, salary) VALUES (5, 'Emma', 'Boston', 6000.00);
 
 SELECT * FROM customers;
 /* OUTPUT:
@@ -49,8 +62,6 @@ ID | Name  | Address     | Salary
    Demonstrates the built-in NO_DATA_FOUND exception (raised by SELECT
    INTO when no row matches) and a catch-all OTHERS handler.
    ---------------------------------------------------------------------------- */
-
-SET SERVEROUTPUT ON;
 
 DECLARE
     c_id   customers.id%TYPE := 5;
@@ -84,10 +95,8 @@ Address: Boston
    the pre-defined NO_DATA_FOUND and a catch-all OTHERS.
    ---------------------------------------------------------------------------- */
 
-SET SERVEROUTPUT ON;
-
 DECLARE
-    c_id          customers.id%TYPE := &cc_id;   -- substitution variable (SQL*Plus)
+    c_id          customers.id%TYPE := 3;
     c_name        customers.name%TYPE;
     c_addr        customers.address%TYPE;
     ex_invalid_id EXCEPTION;

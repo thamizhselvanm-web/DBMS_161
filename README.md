@@ -383,6 +383,7 @@ Use the following checklist when running the converted exercises:
 - Keep the Oracle connection active while the script creates dependent objects.
 - Confirm the active connection belongs to the intended Oracle schema.
 - Do not substitute MySQL delimiter commands for the Oracle `/` block terminator.
+- Exercise 8 uses a fixed sample customer ID and requires no substitution prompt.
 
 **Important:** Make sure `SET SERVEROUTPUT ON` is enabled so that `DBMS_OUTPUT.PUT_LINE` output is visible (this is included in each PL/SQL file).
 

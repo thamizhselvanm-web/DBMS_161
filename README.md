@@ -377,6 +377,7 @@ Use the following checklist when running the converted exercises:
 - Enable DBMS Output before running Exercises 6 or 8.
 - Run Exercise 7 before checking its library verification queries.
 - Re-running a converted exercise is supported because its objects are dropped first.
+- Use a schema with permission to create tables, triggers, and PL/SQL blocks.
 
 **Important:** Make sure `SET SERVEROUTPUT ON` is enabled so that `DBMS_OUTPUT.PUT_LINE` output is visible (this is included in each PL/SQL file).
 

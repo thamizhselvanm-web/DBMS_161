@@ -376,6 +376,7 @@ Use the following checklist when running the converted exercises:
 - Run the complete file as a script so `/` terminators compile PL/SQL blocks.
 - Enable DBMS Output before running Exercises 6 or 8.
 - Run Exercise 7 before checking its library verification queries.
+- Re-running a converted exercise is supported because its objects are dropped first.
 
 **Important:** Make sure `SET SERVEROUTPUT ON` is enabled so that `DBMS_OUTPUT.PUT_LINE` output is visible (this is included in each PL/SQL file).
 

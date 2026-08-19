@@ -372,6 +372,8 @@ run independently and repeatedly in the same Oracle schema.
 
 Use the following checklist when running the converted exercises:
 
+- Connect to an Oracle 12c or newer database before executing the script.
+
 **Important:** Make sure `SET SERVEROUTPUT ON` is enabled so that `DBMS_OUTPUT.PUT_LINE` output is visible (this is included in each PL/SQL file).
 
 ---

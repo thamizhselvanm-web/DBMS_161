@@ -36,7 +36,7 @@ Complete set of DBMS / PL-SQL lab exercises — SQL commands, PL/SQL blocks, exp
 * Self-Contained Files — Each exercise is independent with complete setup
 * Detailed Comments — Fully documented SQL/PL-SQL code
 * Expected Outputs — Results shown inline for easy verification
-* Multi-Database Support — Oracle, MySQL, and PostgreSQL compatibility
+* Oracle Connector Ready — Exercises 6–8 use Oracle SQL and PL/SQL syntax
 * Real-World Schemas — Student enrollment, library system, and customer data
 * Learning Outcomes — Each exercise builds foundational database skills
 * Production-Ready — Best practices and proper syntax throughout
@@ -289,8 +289,8 @@ psql -U username -d database_name -f DBMS_Experiment_1_Simple_Nested_Subqueries.
 
 | Component | Requirement | Notes |
 |-----------|-------------|-------|
-| RDBMS | Oracle 11g+ / MySQL 5.7+ / PostgreSQL 10+ | Choose one to get started |
-| Client | SQL Developer, SQL*Plus, MySQL Workbench, pgAdmin, or DBeaver | Free tools available |
+| RDBMS | Oracle 12c+ | Required for the identity columns used by Exercise 7 |
+| Client | Oracle SQL Developer, SQL*Plus, Oracle connector for VS Code, or DBeaver | Use an Oracle connection |
 | OS | Windows, macOS, or Linux | DBMS software is cross-platform |
 | Disk Space | 100 MB (minimum) | For DBMS installation + sample data |
 | RAM | 2 GB (minimum) | Most modern systems have this |
@@ -302,7 +302,9 @@ psql -U username -d database_name -f DBMS_Experiment_1_Simple_Nested_Subqueries.
 - **MySQL** — Great for exercises 1–3, 7 (standard SQL); requires workarounds for 4–6, 8
 - **PostgreSQL** — Good for exercises 1–3, 7; requires PL/pgSQL translation for 4–6, 8
 
-**Recommended:** Start with **Oracle** (most complete feature set for this course)
+**Recommended:** Use **Oracle** for the complete course workflow. Exercises 6–8
+are written for Oracle and should be run through an Oracle connector, not MySQL
+Workbench.
 
 ### Installation Links
 
@@ -352,11 +354,25 @@ SQL> SET SERVEROUTPUT ON
 SQL> EXIT;
 ```
 
+**Using an Oracle connector in VS Code:**
+
+1. Install an Oracle database extension that supports SQL scripts and PL/SQL.
+2. Create an Oracle connection and open the database connection in the extension.
+3. Open one of `DBMS_Experiment_6_triggers.sql`,
+  `DBMS_Experiment_07_normalized_schema_library.sql`, or
+  `DBMS_Experiment_08_exception_handling.sql`.
+4. Choose the extension's **Run Script** or **Run SQL** command for the active
+  Oracle connection. Do not use a MySQL connection for these files.
+5. Enable the extension's DBMS Output panel when running Exercises 6 or 8.
+
+Exercises 6–8 drop their own objects before creating them, so each file can be
+run independently and repeatedly in the same Oracle schema.
+
 **Important:** Make sure `SET SERVEROUTPUT ON` is enabled so that `DBMS_OUTPUT.PUT_LINE` output is visible (this is included in each PL/SQL file).
 
 ---
 
-### MySQL Workbench
+### MySQL Workbench (Exercises 1–3 only)
 
 **Step-by-step:**
 
@@ -376,7 +392,7 @@ mysql -u username -p database_name < DBMS_Experiment_1_Simple_Nested_Subqueries.
 
 ---
 
-### PostgreSQL (psql)
+### PostgreSQL (Exercises 1–3 only)
 
 **Using pgAdmin (GUI):**
 
@@ -415,7 +431,7 @@ psql -U username -d database_name -f DBMS_Experiment_1_Simple_Nested_Subqueries.
 | Ex 4 — Implicit & Explicit Cursors | Yes | No | No | Oracle PL/SQL only; MySQL/PostgreSQL use different cursor syntax |
 | Ex 5 — Procedures & Functions | Yes | Partial | Partial | Oracle syntax; MySQL/PostgreSQL require stored procedure syntax changes |
 | Ex 6 — Triggers | Yes | Partial | Partial | Oracle `:NEW`/`:OLD`; MySQL/PostgreSQL use `NEW`/`OLD` |
-| Ex 7 — Normalized Schema | Yes | Yes | Yes | Standard SQL — all databases supported |
+| Ex 7 — Normalized Schema | Yes | No | No | Oracle identity columns and `DATE` literals |
 | Ex 8 — Exception Handling | Yes | No | No | Oracle PL/SQL exception syntax; others use different approaches |
 
 ### Legend

@@ -382,6 +382,7 @@ Use the following checklist when running the converted exercises:
 - Run each exercise in its own Oracle schema session when isolating lab results.
 - Keep the Oracle connection active while the script creates dependent objects.
 - Confirm the active connection belongs to the intended Oracle schema.
+- Do not substitute MySQL delimiter commands for the Oracle `/` block terminator.
 
 **Important:** Make sure `SET SERVEROUTPUT ON` is enabled so that `DBMS_OUTPUT.PUT_LINE` output is visible (this is included in each PL/SQL file).
 

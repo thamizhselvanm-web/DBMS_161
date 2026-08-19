@@ -18,22 +18,68 @@
    ============================================================================ */
 
 
+SET SERVEROUTPUT ON;
+
+/* ----------------------------------------------------------------------------
+   RESET OBJECTS SO THE EXERCISE CAN BE RUN MORE THAN ONCE
+   ---------------------------------------------------------------------------- */
+
+BEGIN
+    EXECUTE IMMEDIATE 'DROP TRIGGER ins_classb';
+EXCEPTION
+    WHEN OTHERS THEN
+        IF SQLCODE != -4080 THEN RAISE; END IF;
+END;
+/
+
+BEGIN
+    EXECUTE IMMEDIATE 'DROP TRIGGER del_classb';
+EXCEPTION
+    WHEN OTHERS THEN
+        IF SQLCODE != -4080 THEN RAISE; END IF;
+END;
+/
+
+BEGIN
+    EXECUTE IMMEDIATE 'DROP TRIGGER up_classd';
+EXCEPTION
+    WHEN OTHERS THEN
+        IF SQLCODE != -4080 THEN RAISE; END IF;
+END;
+/
+
+BEGIN
+    EXECUTE IMMEDIATE 'DROP TABLE classb CASCADE CONSTRAINTS';
+EXCEPTION
+    WHEN OTHERS THEN
+        IF SQLCODE != -942 THEN RAISE; END IF;
+END;
+/
+
+BEGIN
+    EXECUTE IMMEDIATE 'DROP TABLE customer CASCADE CONSTRAINTS';
+EXCEPTION
+    WHEN OTHERS THEN
+        IF SQLCODE != -942 THEN RAISE; END IF;
+END;
+/
+
 /* ----------------------------------------------------------------------------
    SUPPORTING TABLES (referenced by the triggers below)
    ---------------------------------------------------------------------------- */
 
 CREATE TABLE customer (
-    sid    INT PRIMARY KEY,
-    sname  VARCHAR(50),
+    sid    NUMBER PRIMARY KEY,
+    sname  VARCHAR2(50),
     stotal NUMBER
 );
 
 CREATE TABLE classb (
-    sid    INT PRIMARY KEY,
-    sname  VARCHAR(50),
-    sdept  VARCHAR(50),
+    sid    NUMBER PRIMARY KEY,
+    sname  VARCHAR2(50),
+    sdept  VARCHAR2(50),
     stotal NUMBER,
-    grade  VARCHAR(5)
+    grade  VARCHAR2(5)
 );
 
 INSERT INTO customer VALUES (1, 'Ravi', 900);
@@ -127,9 +173,19 @@ sid | sname | sdept | stotal | grade
 */
 
 -- Test 2: invalid insert (stotal > 1000) -> trigger blocks it
-INSERT INTO classb VALUES (6, 'jana', 'it', 20000, 'a');
-/* OUTPUT (ERROR):
-ORA-20000: Total not valid
+BEGIN
+    INSERT INTO classb VALUES (6, 'jana', 'it', 20000, 'a');
+EXCEPTION
+    WHEN OTHERS THEN
+        IF SQLCODE = -20000 THEN
+            DBMS_OUTPUT.PUT_LINE('Invalid insert rejected: ' || SQLERRM);
+        ELSE
+            RAISE;
+        END IF;
+END;
+/
+/* OUTPUT:
+Invalid insert rejected: ORA-20000: Total not valid
 */
 
 

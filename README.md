@@ -379,6 +379,7 @@ Use the following checklist when running the converted exercises:
 - Re-running a converted exercise is supported because its objects are dropped first.
 - Use a schema with permission to create tables, triggers, and PL/SQL blocks.
 - Review the connector's script output for ORA- errors after execution.
+- Run each exercise in its own Oracle schema session when isolating lab results.
 
 **Important:** Make sure `SET SERVEROUTPUT ON` is enabled so that `DBMS_OUTPUT.PUT_LINE` output is visible (this is included in each PL/SQL file).
 

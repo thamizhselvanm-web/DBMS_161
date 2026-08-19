@@ -368,6 +368,10 @@ SQL> EXIT;
 Exercises 6–8 drop their own objects before creating them, so each file can be
 run independently and repeatedly in the same Oracle schema.
 
+### Oracle Connector Checklist
+
+Use the following checklist when running the converted exercises:
+
 **Important:** Make sure `SET SERVEROUTPUT ON` is enabled so that `DBMS_OUTPUT.PUT_LINE` output is visible (this is included in each PL/SQL file).
 
 ---

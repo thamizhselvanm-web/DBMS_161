@@ -375,6 +375,7 @@ Use the following checklist when running the converted exercises:
 - Connect to an Oracle 12c or newer database before executing the script.
 - Run the complete file as a script so `/` terminators compile PL/SQL blocks.
 - Enable DBMS Output before running Exercises 6 or 8.
+- Run Exercise 7 before checking its library verification queries.
 
 **Important:** Make sure `SET SERVEROUTPUT ON` is enabled so that `DBMS_OUTPUT.PUT_LINE` output is visible (this is included in each PL/SQL file).
 

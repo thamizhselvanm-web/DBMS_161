@@ -386,6 +386,7 @@ Use the following checklist when running the converted exercises:
 - Exercise 8 uses a fixed sample customer ID and requires no substitution prompt.
 - Exercise 6 catches the expected validation error so the script can continue.
 - Exercise 7 uses Oracle `DATE` literals to avoid session date-format issues.
+- After successful execution, use the included `SELECT` statements to verify rows.
 
 **Important:** Make sure `SET SERVEROUTPUT ON` is enabled so that `DBMS_OUTPUT.PUT_LINE` output is visible (this is included in each PL/SQL file).
 

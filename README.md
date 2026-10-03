@@ -19,7 +19,7 @@ The repository is built with an emphasis on **rigorous schema design, relational
 | **Ex 7** | Normalized Schema (Library System) | Relational Normalization (1NF, 2NF, 3NF/BCNF, M:N) | [`DBMS_Experiment_07_normalized_schema_library.sql`](DBMS_Experiment_07_normalized_schema_library.sql) |
 | **Ex 8** | Exception Handling in PL/SQL | Robust Error Propagation (Predefined & User-Defined) | [`DBMS_Experiment_08_exception_handling.sql`](DBMS_Experiment_08_exception_handling.sql) |
 | **Ex 9** | NoSQL Database Models | NoSQL Architectures (Key-Value, Column, Document, Graph) | [`DBMS_Experiment_09_nosql_database_models.txt`](DBMS_Experiment_09_nosql_database_models.txt) |
-| **Ex 10** | Document Database with MongoDB | Document Store (MongoDB CRUD, Collections & BSON) | [`DBMS_Experiment_10_mongodb_crud_library.js`](DBMS_Experiment_10_mongodb_crud_library.js) |
+| **Ex 10** | Document Database with MongoDB | Document Store (MongoDB CRUD, Collections & BSON) | [`DBMS_Experiment_10_mongodb_crud_library.txt`](DBMS_Experiment_10_mongodb_crud_library.txt) |
 | **Ex 11** | Cassandra Distributed Cluster & CQL | Distributed Columnar Store (Gossip Ring, Keyspace, CQL) | [`DBMS_Experiment_11_cassandra_cluster_and_cql.txt`](DBMS_Experiment_11_cassandra_cluster_and_cql.txt) |
 | **Ex 12 / Project** | Enterprise Banking Management System | Full-Stack Commercial RDBMS (6 Tables, DDL/DML, Audit) | [`DBMS_Mini_Project_Banking_System.sql`](DBMS_Mini_Project_Banking_System.sql) |
 
@@ -30,6 +30,11 @@ The repository is built with an emphasis on **rigorous schema design, relational
 ```text
 DBMS_EXERCISE/
 ├── README.md
+├── Index.docx
+├── Index.pdf
+├── UPDATED DBMS INDEX FINAL.docx
+├── UPDATED DBMS INDEX FINAL.pdf
+├── qr_codes/
 ├── DBMS_Experiment_1_Simple_Nested_Subqueries.sql
 ├── DBMS_Experiment_2_JOIN_Queries.sql
 ├── DBMS_Experiment_3_View_and_Index.sql
@@ -39,7 +44,7 @@ DBMS_EXERCISE/
 ├── DBMS_Experiment_07_normalized_schema_library.sql
 ├── DBMS_Experiment_08_exception_handling.sql
 ├── DBMS_Experiment_09_nosql_database_models.txt
-├── DBMS_Experiment_10_mongodb_crud_library.js
+├── DBMS_Experiment_10_mongodb_crud_library.txt
 ├── DBMS_Experiment_11_cassandra_cluster_and_cql.txt
 └── DBMS_Mini_Project_Banking_System.sql
 ```
@@ -133,7 +138,7 @@ DBMS_EXERCISE/
 - **Key Concepts:** CAP theorem, BASE properties (Basically Available, Soft state, Eventual consistency), schema-on-read vs schema-on-write.
 
 #### Ex 10: Document Database Implementation with MongoDB
-- **File:** [`DBMS_Experiment_10_mongodb_crud_library.js`](DBMS_Experiment_10_mongodb_crud_library.js)
+- **File:** [`DBMS_Experiment_10_mongodb_crud_library.txt`](DBMS_Experiment_10_mongodb_crud_library.txt)
 - **Description:** Implements a document-oriented database for the Library System in MongoDB, serving as the direct NoSQL counterpart to Experiment 7's relational schema. Performs full CRUD (Create, Read, Update, Delete) lifecycle operations using MongoDB shell (`mongosh`):
   - **Create:** Batch document insertions (`insertMany()`) with ISO date objects and reference arrays.
   - **Read:** Formatted queries (`find().pretty()`) with criteria projection.
@@ -240,10 +245,10 @@ For MongoDB, ensure the `mongod` service is running, then load the script using 
 mongosh
 
 # Load and execute the script inside mongosh
-load("d:/DBMS_EXERCISE/DBMS_Experiment_10_mongodb_crud_library.js")
+load("d:/DBMS_EXERCISE/DBMS_Experiment_10_mongodb_crud_library.txt")
 
 # Or run directly from terminal:
-mongosh library "d:/DBMS_EXERCISE/DBMS_Experiment_10_mongodb_crud_library.js"
+mongosh library "d:/DBMS_EXERCISE/DBMS_Experiment_10_mongodb_crud_library.txt"
 ```
 
 ---

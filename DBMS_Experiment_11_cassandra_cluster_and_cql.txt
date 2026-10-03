@@ -1,0 +1,115 @@
+/* ============================================================================
+   EX NO: 11
+   TITLE : DISTRIBUTED DATABASE IMPLEMENTATION USING APACHE CASSANDRA
+   AIM   : To configure a multi-node Apache Cassandra distributed cluster,
+           verify node states via nodetool, and perform Keyspace and Table
+           operations using Cassandra Query Language (CQL).
+   ============================================================================
+   ALGORITHM
+   ---------
+   STEP 1 : Start
+   STEP 2 : Configure `cassandra.yaml` across cluster nodes specifying:
+            - `cluster_name`
+            - `seeds` (seed node IP address)
+            - `listen_address` (node-specific host IP)
+   STEP 3 : Start the Apache Cassandra service daemon across nodes.
+   STEP 4 : Verify the distributed cluster topology and status using `nodetool status`.
+   STEP 5 : Launch the Cassandra Query Language shell (`cqlsh`).
+   STEP 6 : Create keyspace `college_ks` with replication strategy and factor.
+   STEP 7 : Switch to `college_ks` and create the `student` column table.
+   STEP 8 : Insert student records and query all rows.
+   STEP 9 : Verify outputs and stop.
+   ============================================================================ */
+
+
+# ============================================================================
+# PART 1: CLUSTER CONFIGURATION (cassandra.yaml on every node)
+# ============================================================================
+
+cluster_name: 'CollegeCluster'
+seeds: "192.168.1.10"
+listen_address: <node's own IP>
+rpc_address: <node's own IP>
+endpoint_snitch: GossipingPropertyFileSnitch
+
+
+# ============================================================================
+# PART 2: SERVICE INITIALIZATION & CLUSTER STATUS VERIFICATION
+# ============================================================================
+
+# Start the Cassandra service daemon
+sudo service cassandra start
+
+# Verify multi-node cluster status and gossip ring
+nodetool status
+
+# EXPECTED OUTPUT:
+# Datacenter: datacenter1
+# =======================
+# Status=Up/Down
+# |/ State=Normal/Leaving/Joining/Moving
+# --  Address       Load       Tokens  Owns (effective)  Host ID                               Rack
+# UN  192.168.1.10  95.42 KB   256     34.0%             a1b2c3d4-e5f6-7890-abcd-ef1234567890  rack1
+# UN  192.168.1.11  102.15 KB  256     33.0%             b2c3d4e5-f6a7-8901-bcde-fa2345678901  rack1
+# UN  192.168.1.12  98.67 KB   256     33.0%             c3d4e5f6-a7b8-9012-cdef-ab3456789012  rack1
+#
+# (Note: 'UN' indicates status is Up and state is Normal)
+
+
+# ============================================================================
+# PART 3: CQL SHELL & KEYSPACE OPERATIONS
+# ============================================================================
+
+# Open CQL interactive shell
+cqlsh 192.168.1.10 9042
+
+# Create Keyspace with SimpleStrategy replication
+CREATE KEYSPACE college_ks
+WITH REPLICATION = {
+    'class': 'SimpleStrategy',
+    'replication_factor': 3
+};
+
+# Switch context to the created keyspace
+USE college_ks;
+
+
+# ============================================================================
+# PART 4: TABLE CREATION (DDL)
+# ============================================================================
+
+CREATE TABLE student (
+    rollno INT PRIMARY KEY,
+    name TEXT,
+    dept TEXT
+);
+
+
+# ============================================================================
+# PART 5: DATA INSERTION (DML)
+# ============================================================================
+
+INSERT INTO student (rollno, name, dept)
+VALUES (101, 'RAJA', 'CSE');
+
+INSERT INTO student (rollno, name, dept)
+VALUES (102, 'PRIYA', 'IT');
+
+INSERT INTO student (rollno, name, dept)
+VALUES (103, 'KARTHIK', 'ECE');
+
+
+# ============================================================================
+# PART 6: DATA RETRIEVAL (CQL QUERY)
+# ============================================================================
+
+SELECT * FROM student;
+
+# EXPECTED OUTPUT:
+#  rollno | dept | name
+# --------+------+---------
+#     101 |  CSE | RAJA
+#     102 |   IT | PRIYA
+#     103 |  ECE | KARTHIK
+#
+# (3 rows)

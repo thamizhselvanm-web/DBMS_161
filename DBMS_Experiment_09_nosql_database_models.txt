@@ -1,0 +1,153 @@
+/* ============================================================================
+   EX NO: 9
+   TITLE : EXPLORE NOSQL DATABASE MODELS (KEY-VALUE, COLUMN-STORE, DOCUMENT, GRAPH)
+   AIM   : To understand, explore, and demonstrate the four primary NoSQL
+           database paradigms: Key-Value, Column-Oriented (Column Family),
+           Document-Oriented, and Graph-based data models.
+   ============================================================================
+   ALGORITHM
+   ---------
+   STEP 1 : Start
+   STEP 2 : Demonstrate the Key-Value data model using Redis-style commands
+            for key-attribute storage and retrieval.
+   STEP 3 : Demonstrate the Columnar (Column-Family) data model using Cassandra
+            CQL schema definition and sparse-column structuring.
+   STEP 4 : Demonstrate the Document-Oriented data model using MongoDB JSON/BSON
+            document insertions with polymorphic schema attributes.
+   STEP 5 : Demonstrate the Graph data model using Neo4j Cypher to create
+            nodes, properties, and directed semantic relationships.
+   STEP 6 : Compare architectural trade-offs, access patterns, and use cases.
+   STEP 7 : Stop
+   ============================================================================ */
+
+
+/* ============================================================================
+   1. KEY-VALUE STORE MODEL (Redis-Style)
+   ----------------------------------------------------------------------------
+   Concept:
+   Data is stored as a collection of key-value pairs. Keys are unique identifiers
+   mapping directly to string, hash, list, or binary values. Fast O(1) lookups.
+   ============================================================================ */
+
+-- Storing user profile attributes under individual keys
+SET Name "Joe Bloggs"
+SET Age 42
+SET Occupation "Stunt Double"
+SET Height "175cm"
+SET Weight "77kg"
+
+-- Querying stored values
+GET Name
+GET Occupation
+MGET Age Height Weight
+
+/*
+EXPECTED OUTPUT:
+"Joe Bloggs"
+"Stunt Double"
+1) "42"
+2) "175cm"
+3) "77kg"
+*/
+
+
+/* ============================================================================
+   2. COLUMN-ORIENTED / COLUMN-FAMILY STORE MODEL (Apache Cassandra CQL)
+   ----------------------------------------------------------------------------
+   Concept:
+   Data is stored in rows with a partition key (RowKey), where each row can have
+   a dynamic set of columns. Optimized for distributed high-write throughput.
+   ============================================================================ */
+
+CREATE TABLE ColumnFamily (
+    RowKey text PRIMARY KEY,
+    col1 text,
+    col2 text,
+    col3 text
+);
+
+-- Populating column family records
+INSERT INTO ColumnFamily (RowKey, col1, col2, col3)
+VALUES ('row_101', 'value_alpha', 'value_beta', 'value_gamma');
+
+INSERT INTO ColumnFamily (RowKey, col1, col2)
+VALUES ('row_102', 'user_profile', 'active_session');
+
+-- Querying records by RowKey
+SELECT * FROM ColumnFamily WHERE RowKey = 'row_101';
+
+/*
+EXPECTED OUTPUT:
+ rowkey  | col1        | col2       | col3
+---------+-------------+------------+-------------
+ row_101 | value_alpha | value_beta | value_gamma
+*/
+
+
+/* ============================================================================
+   3. DOCUMENT-ORIENTED STORE MODEL (MongoDB BSON / JSON)
+   ----------------------------------------------------------------------------
+   Concept:
+   Stores semi-structured data as documents (JSON/BSON format). Each document
+   can contain nested objects, arrays, and varying fields without strict schema.
+   ============================================================================ */
+
+db.documents.insertMany([
+  { "prop1": "data", "prop2": "data", "prop3": "data", "prop4": "data" },
+  { "prop1": "data", "prop2": "data", "prop3": "data", "prop4": "data" },
+  { "prop1": "data", "prop2": "data", "prop3": "data", "prop4": "data" }
+]);
+
+-- Querying inserted documents
+db.documents.find().pretty();
+
+/*
+EXPECTED OUTPUT:
+{
+  "_id": ObjectId("651a1b2c3d4e5f6789012345"),
+  "prop1": "data",
+  "prop2": "data",
+  "prop3": "data",
+  "prop4": "data"
+}
+... (3 documents inserted and returned)
+*/
+
+
+/* ============================================================================
+   4. GRAPH-BASED DATA MODEL (Neo4j Cypher)
+   ----------------------------------------------------------------------------
+   Concept:
+   Models entities as nodes and associations as first-class directed edges
+   (relationships) with optional properties. Ideal for interconnected networks.
+   ============================================================================ */
+
+-- Creating person, city, and restaurant nodes with relationships
+CREATE (p:Person {name: "Alice"})-[:LIVES_IN]->(c:City {name: "Chennai"})
+CREATE (p)-[:LIKES {rating: 5}]->(r:Restaurant {name: "Spice House"})
+CREATE (r)-[:LOCATED_IN]->(c);
+
+-- Querying graph relations: Find restaurants in Chennai liked by Alice
+MATCH (p:Person {name: "Alice"})-[l:LIKES]->(r:Restaurant)-[:LOCATED_IN]->(c:City {name: "Chennai"})
+RETURN p.name AS Customer, r.name AS Restaurant, l.rating AS Rating, c.name AS City;
+
+/*
+EXPECTED OUTPUT:
++------------+---------------+--------+-----------+
+| Customer   | Restaurant    | Rating | City      |
++------------+---------------+--------+-----------+
+| "Alice"    | "Spice House" | 5      | "Chennai" |
++------------+---------------+--------+-----------+
+*/
+
+
+/* ============================================================================
+   5. COMPARATIVE PARADIGM MATRIX
+   ----------------------------------------------------------------------------
+   Model          | Primary Engine | Data Structure   | Primary Use Case
+   ---------------+----------------+------------------+-----------------------
+   Key-Value      | Redis, DynamoDB| Key -> Value map | Caching, session store
+   Column-Family  | Cassandra, Hbase| Sparse table rows| Time-series, analytics
+   Document       | MongoDB, Couch | JSON / BSON docs | Content mgmt, catalogs
+   Graph          | Neo4j, Neptune | Nodes & Edges    | Social & knowledge nets
+   ============================================================================ */

@@ -222,6 +222,10 @@ INSERT INTO Branch VALUES
 INSERT INTO Branch VALUES
 (4, 'Trichy Branch', 'Trichy', 'BANK000004');
 
+/* OUTPUT:
+4 rows inserted.
+*/
+
 
 /* ============================================================
    9. INSERT CUSTOMER DATA
@@ -247,6 +251,10 @@ INSERT INTO Customer VALUES
 (5, 'Meena', DATE '1997-07-12', 'Female',
  '9876543214', 'meena@gmail.com', 'Chennai');
 
+/* OUTPUT:
+5 rows inserted.
+*/
+
 
 /* ============================================================
    10. INSERT ACCOUNT DATA
@@ -271,6 +279,10 @@ INSERT INTO Account VALUES
 INSERT INTO Account VALUES
 (100005, 5, 1, 'Savings', DATE '2025-01-15',
  90000.00, 'Active');
+
+/* OUTPUT:
+5 rows inserted.
+*/
 
 
 /* ============================================================
@@ -301,6 +313,10 @@ INSERT INTO Bank_Transaction VALUES
 (5006, 100005, DATE '2026-09-05',
  'Deposit', 25000.00, 'Salary credit');
 
+/* OUTPUT:
+6 rows inserted.
+*/
+
 
 /* ============================================================
    12. INSERT LOAN DATA
@@ -322,6 +338,10 @@ INSERT INTO Loan VALUES
 (7004, 4, 'Personal Loan', 300000.00,
  10.50, DATE '2025-01-20', 'Closed');
 
+/* OUTPUT:
+4 rows inserted.
+*/
+
 
 /* ============================================================
    13. INSERT LOAN PAYMENT DATA
@@ -342,6 +362,16 @@ INSERT INTO Loan_Payment VALUES
 INSERT INTO Loan_Payment VALUES
 (8004, 7004, DATE '2026-08-25',
  30000.00, 'UPI');
+
+/* OUTPUT:
+4 rows inserted.
+*/
+
+COMMIT;
+
+/* OUTPUT:
+Commit complete.
+*/
 
 
 /* ============================================================

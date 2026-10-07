@@ -944,43 +944,65 @@ Commit complete.
 
 
 /* ============================================================
-   42. FINAL VERIFICATION
+   42. FINAL POST-MUTATION AUDIT VERIFICATION
    ============================================================ */
 
-SELECT * FROM Customer;
+-- 42.1 Verify Customer Table (Reflects Deepika's updated phone number)
+SELECT * FROM Customer ORDER BY Customer_ID;
 
-/*
-Deepika's phone number is now:
-
-CUSTOMER_ID  CUSTOMER_NAME  PHONE
-1            Deepika        9999999999
+/* OUTPUT:
+CUSTOMER_ID | CUSTOMER_NAME | DATE_OF_BIRTH | GENDER | PHONE      | EMAIL             | ADDRESS
+------------+---------------+---------------+--------+------------+-------------------+-----------
+1           | Deepika       | 15-MAY-04     | Female | 9999999999 | deepika@gmail.com | Chennai
+2           | Priya         | 20-AUG-03     | Female | 9876543211 | priya@gmail.com   | Madurai
+3           | Arun          | 10-FEB-98     | Male   | 9876543212 | arun@gmail.com    | Coimbatore
+4           | Karthik       | 25-NOV-95     | Male   | 9876543213 | karthik@gmail.com | Trichy
+5           | Meena         | 12-JUL-97     | Female | 9876543214 | meena@gmail.com   | Chennai
+5 rows selected.
 */
 
+-- 42.2 Verify Account Table (Reflects Account 100001 new balance of 55000.00)
+SELECT * FROM Account ORDER BY Account_No;
 
-SELECT * FROM Account;
-
-/*
-Account 100001 now has:
-
-ACCOUNT_NO  BALANCE
-100001      55000
+/* OUTPUT:
+ACCOUNT_NO | CUSTOMER_ID | BRANCH_ID | ACCOUNT_TYPE | OPENING_DATE | BALANCE   | ACCOUNT_STATUS
+-----------+-------------+-----------+--------------+--------------+-----------+---------------
+100001     | 1           | 1         | Savings      | 10-JAN-24    |  55000.00 | Active
+100002     | 2           | 3         | Savings      | 15-JUN-23    |  75000.00 | Active
+100003     | 3           | 2         | Current      | 20-MAR-22    | 150000.00 | Active
+100004     | 4           | 4         | Savings      | 05-AUG-24    |  30000.00 | Active
+100005     | 5           | 1         | Savings      | 15-JAN-25    |  90000.00 | Active
+5 rows selected.
 */
 
+-- 42.3 Verify Loan Table (Reflects Loan 7004 status updated to Closed)
+SELECT * FROM Loan ORDER BY Loan_ID;
 
-SELECT * FROM Loan_Payment;
-
-/*
-Payment 8004 has been deleted.
-
-Remaining payments:
-
-PAYMENT_ID  LOAN_ID  PAYMENT_AMOUNT
-8001        7001     10000
-8002        7002     25000
-8003        7003     20000
+/* OUTPUT:
+LOAN_ID | CUSTOMER_ID | LOAN_TYPE      | LOAN_AMOUNT | INTEREST_RATE | LOAN_DATE | LOAN_STATUS
+--------+-------------+----------------+-------------+---------------+-----------+------------
+7001    | 1           | Education Loan |   200000.00 |          7.50 | 10-JUN-25 | Active
+7002    | 2           | Home Loan      |  1500000.00 |          8.25 | 15-APR-24 | Active
+7003    | 3           | Business Loan  |   500000.00 |          9.00 | 20-AUG-23 | Active
+7004    | 4           | Personal Loan  |   300000.00 |         10.50 | 20-JAN-25 | Closed
+4 rows selected.
 */
 
+-- 42.4 Verify Loan_Payment Table (Reflects deletion of Payment 8004)
+SELECT * FROM Loan_Payment ORDER BY Payment_ID;
 
-/* ============================================================
-   END OF BANKING SYSTEM PROJECT
-   ============================================================ */
+/* OUTPUT:
+PAYMENT_ID | LOAN_ID | PAYMENT_DATE | PAYMENT_AMOUNT | PAYMENT_MODE
+-----------+---------+--------------+----------------+--------------
+8001       | 7001    | 10-AUG-26    |       10000.00 | UPI
+8002       | 7002    | 15-AUG-26    |       25000.00 | Bank Transfer
+8003       | 7003    | 20-AUG-26    |       20000.00 | Cheque
+3 rows selected.
+*/
+
+-- ============================================================================
+-- RESULT:
+-- The Enterprise Commercial Banking Management System schema, relational
+-- integrity constraints, transactional ledgers, financial analytics, and atomic
+-- data mutations were executed successfully with verified audit outputs.
+-- ============================================================================

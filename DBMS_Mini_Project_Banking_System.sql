@@ -584,12 +584,11 @@ SELECT
 FROM Bank_Transaction
 WHERE Transaction_Type = 'Deposit';
 
-/*
-OUTPUT:
-
+/* OUTPUT:
 TOTAL_DEPOSITS
 --------------
-60000
+      60000.00
+1 row selected.
 */
 
 
@@ -602,12 +601,11 @@ SELECT
 FROM Bank_Transaction
 WHERE Transaction_Type = 'Withdrawal';
 
-/*
-OUTPUT:
-
+/* OUTPUT:
 TOTAL_WITHDRAWALS
 -----------------
-20000
+         20000.00
+1 row selected.
 */
 
 
@@ -622,11 +620,11 @@ SELECT
 FROM Account
 WHERE Balance = (SELECT MAX(Balance) FROM Account);
 
-/*
-OUTPUT:
-
-ACCOUNT_NO  CUSTOMER_ID  BALANCE
-100003      3            150000
+/* OUTPUT:
+ACCOUNT_NO | CUSTOMER_ID | BALANCE
+-----------+-------------+----------
+100003     | 3           | 150000.00
+1 row selected.
 */
 
 
@@ -641,11 +639,11 @@ SELECT
 FROM Account
 WHERE Balance = (SELECT MIN(Balance) FROM Account);
 
-/*
-OUTPUT:
-
-ACCOUNT_NO  CUSTOMER_ID  BALANCE
-100004      4            30000
+/* OUTPUT:
+ACCOUNT_NO | CUSTOMER_ID | BALANCE
+-----------+-------------+---------
+100004     | 4           | 30000.00
+1 row selected.
 */
 
 
@@ -659,12 +657,12 @@ SELECT
 FROM Account
 GROUP BY Account_Type;
 
-/*
-OUTPUT:
-
-ACCOUNT_TYPE  NUMBER_OF_ACCOUNTS
-Savings       4
-Current       1
+/* OUTPUT:
+ACCOUNT_TYPE | NUMBER_OF_ACCOUNTS
+-------------+-------------------
+Savings      |                  4
+Current      |                  1
+2 rows selected.
 */
 
 
@@ -676,12 +674,11 @@ SELECT
     AVG(Balance) AS Average_Balance
 FROM Account;
 
-/*
-OUTPUT:
-
+/* OUTPUT:
 AVERAGE_BALANCE
 ---------------
-79000
+       79000.00
+1 row selected.
 */
 
 

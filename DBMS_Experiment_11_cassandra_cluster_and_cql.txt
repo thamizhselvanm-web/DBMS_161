@@ -1,24 +1,26 @@
 /* ============================================================================
    EX NO: 11
-   TITLE : DISTRIBUTED DATABASE IMPLEMENTATION USING APACHE CASSANDRA
+   TITLE : DISTRIBUTED DATABASE CLUSTER USING APACHE CASSANDRA & CQL
    AIM   : To configure a multi-node Apache Cassandra distributed cluster,
-           verify node states via nodetool, and perform Keyspace and Table
+           verify ring topology via nodetool, and perform keyspace and table
            operations using Cassandra Query Language (CQL).
+   ENGINE: Apache Cassandra 4.x/5.x / cqlsh
    ============================================================================
-   ALGORITHM
+   ALGORITHM:
    ---------
-   STEP 1 : Start
-   STEP 2 : Configure `cassandra.yaml` across cluster nodes specifying:
-            - `cluster_name`
-            - `seeds` (seed node IP address)
-            - `listen_address` (node-specific host IP)
-   STEP 3 : Start the Apache Cassandra service daemon across nodes.
-   STEP 4 : Verify the distributed cluster topology and status using `nodetool status`.
-   STEP 5 : Launch the Cassandra Query Language shell (`cqlsh`).
-   STEP 6 : Create keyspace `college_ks` with replication strategy and factor.
-   STEP 7 : Switch to `college_ks` and create the `student` column table.
-   STEP 8 : Insert student records and query all rows.
-   STEP 9 : Verify outputs and stop.
+   STEP 1: Start.
+   STEP 2: Configure cluster networking in `cassandra.yaml` on all nodes:
+           - `cluster_name`: 'CollegeCluster'
+           - `seeds`: "192.168.1.10"
+           - `listen_address`: Host machine IP
+           - `endpoint_snitch`: GossipingPropertyFileSnitch
+   STEP 3: Start the Cassandra daemon service across cluster nodes.
+   STEP 4: Verify distributed cluster topology and node health using `nodetool status`.
+   STEP 5: Launch interactive CQL shell (`cqlsh`).
+   STEP 6: Create keyspace `college_ks` with `SimpleStrategy` and replication factor 3.
+   STEP 7: Switch to keyspace and create columnar table `student`.
+   STEP 8: Execute CQL DML insertions, row selections, and targeted updates.
+   STEP 9: Verify query outputs and conclude the experiment.
    ============================================================================ */
 
 
@@ -28,8 +30,8 @@
 
 cluster_name: 'CollegeCluster'
 seeds: "192.168.1.10"
-listen_address: <node's own IP>
-rpc_address: <node's own IP>
+listen_address: 192.168.1.10
+rpc_address: 192.168.1.10
 endpoint_snitch: GossipingPropertyFileSnitch
 
 
@@ -89,14 +91,9 @@ CREATE TABLE student (
 # PART 5: DATA INSERTION (DML)
 # ============================================================================
 
-INSERT INTO student (rollno, name, dept)
-VALUES (101, 'RAJA', 'CSE');
-
-INSERT INTO student (rollno, name, dept)
-VALUES (102, 'PRIYA', 'IT');
-
-INSERT INTO student (rollno, name, dept)
-VALUES (103, 'KARTHIK', 'ECE');
+INSERT INTO student (rollno, name, dept) VALUES (101, 'RAJA', 'CSE');
+INSERT INTO student (rollno, name, dept) VALUES (102, 'PRIYA', 'IT');
+INSERT INTO student (rollno, name, dept) VALUES (103, 'KARTHIK', 'ECE');
 
 
 # ============================================================================
@@ -113,3 +110,35 @@ SELECT * FROM student;
 #     103 |  ECE | KARTHIK
 #
 # (3 rows)
+
+
+# ============================================================================
+# PART 7: PARTITION KEY FILTERING & UPDATE
+# ============================================================================
+
+SELECT * FROM student WHERE rollno = 101;
+
+# EXPECTED OUTPUT:
+#  rollno | dept | name
+# --------+------+------
+#     101 |  CSE | RAJA
+#
+# (1 rows)
+
+UPDATE student SET dept = 'AI-DS' WHERE rollno = 101;
+
+SELECT * FROM student WHERE rollno = 101;
+
+# EXPECTED OUTPUT:
+#  rollno | dept  | name
+# --------+-------+------
+#     101 | AI-DS | RAJA
+#
+# (1 rows)
+
+
+# ============================================================================
+# RESULT:
+# The distributed Apache Cassandra cluster was initialized, inspected via
+# nodetool status, and CQL keyspace, table, and row queries were verified.
+# ============================================================================

@@ -853,13 +853,20 @@ UPDATE Account
 SET Balance = Balance + 5000
 WHERE Account_No = 100001;
 
-/*
-OUTPUT:
-
+/* OUTPUT:
 1 row updated.
+*/
 
-Account 100001 balance:
-50000 + 5000 = 55000
+-- Verify updated balance
+SELECT Account_No, Customer_ID, Balance
+FROM Account
+WHERE Account_No = 100001;
+
+/* OUTPUT:
+ACCOUNT_NO | CUSTOMER_ID | BALANCE
+-----------+-------------+---------
+100001     | 1           | 55000.00
+1 row selected.
 */
 
 
@@ -871,13 +878,20 @@ UPDATE Customer
 SET Phone = '9999999999'
 WHERE Customer_ID = 1;
 
-/*
-OUTPUT:
-
+/* OUTPUT:
 1 row updated.
+*/
 
-Deepika's new phone number:
-9999999999
+-- Verify updated phone number
+SELECT Customer_ID, Customer_Name, Phone
+FROM Customer
+WHERE Customer_ID = 1;
+
+/* OUTPUT:
+CUSTOMER_ID | CUSTOMER_NAME | PHONE
+------------+---------------+-----------
+1           | Deepika       | 9999999999
+1 row selected.
 */
 
 
@@ -889,13 +903,20 @@ UPDATE Loan
 SET Loan_Status = 'Closed'
 WHERE Loan_ID = 7004;
 
-/*
-OUTPUT:
-
+/* OUTPUT:
 1 row updated.
+*/
 
-Loan 7004 status:
-Closed
+-- Verify updated loan status
+SELECT Loan_ID, Loan_Type, Loan_Status
+FROM Loan
+WHERE Loan_ID = 7004;
+
+/* OUTPUT:
+LOAN_ID | LOAN_TYPE     | LOAN_STATUS
+--------+---------------+------------
+7004    | Personal Loan | Closed
+1 row selected.
 */
 
 
@@ -906,12 +927,8 @@ Closed
 DELETE FROM Loan_Payment
 WHERE Payment_ID = 8004;
 
-/*
-OUTPUT:
-
+/* OUTPUT:
 1 row deleted.
-
-Payment 8004 has been deleted.
 */
 
 
@@ -921,9 +938,7 @@ Payment 8004 has been deleted.
 
 COMMIT;
 
-/*
-OUTPUT:
-
+/* OUTPUT:
 Commit complete.
 */
 

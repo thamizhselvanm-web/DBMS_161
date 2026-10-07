@@ -29,12 +29,8 @@ The repository is built with an emphasis on **rigorous schema design, relational
 
 ```text
 DBMS_EXERCISE/
+├── .gitignore
 ├── README.md
-├── Index.docx
-├── Index.pdf
-├── UPDATED DBMS INDEX FINAL.docx
-├── UPDATED DBMS INDEX FINAL.pdf
-├── qr_codes/
 ├── DBMS_Experiment_1_Simple_Nested_Subqueries.sql
 ├── DBMS_Experiment_2_JOIN_Queries.sql
 ├── DBMS_Experiment_3_View_and_Index.sql

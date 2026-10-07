@@ -688,20 +688,14 @@ AVERAGE_BALANCE
 
 SELECT * FROM Loan;
 
-/*
-OUTPUT:
-
-LOAN_ID  CUSTOMER_ID  LOAN_TYPE        LOAN_AMOUNT  INTEREST_RATE
-7001     1            Education Loan   200000       7.5
-7002     2            Home Loan        1500000      8.25
-7003     3            Business Loan    500000       9
-7004     4            Personal Loan    300000       10.5
-
-LOAN_STATUS
-Active
-Active
-Active
-Closed
+/* OUTPUT:
+LOAN_ID | CUSTOMER_ID | LOAN_TYPE      | LOAN_AMOUNT | INTEREST_RATE | LOAN_DATE | LOAN_STATUS
+--------+-------------+----------------+-------------+---------------+-----------+------------
+7001    | 1           | Education Loan |   200000.00 |          7.50 | 10-JUN-25 | Active
+7002    | 2           | Home Loan      |  1500000.00 |          8.25 | 15-APR-24 | Active
+7003    | 3           | Business Loan  |   500000.00 |          9.00 | 20-AUG-23 | Active
+7004    | 4           | Personal Loan  |   300000.00 |         10.50 | 20-JAN-25 | Closed
+4 rows selected.
 */
 
 
@@ -719,13 +713,13 @@ SELECT
 FROM Loan
 WHERE Loan_Status = 'Active';
 
-/*
-OUTPUT:
-
-LOAN_ID  CUSTOMER_ID  LOAN_TYPE        LOAN_AMOUNT  RATE  STATUS
-7001     1            Education Loan   200000       7.5   Active
-7002     2            Home Loan        1500000      8.25  Active
-7003     3            Business Loan    500000       9     Active
+/* OUTPUT:
+LOAN_ID | CUSTOMER_ID | LOAN_TYPE      | LOAN_AMOUNT | INTEREST_RATE | LOAN_STATUS
+--------+-------------+----------------+-------------+---------------+------------
+7001    | 1           | Education Loan |   200000.00 |          7.50 | Active
+7002    | 2           | Home Loan      |  1500000.00 |          8.25 | Active
+7003    | 3           | Business Loan  |   500000.00 |          9.00 | Active
+3 rows selected.
 */
 
 
@@ -744,14 +738,14 @@ FROM Customer c
 JOIN Loan l
 ON c.Customer_ID = l.Customer_ID;
 
-/*
-OUTPUT:
-
-CUSTOMER_NAME  LOAN_ID  LOAN_TYPE        LOAN_AMOUNT  RATE  STATUS
-Deepika        7001     Education Loan   200000       7.5   Active
-Priya          7002     Home Loan        1500000      8.25  Active
-Arun           7003     Business Loan    500000       9     Active
-Karthik        7004     Personal Loan    300000       10.5  Closed
+/* OUTPUT:
+CUSTOMER_NAME | LOAN_ID | LOAN_TYPE      | LOAN_AMOUNT | INTEREST_RATE | LOAN_STATUS
+--------------+---------+----------------+-------------+---------------+------------
+Deepika       | 7001    | Education Loan |   200000.00 |          7.50 | Active
+Priya         | 7002    | Home Loan      |  1500000.00 |          8.25 | Active
+Arun          | 7003    | Business Loan  |   500000.00 |          9.00 | Active
+Karthik       | 7004    | Personal Loan  |   300000.00 |         10.50 | Closed
+4 rows selected.
 */
 
 
@@ -763,12 +757,11 @@ SELECT
     SUM(Loan_Amount) AS Total_Loan_Amount
 FROM Loan;
 
-/*
-OUTPUT:
-
+/* OUTPUT:
 TOTAL_LOAN_AMOUNT
 -----------------
-2500000
+       2500000.00
+1 row selected.
 */
 
 
@@ -784,11 +777,11 @@ SELECT
 FROM Loan
 WHERE Loan_Amount = (SELECT MAX(Loan_Amount) FROM Loan);
 
-/*
-OUTPUT:
-
-LOAN_ID  CUSTOMER_ID  LOAN_TYPE    LOAN_AMOUNT
-7002     2            Home Loan    1500000
+/* OUTPUT:
+LOAN_ID | CUSTOMER_ID | LOAN_TYPE | LOAN_AMOUNT
+--------+-------------+-----------+-----------
+7002    | 2           | Home Loan | 1500000.00
+1 row selected.
 */
 
 
@@ -798,14 +791,14 @@ LOAN_ID  CUSTOMER_ID  LOAN_TYPE    LOAN_AMOUNT
 
 SELECT * FROM Loan_Payment;
 
-/*
-OUTPUT:
-
-PAYMENT_ID  LOAN_ID  PAYMENT_DATE  PAYMENT_AMOUNT  PAYMENT_MODE
-8001        7001     10-AUG-26     10000           UPI
-8002        7002     15-AUG-26     25000           Bank Transfer
-8003        7003     20-AUG-26     20000           Cheque
-8004        7004     25-AUG-26     30000           UPI
+/* OUTPUT:
+PAYMENT_ID | LOAN_ID | PAYMENT_DATE | PAYMENT_AMOUNT | PAYMENT_MODE
+-----------+---------+--------------+----------------+--------------
+8001       | 7001    | 10-AUG-26    |       10000.00 | UPI
+8002       | 7002    | 15-AUG-26    |       25000.00 | Bank Transfer
+8003       | 7003    | 20-AUG-26    |       20000.00 | Cheque
+8004       | 7004    | 25-AUG-26    |       30000.00 | UPI
+4 rows selected.
 */
 
 
@@ -825,14 +818,14 @@ ON lp.Loan_ID = l.Loan_ID
 JOIN Customer c
 ON l.Customer_ID = c.Customer_ID;
 
-/*
-OUTPUT:
-
-CUSTOMER_NAME  LOAN_TYPE        PAYMENT_DATE  PAYMENT_AMOUNT  MODE
-Deepika        Education Loan   10-AUG-26     10000           UPI
-Priya          Home Loan        15-AUG-26     25000           Bank Transfer
-Arun           Business Loan    20-AUG-26     20000           Cheque
-Karthik        Personal Loan    25-AUG-26     30000           UPI
+/* OUTPUT:
+CUSTOMER_NAME | LOAN_TYPE      | PAYMENT_DATE | PAYMENT_AMOUNT | PAYMENT_MODE
+--------------+----------------+--------------+----------------+--------------
+Deepika       | Education Loan | 10-AUG-26    |       10000.00 | UPI
+Priya         | Home Loan      | 15-AUG-26    |       25000.00 | Bank Transfer
+Arun          | Business Loan  | 20-AUG-26    |       20000.00 | Cheque
+Karthik       | Personal Loan  | 25-AUG-26    |       30000.00 | UPI
+4 rows selected.
 */
 
 
@@ -844,12 +837,11 @@ SELECT
     SUM(Payment_Amount) AS Total_Loan_Payments
 FROM Loan_Payment;
 
-/*
-OUTPUT:
-
+/* OUTPUT:
 TOTAL_LOAN_PAYMENTS
 -------------------
-85000
+           85000.00
+1 row selected.
 */
 
 

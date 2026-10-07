@@ -380,29 +380,15 @@ Commit complete.
 
 SELECT * FROM Customer;
 
-/*
-OUTPUT:
-
-CUSTOMER_ID  CUSTOMER_NAME  DATE_OF_BIRTH  GENDER  PHONE
-1            Deepika        15-MAY-04      Female  9876543210
-2            Priya          20-AUG-03      Female  9876543211
-3            Arun           10-FEB-98      Male    9876543212
-4            Karthik        25-NOV-95      Male    9876543213
-5            Meena          12-JUL-97      Female  9876543214
-
-EMAIL
-deepika@gmail.com
-priya@gmail.com
-arun@gmail.com
-karthik@gmail.com
-meena@gmail.com
-
-ADDRESS
-Chennai
-Madurai
-Coimbatore
-Trichy
-Chennai
+/* OUTPUT:
+CUSTOMER_ID | CUSTOMER_NAME | DATE_OF_BIRTH | GENDER | PHONE      | EMAIL             | ADDRESS
+------------+---------------+---------------+--------+------------+-------------------+-----------
+1           | Deepika       | 15-MAY-04     | Female | 9876543210 | deepika@gmail.com | Chennai
+2           | Priya         | 20-AUG-03     | Female | 9876543211 | priya@gmail.com   | Madurai
+3           | Arun          | 10-FEB-98     | Male   | 9876543212 | arun@gmail.com    | Coimbatore
+4           | Karthik       | 25-NOV-95     | Male   | 9876543213 | karthik@gmail.com | Trichy
+5           | Meena         | 12-JUL-97     | Female | 9876543214 | meena@gmail.com   | Chennai
+5 rows selected.
 */
 
 
@@ -412,14 +398,14 @@ Chennai
 
 SELECT * FROM Branch;
 
-/*
-OUTPUT:
-
-BRANCH_ID  BRANCH_NAME           CITY        IFSC_CODE
-1          Chennai Main Branch   Chennai     BANK000001
-2          Coimbatore Branch     Coimbatore  BANK000002
-3          Madurai Branch        Madurai     BANK000003
-4          Trichy Branch         Trichy      BANK000004
+/* OUTPUT:
+BRANCH_ID | BRANCH_NAME         | CITY       | IFSC_CODE
+----------+---------------------+------------+-----------
+1         | Chennai Main Branch | Chennai    | BANK000001
+2         | Coimbatore Branch   | Coimbatore | BANK000002
+3         | Madurai Branch      | Madurai    | BANK000003
+4         | Trichy Branch       | Trichy     | BANK000004
+4 rows selected.
 */
 
 
@@ -429,22 +415,15 @@ BRANCH_ID  BRANCH_NAME           CITY        IFSC_CODE
 
 SELECT * FROM Account;
 
-/*
-OUTPUT:
-
-ACCOUNT_NO  CUSTOMER_ID  BRANCH_ID  ACCOUNT_TYPE  OPENING_DATE
-100001      1            1          Savings       10-JAN-24
-100002      2            3          Savings       15-JUN-23
-100003      3            2          Current       20-MAR-22
-100004      4            4          Savings       05-AUG-24
-100005      5            1          Savings       15-JAN-25
-
-BALANCE     ACCOUNT_STATUS
-50000       Active
-75000       Active
-150000      Active
-30000       Active
-90000       Active
+/* OUTPUT:
+ACCOUNT_NO | CUSTOMER_ID | BRANCH_ID | ACCOUNT_TYPE | OPENING_DATE | BALANCE   | ACCOUNT_STATUS
+-----------+-------------+-----------+--------------+--------------+-----------+---------------
+100001     | 1           | 1         | Savings      | 10-JAN-24    |  50000.00 | Active
+100002     | 2           | 3         | Savings      | 15-JUN-23    |  75000.00 | Active
+100003     | 3           | 2         | Current      | 20-MAR-22    | 150000.00 | Active
+100004     | 4           | 4         | Savings      | 05-AUG-24    |  30000.00 | Active
+100005     | 5           | 1         | Savings      | 15-JAN-25    |  90000.00 | Active
+5 rows selected.
 */
 
 
@@ -463,15 +442,15 @@ FROM Customer c
 JOIN Account a
 ON c.Customer_ID = a.Customer_ID;
 
-/*
-OUTPUT:
-
-CUSTOMER_ID  CUSTOMER_NAME  ACCOUNT_NO  ACCOUNT_TYPE  BALANCE  STATUS
-1            Deepika        100001      Savings       50000    Active
-2            Priya          100002      Savings       75000    Active
-3            Arun           100003      Current       150000   Active
-4            Karthik        100004      Savings       30000    Active
-5            Meena          100005      Savings       90000    Active
+/* OUTPUT:
+CUSTOMER_ID | CUSTOMER_NAME | ACCOUNT_NO | ACCOUNT_TYPE | BALANCE   | STATUS
+------------+---------------+------------+--------------+-----------+-------
+1           | Deepika       | 100001     | Savings      |  50000.00 | Active
+2           | Priya         | 100002     | Savings      |  75000.00 | Active
+3           | Arun          | 100003     | Current      | 150000.00 | Active
+4           | Karthik       | 100004     | Savings      |  30000.00 | Active
+5           | Meena         | 100005     | Savings      |  90000.00 | Active
+5 rows selected.
 */
 
 
@@ -491,15 +470,15 @@ ON c.Customer_ID = a.Customer_ID
 JOIN Branch b
 ON a.Branch_ID = b.Branch_ID;
 
-/*
-OUTPUT:
-
-CUSTOMER_NAME  ACCOUNT_NO  BRANCH_NAME          CITY        IFSC_CODE
-Deepika        100001      Chennai Main Branch  Chennai     BANK000001
-Priya          100002      Madurai Branch       Madurai     BANK000003
-Arun           100003      Coimbatore Branch    Coimbatore  BANK000002
-Karthik        100004      Trichy Branch        Trichy      BANK000004
-Meena          100005      Chennai Main Branch  Chennai     BANK000001
+/* OUTPUT:
+CUSTOMER_NAME | ACCOUNT_NO | BRANCH_NAME         | CITY       | IFSC_CODE
+--------------+------------+---------------------+------------+-----------
+Deepika       | 100001     | Chennai Main Branch | Chennai    | BANK000001
+Priya         | 100002     | Madurai Branch      | Madurai    | BANK000003
+Arun          | 100003     | Coimbatore Branch   | Coimbatore | BANK000002
+Karthik       | 100004     | Trichy Branch       | Trichy     | BANK000004
+Meena         | 100005     | Chennai Main Branch | Chennai    | BANK000001
+5 rows selected.
 */
 
 
@@ -514,14 +493,14 @@ SELECT
 FROM Account
 WHERE Account_Type = 'Savings';
 
-/*
-OUTPUT:
-
-ACCOUNT_NO  CUSTOMER_ID  BALANCE
-100001      1            50000
-100002      2            75000
-100004      4            30000
-100005      5            90000
+/* OUTPUT:
+ACCOUNT_NO | CUSTOMER_ID | BALANCE
+-----------+-------------+---------
+100001     | 1           | 50000.00
+100002     | 2           | 75000.00
+100004     | 4           | 30000.00
+100005     | 5           | 90000.00
+4 rows selected.
 */
 
 
@@ -537,13 +516,13 @@ SELECT
 FROM Account
 WHERE Balance > 50000;
 
-/*
-OUTPUT:
-
-ACCOUNT_NO  CUSTOMER_ID  ACCOUNT_TYPE  BALANCE
-100002      2            Savings       75000
-100003      3            Current       150000
-100005      5            Savings       90000
+/* OUTPUT:
+ACCOUNT_NO | CUSTOMER_ID | ACCOUNT_TYPE | BALANCE
+-----------+-------------+--------------+----------
+100002     | 2           | Savings      |  75000.00
+100003     | 3           | Current      | 150000.00
+100005     | 5           | Savings      |  90000.00
+3 rows selected.
 */
 
 
@@ -553,24 +532,16 @@ ACCOUNT_NO  CUSTOMER_ID  ACCOUNT_TYPE  BALANCE
 
 SELECT * FROM Bank_Transaction;
 
-/*
-OUTPUT:
-
-TRANSACTION_ID  ACCOUNT_NO  DATE       TYPE        AMOUNT
-5001            100001      01-SEP-26  Deposit     10000
-5002            100001      05-SEP-26  Withdrawal  5000
-5003            100002      02-SEP-26  Deposit     20000
-5004            100003      03-SEP-26  Withdrawal  15000
-5005            100004      04-SEP-26  Deposit     5000
-5006            100005      05-SEP-26  Deposit     25000
-
-DESCRIPTION
-Cash deposit
-ATM withdrawal
-Salary credit
-Business payment
-Cash deposit
-Salary credit
+/* OUTPUT:
+TRANSACTION_ID | ACCOUNT_NO | TRANSACTION_DATE | TRANSACTION_TYPE | AMOUNT   | DESCRIPTION
+---------------+------------+------------------+------------------+----------+-----------------
+5001           | 100001     | 01-SEP-26        | Deposit          | 10000.00 | Cash deposit
+5002           | 100001     | 05-SEP-26        | Withdrawal       |  5000.00 | ATM withdrawal
+5003           | 100002     | 02-SEP-26        | Deposit          | 20000.00 | Salary credit
+5004           | 100003     | 03-SEP-26        | Withdrawal       | 15000.00 | Business payment
+5005           | 100004     | 04-SEP-26        | Deposit          |  5000.00 | Cash deposit
+5006           | 100005     | 05-SEP-26        | Deposit          | 25000.00 | Salary credit
+6 rows selected.
 */
 
 
@@ -591,24 +562,16 @@ ON t.Account_No = a.Account_No
 JOIN Customer c
 ON a.Customer_ID = c.Customer_ID;
 
-/*
-OUTPUT:
-
-CUSTOMER_NAME  ACCOUNT_NO  TRANSACTION_DATE  TYPE        AMOUNT
-Deepika        100001      01-SEP-26         Deposit     10000
-Deepika        100001      05-SEP-26         Withdrawal  5000
-Priya          100002      02-SEP-26         Deposit     20000
-Arun           100003      03-SEP-26         Withdrawal  15000
-Karthik        100004      04-SEP-26         Deposit     5000
-Meena          100005      05-SEP-26         Deposit     25000
-
-DESCRIPTION
-Cash deposit
-ATM withdrawal
-Salary credit
-Business payment
-Cash deposit
-Salary credit
+/* OUTPUT:
+CUSTOMER_NAME | ACCOUNT_NO | TRANSACTION_DATE | TYPE       | AMOUNT   | DESCRIPTION
+--------------+------------+------------------+------------+----------+-----------------
+Deepika       | 100001     | 01-SEP-26        | Deposit    | 10000.00 | Cash deposit
+Deepika       | 100001     | 05-SEP-26        | Withdrawal |  5000.00 | ATM withdrawal
+Priya         | 100002     | 02-SEP-26        | Deposit    | 20000.00 | Salary credit
+Arun          | 100003     | 03-SEP-26        | Withdrawal | 15000.00 | Business payment
+Karthik       | 100004     | 04-SEP-26        | Deposit    |  5000.00 | Cash deposit
+Meena         | 100005     | 05-SEP-26        | Deposit    | 25000.00 | Salary credit
+6 rows selected.
 */
 
 

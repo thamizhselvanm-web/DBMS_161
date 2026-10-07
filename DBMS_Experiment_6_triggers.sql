@@ -1,28 +1,31 @@
 /* ============================================================================
    EX NO: 6
-   TITLE : WRITE A PROGRAM FOR TRIGGERS
-   AIM   : To write a program to create a trigger during insert, update
-           and deletion of records on a table.
+   TITLE : WRITE SQL TRIGGERS FOR INSERT, DELETE, AND UPDATE OPERATIONS
+   AIM   : To write and verify row-level database triggers for INSERT, UPDATE,
+           and DELETE operations with business rule validations in PL/SQL.
+   DBMS  : Oracle 19c+ / PL/SQL
    ============================================================================
-   ALGORITHM
+   ALGORITHM:
    ---------
-   STEP 1 : Start
-   STEP 2 : Initialize the trigger with a specific table id
-   STEP 3 : When the total is greater than 1000, raise an exception
-   STEP 4 : Specify the operation (UPDATE / INSERT / DELETE) for which
-            the trigger has to be executed
-   STEP 5 : Carry out the operation on the table to check trigger
-            execution
-   STEP 6 : Display the action taken as a result of the above condition
-   STEP 7 : Stop
+   STEP 1: Start and enable server output (`SET SERVEROUTPUT ON`).
+   STEP 2: Reset schema objects idempotently.
+   STEP 3: Create base tables `customer` and `classb`, and insert initial test records.
+   STEP 4: Create BEFORE UPDATE trigger `up_classd` on `customer` to monitor
+           attribute transformations using :OLD and :NEW bind variables.
+   STEP 5: Test UPDATE trigger and verify logged values.
+   STEP 6: Create BEFORE DELETE trigger `del_classb` on `customer` to capture row deletions.
+   STEP 7: Test DELETE trigger and verify deletion message.
+   STEP 8: Create BEFORE INSERT trigger `ins_classb` on `classb` to enforce the
+           constraint that `stotal <= 1000`, raising custom application error when violated.
+   STEP 9: Test INSERT trigger with both valid and invalid data, handling error gracefully.
+   STEP 10: Verify table states and conclude the experiment.
    ============================================================================ */
-
 
 SET SERVEROUTPUT ON;
 
-/* ----------------------------------------------------------------------------
-   RESET OBJECTS SO THE EXERCISE CAN BE RUN MORE THAN ONCE
-   ---------------------------------------------------------------------------- */
+-- ============================================================================
+-- 1. RESET OBJECTS (Idempotent script execution)
+-- ============================================================================
 
 BEGIN
     EXECUTE IMMEDIATE 'DROP TRIGGER ins_classb';
@@ -64,9 +67,9 @@ EXCEPTION
 END;
 /
 
-/* ----------------------------------------------------------------------------
-   SUPPORTING TABLES (referenced by the triggers below)
-   ---------------------------------------------------------------------------- */
+-- ============================================================================
+-- 2. CREATE SUPPORTING TABLES AND SEED DATA
+-- ============================================================================
 
 CREATE TABLE customer (
     sid    NUMBER PRIMARY KEY,
@@ -84,13 +87,23 @@ CREATE TABLE classb (
 
 INSERT INTO customer VALUES (1, 'Ravi', 900);
 INSERT INTO customer VALUES (3, 'Kumar', 900);
+COMMIT;
 
+-- Verify initial customer table
+SELECT * FROM customer ORDER BY sid;
 
-/* ----------------------------------------------------------------------------
-   TRIGGER ON UPDATE
-   Fires BEFORE an UPDATE on "customer", printing the OLD and NEW value
-   of stotal for each affected row.
-   ---------------------------------------------------------------------------- */
+/* OUTPUT:
+SID | SNAME | STOTAL
+----+-------+-------
+1   | Ravi  | 900
+3   | Kumar | 900
+2 rows selected.
+*/
+
+-- ============================================================================
+-- 3. TRIGGER ON UPDATE (BEFORE ROW-LEVEL TRIGGER)
+-- Fires before updating customer, logging old and new stotal values.
+-- ============================================================================
 
 CREATE OR REPLACE TRIGGER up_classd
 BEFORE UPDATE ON customer
@@ -103,21 +116,35 @@ BEGIN
 END;
 /
 
+/* OUTPUT:
+Trigger UP_CLASSD compiled
+*/
+
 -- Test the UPDATE trigger
 UPDATE customer
 SET stotal = 500
 WHERE sid = 3;
+
 /* OUTPUT:
 new value is 500
 old value is 900
 1 row updated.
 */
 
+-- Verify customer table after update
+SELECT * FROM customer WHERE sid = 3;
 
-/* ----------------------------------------------------------------------------
-   TRIGGER ON DELETE
-   Fires BEFORE a DELETE on "customer", printing a confirmation message.
-   ---------------------------------------------------------------------------- */
+/* OUTPUT:
+SID | SNAME | STOTAL
+----+-------+-------
+3   | Kumar | 500
+1 row selected.
+*/
+
+-- ============================================================================
+-- 4. TRIGGER ON DELETE (BEFORE ROW-LEVEL TRIGGER)
+-- Fires before deleting a customer record, notifying user.
+-- ============================================================================
 
 CREATE OR REPLACE TRIGGER del_classb
 BEFORE DELETE ON customer
@@ -129,21 +156,33 @@ BEGIN
 END;
 /
 
+/* OUTPUT:
+Trigger DEL_CLASSB compiled
+*/
+
 -- Test the DELETE trigger
 DELETE FROM customer
 WHERE sid = 1;
+
 /* OUTPUT:
 row deleted
 1 row deleted.
 */
 
+-- Verify customer table after deletion
+SELECT * FROM customer ORDER BY sid;
 
-/* ----------------------------------------------------------------------------
-   TRIGGER ON INSERT (with validation / exception)
-   Fires BEFORE an INSERT on "classb". If the new row's stotal exceeds
-   1000, a user-defined exception (InvTot) is raised and reported via
-   RAISE_APPLICATION_ERROR.
-   ---------------------------------------------------------------------------- */
+/* OUTPUT:
+SID | SNAME | STOTAL
+----+-------+-------
+3   | Kumar | 500
+1 row selected.
+*/
+
+-- ============================================================================
+-- 5. TRIGGER ON INSERT WITH CONSTRAINT VALIDATION
+-- Blocks insertions into classb if stotal > 1000 using RAISE_APPLICATION_ERROR.
+-- ============================================================================
 
 CREATE OR REPLACE TRIGGER ins_classb
 BEFORE INSERT ON classb
@@ -162,17 +201,27 @@ EXCEPTION
 END;
 /
 
--- Test 1: valid insert (stotal <= 1000) -> succeeds
-INSERT INTO classb VALUES (1, 'John', 'IT', 900, 'A');
-
-SELECT * FROM classb;
 /* OUTPUT:
-sid | sname | sdept | stotal | grade
-----+-------+-------+--------+------
-1   | John  | IT    | 900    | A
+Trigger INS_CLASSB compiled
 */
 
--- Test 2: invalid insert (stotal > 1000) -> trigger blocks it
+-- Test Case A: Valid insert (stotal <= 1000) -> Allowed
+INSERT INTO classb VALUES (1, 'John', 'IT', 900, 'A');
+
+/* OUTPUT:
+1 row inserted.
+*/
+
+SELECT * FROM classb;
+
+/* OUTPUT:
+SID | SNAME | SDEPT | STOTAL | GRADE
+----+-------+-------+--------+------
+1   | John  | IT    | 900    | A
+1 row selected.
+*/
+
+-- Test Case B: Invalid insert (stotal > 1000) -> Blocked by trigger
 BEGIN
     INSERT INTO classb VALUES (6, 'jana', 'it', 20000, 'a');
 EXCEPTION
@@ -184,13 +233,15 @@ EXCEPTION
         END IF;
 END;
 /
+
 /* OUTPUT:
 Invalid insert rejected: ORA-20000: Total not valid
+
+PL/SQL procedure successfully completed.
 */
 
-
-/* ============================================================================
-   RESULT: Thus, the programs for triggers created during insertion,
-   update and deletion have been executed successfully and the output
-   was verified.
-   ============================================================================ */
+-- ============================================================================
+-- RESULT:
+-- Thus the PL/SQL triggers for INSERT, UPDATE, and DELETE operations with
+-- constraint validation and bind variable tracking were executed successfully.
+-- ============================================================================

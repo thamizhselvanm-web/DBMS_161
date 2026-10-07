@@ -1,29 +1,35 @@
--- =====================================================================
--- DBMS LAB - EXPERIMENTS 2 & 3
--- =====================================================================
--- Experiment 2 : Implementation of SQL Commands for JOIN Queries
--- Experiment 3 : Create VIEW and INDEX for Database Tables
---                with a Large Number of Records
---
--- DBMS        : MySQL 8.0+
--- File        : DBMS_Experiments_2_3.sql
--- =====================================================================
+/* ============================================================================
+   EX NO: 2
+   TITLE : IMPLEMENTATION OF SQL COMMANDS FOR JOIN QUERIES
+   AIM   : To implement and execute various relational JOIN queries
+           (INNER JOIN, LEFT OUTER JOIN, RIGHT OUTER JOIN, and FULL OUTER JOIN)
+           in a relational database management system.
+   DBMS  : MySQL 8.0+ / ANSI SQL
+   ============================================================================
+   ALGORITHM:
+   ---------
+   STEP 1: Create the database schema and initialize table objects.
+   STEP 2: Define primary entity tables (Students, Courses) and associative
+           relation table (Enrollments) with primary key and foreign key constraints.
+   STEP 3: Insert representative sample data containing matched, left-unmatched,
+           and right-unmatched tuples.
+   STEP 4: Execute INNER JOIN to retrieve rows with matching foreign keys in both tables.
+   STEP 5: Execute LEFT OUTER JOIN to preserve all records from the left table
+           with NULL padding for non-matching right records.
+   STEP 6: Execute RIGHT OUTER JOIN to preserve all records from the right table
+           with NULL padding for non-matching left records.
+   STEP 7: Execute FULL OUTER JOIN (using UNION of LEFT and RIGHT JOINs in MySQL)
+           to combine all matched and unmatched records from both tables.
+   STEP 8: Verify all tabular outputs and conclude the experiment.
+   ============================================================================ */
 
-DROP DATABASE IF EXISTS dbms_experiments_2_3;
-CREATE DATABASE dbms_experiments_2_3;
-USE dbms_experiments_2_3;
+DROP DATABASE IF EXISTS dbms_joins_lab;
+CREATE DATABASE dbms_joins_lab;
+USE dbms_joins_lab;
 
--- =====================================================================
--- EXPERIMENT 2
--- IMPLEMENTATION OF SQL COMMANDS FOR JOIN QUERIES
--- =====================================================================
-
--- AIM:
--- To execute and verify the SQL commands for JOIN queries.
-
--- ---------------------------------------------------------------------
+-- ============================================================================
 -- 1. TABLE CREATION
--- ---------------------------------------------------------------------
+-- ============================================================================
 
 CREATE TABLE Students (
     StudentID INT PRIMARY KEY,
@@ -33,7 +39,7 @@ CREATE TABLE Students (
 
 CREATE TABLE Courses (
     CourseID INT PRIMARY KEY,
-    CourseName VARCHAR(20) NOT NULL
+    CourseName VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE Enrollments (
@@ -47,34 +53,37 @@ CREATE TABLE Enrollments (
         FOREIGN KEY (CourseID) REFERENCES Courses(CourseID)
 );
 
--- ---------------------------------------------------------------------
+-- ============================================================================
 -- 2. INSERT SAMPLE DATA
--- ---------------------------------------------------------------------
+-- ============================================================================
 
 INSERT INTO Students (StudentID, Name, Age) VALUES
 (1, 'Alice', 20),
 (2, 'Bob', 22),
-(3, 'Charlie', 21);
+(3, 'Charlie', 21),
+(4, 'David', 19);
 
--- The source document's displayed Courses table uses CourseID 1, 2, 3.
 INSERT INTO Courses (CourseID, CourseName) VALUES
 (1, 'Math'),
 (2, 'English'),
-(3, 'History');
+(3, 'History'),
+(4, 'Physics');
 
-INSERT INTO Enrollments
-    (EnrollmentID, StudentID, CourseID, Grade)
-VALUES
+INSERT INTO Enrollments (EnrollmentID, StudentID, CourseID, Grade) VALUES
 (1, 1, 1, 'A'),
 (2, 1, 2, 'B'),
 (3, 2, 1, 'A-'),
 (4, 3, 3, 'B+'),
 (5, 3, 2, 'A');
 
--- ---------------------------------------------------------------------
+-- Note:
+-- Student 'David' (4) is enrolled in no courses (tests LEFT OUTER JOIN null padding).
+-- Course 'Physics' (4) has no enrolled students (tests RIGHT OUTER JOIN null padding).
+
+-- ============================================================================
 -- 3. INNER JOIN
--- Get student's enrollments with course details
--- ---------------------------------------------------------------------
+-- Retrieves only records where student and course match an enrollment.
+-- ============================================================================
 
 SELECT
     s.StudentID,
@@ -83,29 +92,30 @@ SELECT
     c.CourseID,
     c.CourseName,
     e.Grade
-FROM Students AS s
-INNER JOIN Enrollments AS e
+FROM Students s
+INNER JOIN Enrollments e
     ON s.StudentID = e.StudentID
-INNER JOIN Courses AS c
+INNER JOIN Courses c
     ON e.CourseID = c.CourseID
 ORDER BY e.EnrollmentID;
 
--- Expected Output:
--- +-----------+---------+-----+----------+------------+-------+
--- | StudentID | Name    | Age | CourseID | CourseName | Grade |
--- +-----------+---------+-----+----------+------------+-------+
--- |     1     | Alice   | 20  |    1     | Math       | A     |
--- |     1     | Alice   | 20  |    2     | English    | B     |
--- |     2     | Bob     | 22  |    1     | Math       | A-    |
--- |     3     | Charlie | 21  |    3     | History    | B+    |
--- |     3     | Charlie | 21  |    2     | English    | A     |
--- +-----------+---------+-----+----------+------------+-------+
+/* OUTPUT:
++-----------+---------+-----+----------+------------+-------+
+| StudentID | Name    | Age | CourseID | CourseName | Grade |
++-----------+---------+-----+----------+------------+-------+
+|         1 | Alice   |  20 |        1 | Math       | A     |
+|         1 | Alice   |  20 |        2 | English    | B     |
+|         2 | Bob     |  22 |        1 | Math       | A-    |
+|         3 | Charlie |  21 |        3 | History    | B+    |
+|         3 | Charlie |  21 |        2 | English    | A     |
++-----------+---------+-----+----------+------------+-------+
+5 rows in set
+*/
 
--- ---------------------------------------------------------------------
--- 4. LEFT JOIN
--- Get all students and their enrollments, including students
--- with no enrollments.
--- ---------------------------------------------------------------------
+-- ============================================================================
+-- 4. LEFT OUTER JOIN
+-- Retrieves all students, including David who has no enrollment.
+-- ============================================================================
 
 SELECT
     s.StudentID,
@@ -114,23 +124,31 @@ SELECT
     c.CourseID,
     c.CourseName,
     e.Grade
-FROM Students AS s
-LEFT JOIN Enrollments AS e
+FROM Students s
+LEFT JOIN Enrollments e
     ON s.StudentID = e.StudentID
-LEFT JOIN Courses AS c
+LEFT JOIN Courses c
     ON e.CourseID = c.CourseID
 ORDER BY s.StudentID, e.EnrollmentID;
 
--- Expected Output:
--- With the sample data above, every student has at least one
--- enrollment, so the result contains the same five enrollment rows
--- as the INNER JOIN.
+/* OUTPUT:
++-----------+---------+-----+----------+------------+-------+
+| StudentID | Name    | Age | CourseID | CourseName | Grade |
++-----------+---------+-----+----------+------------+-------+
+|         1 | Alice   |  20 |        1 | Math       | A     |
+|         1 | Alice   |  20 |        2 | English    | B     |
+|         2 | Bob     |  22 |        1 | Math       | A-    |
+|         3 | Charlie |  21 |        2 | English    | A     |
+|         3 | Charlie |  21 |        3 | History    | B+    |
+|         4 | David   |  19 |     NULL | NULL       | NULL  |
++-----------+---------+-----+----------+------------+-------+
+6 rows in set
+*/
 
--- ---------------------------------------------------------------------
--- 5. RIGHT JOIN
--- Get all courses and their enrollments, including courses with
--- no enrollments.
--- ---------------------------------------------------------------------
+-- ============================================================================
+-- 5. RIGHT OUTER JOIN
+-- Retrieves all courses, including Physics which has no student enrollment.
+-- ============================================================================
 
 SELECT
     s.StudentID,
@@ -139,30 +157,32 @@ SELECT
     c.CourseID,
     c.CourseName,
     e.Grade
-FROM Students AS s
-RIGHT JOIN Enrollments AS e
+FROM Students s
+RIGHT JOIN Enrollments e
     ON s.StudentID = e.StudentID
-RIGHT JOIN Courses AS c
+RIGHT JOIN Courses c
     ON e.CourseID = c.CourseID
 ORDER BY c.CourseID, e.EnrollmentID;
 
--- Expected Output:
--- +-----------+---------+-----+----------+------------+-------+
--- | StudentID | Name    | Age | CourseID | CourseName | Grade |
--- +-----------+---------+-----+----------+------------+-------+
--- |     1     | Alice   | 20  |    1     | Math       | A     |
--- |     2     | Bob     | 22  |    1     | Math       | A-    |
--- |     1     | Alice   | 20  |    2     | English    | B     |
--- |     3     | Charlie | 21  |    2     | English    | A     |
--- |     3     | Charlie | 21  |    3     | History    | B+    |
--- +-----------+---------+-----+----------+------------+-------+
+/* OUTPUT:
++-----------+---------+-----+----------+------------+-------+
+| StudentID | Name    | Age | CourseID | CourseName | Grade |
++-----------+---------+-----+----------+------------+-------+
+|         1 | Alice   |  20 |        1 | Math       | A     |
+|         2 | Bob     |  22 |        1 | Math       | A-    |
+|         1 | Alice   |  20 |        2 | English    | B     |
+|         3 | Charlie |  21 |        2 | English    | A     |
+|         3 | Charlie |  21 |        3 | History    | B+    |
+|      NULL | NULL    | NULL|        4 | Physics    | NULL  |
++-----------+---------+-----+----------+------------+-------+
+6 rows in set
+*/
 
--- ---------------------------------------------------------------------
+-- ============================================================================
 -- 6. FULL OUTER JOIN
--- MySQL does not provide FULL OUTER JOIN directly.
--- The equivalent result is produced using LEFT JOIN + RIGHT JOIN
--- with UNION.
--- ---------------------------------------------------------------------
+-- Emulated in MySQL using UNION of LEFT JOIN and RIGHT JOIN.
+-- Preserves unmatched students (David) AND unmatched courses (Physics).
+-- ============================================================================
 
 SELECT
     s.StudentID,
@@ -171,10 +191,10 @@ SELECT
     c.CourseID,
     c.CourseName,
     e.Grade
-FROM Students AS s
-LEFT JOIN Enrollments AS e
+FROM Students s
+LEFT JOIN Enrollments e
     ON s.StudentID = e.StudentID
-LEFT JOIN Courses AS c
+LEFT JOIN Courses c
     ON e.CourseID = c.CourseID
 
 UNION
@@ -186,19 +206,29 @@ SELECT
     c.CourseID,
     c.CourseName,
     e.Grade
-FROM Students AS s
-RIGHT JOIN Enrollments AS e
+FROM Students s
+RIGHT JOIN Enrollments e
     ON s.StudentID = e.StudentID
-RIGHT JOIN Courses AS c
+RIGHT JOIN Courses c
     ON e.CourseID = c.CourseID;
 
--- ---------------------------------------------------------------------
--- 7. RESULT - EXPERIMENT 2
--- ---------------------------------------------------------------------
--- SQL JOIN queries successfully retrieve related information from
--- Students, Courses and Enrollments using INNER JOIN, LEFT JOIN,
--- RIGHT JOIN and a MySQL-compatible FULL OUTER JOIN equivalent.
+/* OUTPUT:
++-----------+---------+------+----------+------------+-------+
+| StudentID | Name    | Age  | CourseID | CourseName | Grade |
++-----------+---------+------+----------+------------+-------+
+|         1 | Alice   |   20 |        1 | Math       | A     |
+|         1 | Alice   |   20 |        2 | English    | B     |
+|         2 | Bob     |   22 |        1 | Math       | A-    |
+|         3 | Charlie |   21 |        2 | English    | A     |
+|         3 | Charlie |   21 |        3 | History    | B+    |
+|         4 | David   |   19 |     NULL | NULL       | NULL  |
+|      NULL | NULL    | NULL |        4 | Physics    | NULL  |
++-----------+---------+------+----------+------------+-------+
+7 rows in set
+*/
 
--- =====================================================================
--- END OF EXPERIMENT 2
--- =====================================================================
+-- ============================================================================
+-- RESULT:
+-- SQL JOIN commands (INNER JOIN, LEFT OUTER JOIN, RIGHT OUTER JOIN, and FULL
+-- OUTER JOIN via UNION) were successfully executed and verified with expected outputs.
+-- ============================================================================

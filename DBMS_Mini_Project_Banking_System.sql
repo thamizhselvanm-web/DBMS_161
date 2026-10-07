@@ -4,29 +4,31 @@
    AIM   : To design, model, implement, and verify an end-to-end relational
            database management system for a commercial banking enterprise
            using Oracle SQL & PL/SQL.
+   DBMS  : Oracle 19c+ / SQL & PL/SQL
    ============================================================================
-   SYSTEM MODULES & ARCHITECTURAL OVERVIEW
-   ---------------------------------------
-   1. Customer Relationship Module (Customer master records & personal info)
-   2. Branch Operations Module (Branch details, cities, and unique IFSC codes)
-   3. Account Management Module (Savings, Current accounts, balance tracking)
-   4. Transaction Ledger Module (Deposit and withdrawal logging with audit trail)
-   5. Credit Financing Module (Personal & business loans, interest rate tiers)
-   6. Repayment Tracking Module (Installment payment schedules and balance updates)
-
-   RELATIONAL SCHEMA ENTITIES
-   --------------------------
-   - Customer      : Customer_ID (PK), Customer_Name, DOB, Gender, Phone, Email, Address
-   - Branch        : Branch_ID (PK), Branch_Name, City, IFSC_Code (UNIQUE)
-   - Account       : Account_No (PK), Customer_ID (FK), Branch_ID (FK), Account_Type, Balance, Status
-   - Bank_Transaction : Transaction_ID (PK), Account_No (FK), Date, Type, Amount, Description
-   - Loan          : Loan_ID (PK), Customer_ID (FK), Loan_Type, Loan_Amount, Interest_Rate, Status
-   - Loan_Payment  : Payment_ID (PK), Loan_ID (FK), Payment_Date, Payment_Amount, Payment_Mode
+   ALGORITHM:
+   ---------
+   STEP 1: Teardown existing schema tables in reverse foreign-key dependency order.
+   STEP 2: Define and construct relational tables with primary keys, unique constraints,
+           and foreign key referential integrity:
+           - Customer (Master profile records)
+           - Branch (Geographic banking locations and unique IFSC routing)
+           - Account (Savings and Current deposit accounts)
+           - Bank_Transaction (Deposit and withdrawal audit ledger)
+           - Loan (Credit financing facility)
+           - Loan_Payment (Installment repayment accounting)
+   STEP 3: Populate all entities with consistent master seed data.
+   STEP 4: Execute multi-table relational join queries for operational reporting.
+   STEP 5: Compute financial metrics and aggregate liquidity balances.
+   STEP 6: Track loan portfolios, debt exposure, and repayment logs.
+   STEP 7: Perform atomic balance modifications, customer profile maintenance,
+           and enforce ACID transactional commitments.
+   STEP 8: Execute post-mutation audit verification and conclude project.
    ============================================================================ */
 
 
 /* ============================================================
-   1. REMOVE OLD TABLES
+   1. REMOVE OLD TABLES (Reverse Dependency Order)
    ============================================================ */
 
 BEGIN
@@ -71,6 +73,10 @@ EXCEPTION
 END;
 /
 
+/* OUTPUT:
+PL/SQL procedure successfully completed.
+*/
+
 
 /* ============================================================
    2. CREATE CUSTOMER TABLE
@@ -86,6 +92,10 @@ CREATE TABLE Customer (
     Address VARCHAR2(200)
 );
 
+/* OUTPUT:
+Table CUSTOMER created.
+*/
+
 
 /* ============================================================
    3. CREATE BRANCH TABLE
@@ -97,6 +107,10 @@ CREATE TABLE Branch (
     City VARCHAR2(50),
     IFSC_Code VARCHAR2(20) UNIQUE
 );
+
+/* OUTPUT:
+Table BRANCH created.
+*/
 
 
 /* ============================================================
@@ -121,6 +135,10 @@ CREATE TABLE Account (
         REFERENCES Branch(Branch_ID)
 );
 
+/* OUTPUT:
+Table ACCOUNT created.
+*/
+
 
 /* ============================================================
    5. CREATE BANK TRANSACTION TABLE
@@ -138,6 +156,10 @@ CREATE TABLE Bank_Transaction (
         FOREIGN KEY (Account_No)
         REFERENCES Account(Account_No)
 );
+
+/* OUTPUT:
+Table BANK_TRANSACTION created.
+*/
 
 
 /* ============================================================
@@ -158,6 +180,10 @@ CREATE TABLE Loan (
         REFERENCES Customer(Customer_ID)
 );
 
+/* OUTPUT:
+Table LOAN created.
+*/
+
 
 /* ============================================================
    7. CREATE LOAN PAYMENT TABLE
@@ -174,6 +200,10 @@ CREATE TABLE Loan_Payment (
         FOREIGN KEY (Loan_ID)
         REFERENCES Loan(Loan_ID)
 );
+
+/* OUTPUT:
+Table LOAN_PAYMENT created.
+*/
 
 
 /* ============================================================

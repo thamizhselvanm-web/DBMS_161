@@ -1,19 +1,20 @@
 /* ============================================================================
    EX NO: 10
-   TITLE : IMPLEMENT DATABASE USING MONGODB (DOCUMENT DATABASE)
-   AIM   : To implement and execute CRUD (Create, Read, Update, Delete)
-           operations in a Document-Oriented NoSQL database using MongoDB.
+   TITLE : INSTALL AND SET UP NOSQL DATABASE (MONGODB) - CRUD OPERATIONS
+   AIM   : To install, configure, and execute CRUD (Create, Read, Update, Delete)
+           operations in a Document-Oriented NoSQL database using MongoDB shell (`mongosh`).
+   ENGINE: MongoDB 6.0+ / mongosh
    ============================================================================
-   ALGORITHM
+   ALGORITHM:
    ---------
-   STEP 1 : Start the MongoDB daemon (`mongod`) and connect via `mongosh`.
-   STEP 2 : Select or create the target database (`use library`).
-   STEP 3 : Populate collections (`authors`, `books`, `borrowers`, `borrowedBooks`)
-            using `insertMany()` with structured BSON documents and embedded arrays.
-   STEP 4 : Execute document updates using `updateOne()` with the `$set` atomic operator.
-   STEP 5 : Query collection documents using `find()` and format with `pretty()`.
-   STEP 6 : Perform document deletion using `deleteOne()` with key filter.
-   STEP 7 : Verify database state and stop.
+   STEP 1: Start the MongoDB daemon (`mongod`) and establish a session in `mongosh`.
+   STEP 2: Create/select the target database context (`use library`).
+   STEP 3: CREATE: Populate collections (`authors`, `books`, `borrowers`, `borrowedBooks`)
+           using `insertMany()` with polymorphic JSON/BSON documents.
+   STEP 4: READ: Query collections using `find().pretty()` with criteria filters and projections.
+   STEP 5: UPDATE: Modify document attributes using `updateOne()` with the `$set` atomic operator.
+   STEP 6: DELETE: Remove targeted documents using `deleteOne()`.
+   STEP 7: Verify final database collection state and conclude the experiment.
    ============================================================================ */
 
 // ----------------------------------------------------------------------------
@@ -24,7 +25,7 @@ use library;
 
 
 // ----------------------------------------------------------------------------
-// Step 3: Insert Initial Data into Collections
+// Step 3: CREATE - Insert Initial Data into Collections
 // ----------------------------------------------------------------------------
 
 // 3.1 Insert Authors
@@ -33,78 +34,144 @@ db.authors.insertMany([
   { "AuthorID": 2, "FirstName": "Aldous", "LastName": "Huxley" },
   { "AuthorID": 3, "FirstName": "J.K.", "LastName": "Rowling" }
 ]);
-// Output: { "acknowledged": true, "insertedIds": [1, 2, 3] }
 
-// 3.2 Insert Books (with reference array to Author IDs)
+/* Output:
+{
+  "acknowledged": true,
+  "insertedIds": {
+    "0": ObjectId("651a1a1b2c3d4e5f67890001"),
+    "1": ObjectId("651a1a1b2c3d4e5f67890002"),
+    "2": ObjectId("651a1a1b2c3d4e5f67890003")
+  }
+}
+*/
+
+// 3.2 Insert Books (Document with embedded array referencing authors)
 db.books.insertMany([
-  { "BookID": 1, "Title": "1984", "Genre": "Dystopian", "PublicationYear": 1949, "Authors": [1] },
-  { "BookID": 2, "Title": "Brave New World", "Genre": "Dystopian", "PublicationYear": 1932, "Authors": [2] },
-  { "BookID": 3, "Title": "Harry Potter and the Sorcerer's Stone", "Genre": "Fantasy", "PublicationYear": 1997, "Authors": [3] }
+  { "BookID": 1, "Title": "1984", "Genre": "Dystopian", "PublicationYear": 1949, "AuthorIDs": [1] },
+  { "BookID": 2, "Title": "Brave New World", "Genre": "Dystopian", "PublicationYear": 1932, "AuthorIDs": [2] },
+  { "BookID": 3, "Title": "Harry Potter and the Sorcerer's Stone", "Genre": "Fantasy", "PublicationYear": 1997, "AuthorIDs": [3] }
 ]);
-// Output: { "acknowledged": true, "insertedIds": [1, 2, 3] }
+
+/* Output:
+{
+  "acknowledged": true,
+  "insertedIds": {
+    "0": ObjectId("651a1a1b2c3d4e5f67890011"),
+    "1": ObjectId("651a1a1b2c3d4e5f67890012"),
+    "2": ObjectId("651a1a1b2c3d4e5f67890013")
+  }
+}
+*/
 
 // 3.3 Insert Borrowers
 db.borrowers.insertMany([
-  { "BorrowerID": 1, "FirstName": "John", "LastName": "Doe", "MembershipDate": new Date("2023-01-01") },
-  { "BorrowerID": 2, "FirstName": "Jane", "LastName": "Smith", "MembershipDate": new Date("2023-02-15") }
+  { "BorrowerID": 1, "FirstName": "John", "LastName": "Doe", "MembershipDate": ISODate("2023-01-01T00:00:00Z") },
+  { "BorrowerID": 2, "FirstName": "Jane", "LastName": "Smith", "MembershipDate": ISODate("2023-02-15T00:00:00Z") }
 ]);
-// Output: { "acknowledged": true, "insertedIds": [1, 2] }
 
-// 3.4 Insert Borrowed Books (Tracking circulation records)
-db.borrowedBooks.insertMany([
-  { "BorrowerID": 1, "BookID": 1, "BorrowedDate": new Date("2023-03-01"), "ReturnDate": new Date("2023-03-15") },
-  { "BorrowerID": 2, "BookID": 3, "BorrowedDate": new Date("2023-03-05"), "ReturnDate": new Date("2023-03-20") }
-]);
-// Output: { "acknowledged": true, "insertedIds": [1, 2] }
-
-
-// ----------------------------------------------------------------------------
-// Step 4: Update Data (Modify Author Record)
-// ----------------------------------------------------------------------------
-db.authors.updateOne(
-  { "AuthorID": 1 },
-  { $set: { "LastName": "Smith" } }
-);
-// Output: { "acknowledged": true, "matchedCount": 1, "modifiedCount": 1 }
-
-
-// ----------------------------------------------------------------------------
-// Step 5: Query Data (Read All Authors)
-// ----------------------------------------------------------------------------
-db.authors.find().pretty();
 /* Output:
 {
-  "_id": ObjectId("651a1a1b2c3d4e5f67890001"),
-  "AuthorID": 1,
-  "FirstName": "George",
-  "LastName": "Smith"
+  "acknowledged": true,
+  "insertedIds": {
+    "0": ObjectId("651a1a1b2c3d4e5f67890021"),
+    "1": ObjectId("651a1a1b2c3d4e5f67890022")
+  }
 }
+*/
+
+// 3.4 Insert Borrowed Books
+db.borrowedBooks.insertMany([
+  { "BorrowerID": 1, "BookID": 1, "BorrowedDate": ISODate("2023-03-01T00:00:00Z"), "ReturnDate": ISODate("2023-03-15T00:00:00Z") },
+  { "BorrowerID": 2, "BookID": 3, "BorrowedDate": ISODate("2023-03-05T00:00:00Z"), "ReturnDate": ISODate("2023-03-20T00:00:00Z") }
+]);
+
+/* Output:
 {
-  "_id": ObjectId("651a1a1b2c3d4e5f67890002"),
-  "AuthorID": 2,
-  "FirstName": "Aldous",
-  "LastName": "Huxley"
-}
-{
-  "_id": ObjectId("651a1a1b2c3d4e5f67890003"),
-  "AuthorID": 3,
-  "FirstName": "J.K.",
-  "LastName": "Rowling"
+  "acknowledged": true,
+  "insertedIds": {
+    "0": ObjectId("651a1a1b2c3d4e5f67890031"),
+    "1": ObjectId("651a1a1b2c3d4e5f67890032")
+  }
 }
 */
 
 
 // ----------------------------------------------------------------------------
-// Step 6: Delete Data (Remove Author Record)
+// Step 4: READ - Query Books Collection
+// ----------------------------------------------------------------------------
+db.books.find({ "Genre": "Dystopian" }).pretty();
+
+/* Output:
+{
+  "_id": ObjectId("651a1a1b2c3d4e5f67890011"),
+  "BookID": 1,
+  "Title": "1984",
+  "Genre": "Dystopian",
+  "PublicationYear": 1949,
+  "AuthorIDs": [ 1 ]
+}
+{
+  "_id": ObjectId("651a1a1b2c3d4e5f67890012"),
+  "BookID": 2,
+  "Title": "Brave New World",
+  "Genre": "Dystopian",
+  "PublicationYear": 1932,
+  "AuthorIDs": [ 2 ]
+}
+*/
+
+
+// ----------------------------------------------------------------------------
+// Step 5: UPDATE - Modify Author Record Atomic Mutation
+// ----------------------------------------------------------------------------
+db.authors.updateOne(
+  { "AuthorID": 1 },
+  { $set: { "LastName": "Blair", "PenName": "George Orwell" } }
+);
+
+/* Output:
+{
+  "acknowledged": true,
+  "insertedId": null,
+  "matchedCount": 1,
+  "modifiedCount": 1,
+  "upsertedCount": 0
+}
+*/
+
+// Verify updated author document
+db.authors.find({ "AuthorID": 1 }).pretty();
+
+/* Output:
+{
+  "_id": ObjectId("651a1a1b2c3d4e5f67890001"),
+  "AuthorID": 1,
+  "FirstName": "George",
+  "LastName": "Blair",
+  "PenName": "George Orwell"
+}
+*/
+
+
+// ----------------------------------------------------------------------------
+// Step 6: DELETE - Remove Targeted Document
 // ----------------------------------------------------------------------------
 db.authors.deleteOne({ "AuthorID": 1 });
-// Output: { "acknowledged": true, "deletedCount": 1 }
+
+/* Output:
+{
+  "acknowledged": true,
+  "deletedCount": 1
+}
+*/
 
 
 // ----------------------------------------------------------------------------
 // Step 7: Final Query Verification
 // ----------------------------------------------------------------------------
 db.authors.find().pretty();
+
 /* Output:
 {
   "_id": ObjectId("651a1a1b2c3d4e5f67890002"),
@@ -119,3 +186,9 @@ db.authors.find().pretty();
   "LastName": "Rowling"
 }
 */
+
+/* ============================================================================
+   RESULT:
+   Thus the MongoDB document database was configured and full CRUD operations
+   (insertMany, find, updateOne with $set, deleteOne) were verified successfully.
+   ============================================================================ */
